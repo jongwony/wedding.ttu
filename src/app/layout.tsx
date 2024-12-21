@@ -33,7 +33,7 @@ function Navbar() {
   return (
     <nav className="shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Our Wedding</h1>
+        <h1 className="text-xl font-bold">💒</h1>
         <div>
           <Link href="/" className="px-4 py-2 text-gray-600">Home</Link>
           <Link href="/gallery" className="px-4 py-2 text-gray-600">Gallery</Link>

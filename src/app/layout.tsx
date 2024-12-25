@@ -37,6 +37,7 @@ function Navbar() {
         <div>
           <Link href="/" className="px-4 py-2 text-gray-600">Home</Link>
           <Link href="/gallery" className="px-4 py-2 text-gray-600">Gallery</Link>
+          <Link href="/dining" className="px-4 py-2 text-gray-600">Dining</Link>
         </div>
       </div>
     </nav>

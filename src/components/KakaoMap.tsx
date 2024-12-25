@@ -1,9 +1,10 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 // 전역 스코프에 kakao 타입이 없으므로 타입을 선언해줍니다.
 declare global {
   interface Window {
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     kakao: any;
   }
 }
@@ -27,7 +28,6 @@ const Kakaomap: React.FC = () => {
       };
       document.head.appendChild(script);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Vue의 methods에 해당: 지도 초기화

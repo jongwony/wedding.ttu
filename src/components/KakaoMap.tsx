@@ -12,7 +12,7 @@ declare global {
 const Kakaomap: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
 
-  // Vue의 mounted() 훅에 해당하는 부분: 스크립트를 로드하고 kakao.maps를 초기화합니다.
+  // 스크립트를 로드하고 kakao.maps를 초기화합니다.
   useEffect(() => {
     // kakao.maps가 이미 로드된 경우 (CSR 재렌더링 등) 중복 로드를 막기 위한 체크
     if (window.kakao && window.kakao.maps) {
@@ -30,11 +30,11 @@ const Kakaomap: React.FC = () => {
     }
   }, []);
 
-  // Vue의 methods에 해당: 지도 초기화
+  // 지도 초기화
   const initMap = () => {
     if (!mapRef.current) return;
 
-    // 송파구 삼전동 위치(홈)
+    // 스타시티 아트홀 위치(홈)
     const coords = new window.kakao.maps.LatLng(
       37.5407309,
       127.0714632,
@@ -55,16 +55,16 @@ const Kakaomap: React.FC = () => {
 
     // 인포윈도우 생성
     const infoWindowInstance = new window.kakao.maps.InfoWindow({ zindex: 1 });
-
-    infoWindowInstance.setContent(
-      `<div style="color: #333333;padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-        서울시 광진구 화양동 능동로 110 <br> 스타시티 아트홀
-      </div>`
-    );
+    const infoContent = `
+      <div style="color:#333333;padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+        <p style="background-color:#DDDDDD;font-weight: bold;font-size: 14px;">스타시티 아트홀</p>
+        <small style="display: block;margin-top: 5px;">서울시 광진구 화양동 능동로 110</small>
+      </div>
+    `;
+    infoWindowInstance.setContent(infoContent);
     infoWindowInstance.open(mapInstance, markerInstance);
 
     // 필요 시 RoadView 로직 등 추가
-
   };
 
   return (

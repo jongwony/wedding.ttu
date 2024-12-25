@@ -16,8 +16,8 @@ const DiningPage = () => {
           손님 모두를 위한 특별한 경험을 준비했습니다.
         </p>
         <p className="text-lg text-gray-400 text-center leading-relaxed mb-6">
-          메인 메뉴인 한정식 한상차림 <strong className="text-gray-300">"정"</strong>의 정통성을 강화하고,<br />
-          뷔페 메뉴인 <strong className="text-gray-300">"밥"</strong>을 새롭게 재해석하여 탄생한
+          메인 메뉴인 한정식 한상차림 <strong className="text-gray-300">정</strong>의 정통성을 강화하고,<br />
+          뷔페 메뉴인 <strong className="text-gray-300">밥</strong>을 새롭게 재해석하여 탄생한
           <span className="block mt-2">
             한정식과 뷔페의 특별한 조합을 만나보세요.
           </span>

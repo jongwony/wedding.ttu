@@ -1,58 +1,83 @@
 "use client";
 import React from "react";
 
-const ICSFileGenerator = () => {
-  const generateICSFile = () => {
-    // 이벤트 정보 설정
-    const eventDetails = {
-      startDate: "20240101T120000", // YYYYMMDDTHHMMSSZ 형식
-      endDate: "20240101T150000", // YYYYMMDDTHHMMSSZ 형식
-      title: "Wedding Ceremony of [신랑 & 신부]",
-      description: "Join us to celebrate the wedding of [신랑] and [신부]!",
-      location: "서울특별시 강남구 OOO 호텔 2층",
-    };
+interface EventDetails {
+  title: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  location: string;
+}
 
-    // ICS 파일 내용 생성
-    const icsContent = `
+const generateGoogleCalendarURL = (event: EventDetails) => {
+  return `https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(
+    event.title
+  )}&dates=${event.startDate}/${event.endDate}&details=${encodeURIComponent(
+    event.description
+  )}&location=${encodeURIComponent(event.location)}&sf=true&output=xml`;
+};
+const generateICSFile = (event: EventDetails) => {
+  const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//YourCompany//YourApp//EN
+PRODID:-//TTUWORLD//WEDDING//KO
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
-DTSTART:${eventDetails.startDate}
-DTEND:${eventDetails.endDate}
-SUMMARY:${eventDetails.title}
-DESCRIPTION:${eventDetails.description}
-LOCATION:${eventDetails.location}
+DTSTART:${event.startDate}
+DTEND:${event.endDate}
+SUMMARY:${event.title}
+DESCRIPTION:${event.description}
+LOCATION:${event.location}
 END:VEVENT
 END:VCALENDAR`;
 
-    // Blob 객체로 파일 생성
-    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
+  const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+  const url = window.URL.createObjectURL(blob);
 
-    // 파일 다운로드 트리거
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "wedding_event.ics";
-    document.body.appendChild(link);
-    link.click();
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "wedding_even.ics";
+  document.body.appendChild(link);
+  link.click();
 
-    // 다운로드 후 정리
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+};
+
+const CalendarEventActions = () => {
+  const eventDetails = {
+    title: "Jongwon ❤️ Ttu 💍",
+    startDate: "20251019T030000Z",
+    endDate: "20251019T060000Z",
+    description: "소중한 시간을 내어 참석해 주셔서 진심으로 감사드립니다. 💖",
+    location: "스타시티아트홀, 대한민국 서울특별시 광진구 화양동 능동로 110 스타시티영존 5층",
+  };
+
+  const handleICSDownload = () => {
+    generateICSFile(eventDetails);
+  };
+
+  const handleGoogleCalendar = () => {
+    const googleCalendarURL = generateGoogleCalendarURL(eventDetails);
+    window.open(googleCalendarURL, "_blank");
   };
 
   return (
-    <div className="flex justify-center items-center mt-6">
+    <div className="flex justify-center items-center space-x-4 mt-6">
       <button
-        onClick={generateICSFile}
+        onClick={handleGoogleCalendar}
         className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
       >
-        📅 캘린더에 추가하기
+        📅 Google 캘린더에 추가
+      </button>
+      <button
+        onClick={handleICSDownload}
+        className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
+      >
+        📅 .ICS 파일 다운로드
       </button>
     </div>
   );
 };
 
-export default ICSFileGenerator;
+export default CalendarEventActions;

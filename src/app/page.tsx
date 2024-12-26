@@ -3,6 +3,7 @@ import Image from "next/image";
 import AddToAppleWalletButton from "@/components/AppleWallet";
 import Kakaomap from "@/components/KakaoMap";
 import TransferButtons from "@/components/Account";
+import ICSFileGenerator from "@/components/Calendar";
 
 export default function Home() {
   return (
@@ -11,7 +12,8 @@ export default function Home() {
       <p className="text-gray-400 mb-6">
         2025년 10월 19일 일요일 오후 12시
       </p>
-      <div className="flex justify-center">
+      <ICSFileGenerator />
+      <div className="mt-12 flex justify-center">
         <Image
           src="/images/couple.jpg"
           alt="Couple"

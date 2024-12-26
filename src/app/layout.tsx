@@ -1,31 +1,7 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import "./globals.css";
-
-function Navbar() {
-  // Navbar 컴포넌트
-  return (
-    <nav className="shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">💒</h1>
-        <div>
-          <Link href="/" className="px-4 py-2 text-gray-600">Home</Link>
-          <Link href="/gallery" className="px-4 py-2 text-gray-600">Gallery</Link>
-          <Link href="/dining" className="px-4 py-2 text-gray-600">Dining</Link>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-// Footer 컴포넌트
-function Footer() {
-  return (
-    <footer className="text-center py-4 text-gray-600">
-      <p>소중한 시간을 내어 참석해 주셔서 진심으로 감사드립니다. 💖</p>
-    </footer>
-  );
-}
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Jongwon ❤️ Ttu",

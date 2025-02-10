@@ -63,19 +63,62 @@ const CalendarEventActions = () => {
   };
 
   return (
-    <div className="flex justify-center items-center space-x-4 mt-6">
-      <button
-        onClick={handleGoogleCalendar}
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
-      >
-        📅 Google 캘린더에 추가
-      </button>
-      <button
-        onClick={handleICSDownload}
-        className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
-      >
-        📅 .ICS 파일 다운로드
-      </button>
+    <div className="flex flex-col justify-center items-center space-x-4 mt-6">
+
+      {/* 헤더 */}
+      <h1 className="font-nanumdahang text-4xl font-bold mb-4">시월의 열아홉번째 날.</h1>
+
+      <p className="font-maru text-gray-400 mb-4">
+        2025년 10월 19일 일요일 오후 12시
+      </p>
+
+      {/* 캘린더 */}
+      <div className="p-4 rounded-lg shadow-md w-full max-w-md">
+        {/* 요일 */}
+        <div className="grid grid-cols-7 text-center text-gray-700 dark:text-gray-300 font-semibold border-b pb-2">
+          {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
+            <div key={day} className="py-2">{day}</div>
+          ))}
+        </div>
+
+        {/* 날짜 */}
+        <div className="grid grid-cols-7 gap-2 mt-2">
+          {/* October 1, 2025 is Wednesday, so three empty spaces */}
+          <div></div>
+          <div></div>
+          <div></div>
+
+          {Array.from({ length: 31 }, (_, i) => {
+            const day = i + 1;
+            const isEventDay = day === 19;
+            return (
+              <div
+                key={day}
+                className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-gray-100 dark:bg-gray-900"
+                  }`}
+              >
+                {day}
+                {isEventDay && <span className="block text-xs mt-1">오후 12시</span>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mx-auto">
+        <button
+          onClick={handleGoogleCalendar}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 m-4 rounded-lg shadow-md transition-all duration-300"
+        >
+          📅 Google 캘린더에 추가
+        </button>
+        <button
+          onClick={handleICSDownload}
+          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 m-4 rounded-lg shadow-md transition-all duration-300"
+        >
+          📅 .ICS 파일 다운로드
+        </button>
+      </div>
     </div>
   );
 };

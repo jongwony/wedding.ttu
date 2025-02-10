@@ -17,14 +17,16 @@ const AddToAppleWalletButton = () => {
   };
 
   return (
-    <button onClick={handleButtonClick} className="focus:outline-none">
-      <Image
-        src="/images/KR_Add_to_Apple_Wallet_RGB_102221.svg"
-        alt="Apple Wallet에 추가"
-        width={128} // 적절한 너비로 설정
-        height={24} // 적절한 높이로 설정
-      />
-    </button>
+    <div className="flex justify-center">
+      <button onClick={handleButtonClick} className="focus:outline-none">
+        <Image
+          src="/images/KR_Add_to_Apple_Wallet_RGB_102221.svg"
+          alt="Apple Wallet에 추가"
+          width={128} // 적절한 너비로 설정
+          height={24} // 적절한 높이로 설정
+        />
+      </button>
+    </div>
   );
 };
 

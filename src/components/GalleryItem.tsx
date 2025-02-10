@@ -11,9 +11,8 @@ const GalleryItem = ({ src, alt }: Props) => (
     <Image
       src={src}
       alt={alt}
-      layout="responsive"
-      width={100}
-      height={100}
+      fill={true}
+      priority={false}
       className="object-cover transition-transform duration-300 hover:scale-110"
     />
   </div>

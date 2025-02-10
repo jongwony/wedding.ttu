@@ -68,11 +68,13 @@ const Kakaomap: React.FC = () => {
   };
 
   return (
-    <div
-      id="map"
-      className="w-full max-w-md h-96 border rounded-lg shadow-lg"
-      ref={mapRef}
-    />
+    <div className="flex justify-center mt-8">
+      <div
+        id="map"
+        className="w-full max-w-md h-96 border rounded-lg shadow-lg"
+        ref={mapRef}
+      />
+    </div>
   );
 };
 

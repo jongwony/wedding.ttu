@@ -63,7 +63,7 @@ const CalendarEventActions = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center space-x-4 mt-6">
+    <div className="mt-24 flex flex-col justify-center items-center space-x-4">
 
       {/* 헤더 */}
       <h1 className="font-nanumdahang text-4xl font-bold mb-4">시월의 열아홉번째 날.</h1>
@@ -73,7 +73,7 @@ const CalendarEventActions = () => {
       </p>
 
       {/* 캘린더 */}
-      <div className="p-4 rounded-lg shadow-md w-full max-w-md">
+      <div className="p-4 w-full max-w-md">
         {/* 요일 */}
         <div className="grid grid-cols-7 text-center text-gray-700 dark:text-gray-300 font-semibold border-b pb-2">
           {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
@@ -98,23 +98,22 @@ const CalendarEventActions = () => {
                   }`}
               >
                 {day}
-                {isEventDay && <span className="block text-xs mt-1">오후 12시</span>}
               </div>
             );
           })}
         </div>
       </div>
 
-      <div className="mx-auto">
+      <div className="flex gap-2 mx-auto mt-4">
         <button
           onClick={handleGoogleCalendar}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 m-4 rounded-lg shadow-md transition-all duration-300"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
         >
           📅 Google 캘린더에 추가
         </button>
         <button
           onClick={handleICSDownload}
-          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 m-4 rounded-lg shadow-md transition-all duration-300"
+          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
         >
           📅 .ICS 파일 다운로드
         </button>

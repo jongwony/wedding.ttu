@@ -17,15 +17,22 @@ const AddToAppleWalletButton = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      <button onClick={handleButtonClick} className="focus:outline-none">
-        <Image
-          src="/images/KR_Add_to_Apple_Wallet_RGB_102221.svg"
-          alt="Apple Wallet에 추가"
-          width={128} // 적절한 너비로 설정
-          height={24} // 적절한 높이로 설정
-        />
-      </button>
+    <div className="flex flex-col justify-center">
+      <h2 className="mt-24 font-nanumdahang text-3xl font-bold">Apple 지갑에 추가하기</h2>
+      <p className="font-maru text-gray-400 m-4">
+        아이폰을 사용하신다면 Apple 지갑에 추가하여 알림을 받아보세요.
+      </p>
+
+      <div className="mb-12">
+        <button onClick={handleButtonClick} className="focus:outline-none">
+          <Image
+            src="/images/KR_Add_to_Apple_Wallet_RGB_102221.svg"
+            alt="Apple Wallet에 추가"
+            width={128} // 적절한 너비로 설정
+            height={24} // 적절한 높이로 설정
+          />
+        </button>
+      </div>
     </div>
   );
 };

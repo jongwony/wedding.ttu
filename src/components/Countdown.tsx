@@ -26,20 +26,20 @@ const WeddingCountdown = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center p-8">
+    <div className="mt-24 flex flex-col items-center p-8">
       {/* 제목 */}
       <h2 className="text-3xl font-nanumdahang font-semibold mb-8">
         종원 ❤️ 수경 결혼식까지
       </h2>
 
       {/* 카운트다운 컨테이너 */}
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid grid-cols-4 gap-6">
         {Object.entries(timeLeft).map(([label, value]) => (
           <div key={label} className="flex flex-col items-center">
             <div className="w-20 h-20 flex items-center justify-center bg-pink-200 rounded-full text-xl text-gray-600">
               <span className="text-xl">{value}</span>
               <div>
-                <span className="text-xs">{label}</span>
+                <span className="font-nanumdahang text-xs">{label}</span>
               </div>
             </div>
           </div>

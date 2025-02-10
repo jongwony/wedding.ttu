@@ -7,6 +7,8 @@ import TransferButtons from "@/components/Account";
 import CalendarEventActions from "@/components/Calendar";
 import WeddingCountdown from "@/components/Countdown";
 import AnimationHeader from "@/components/Typewriter";
+import BrideGroomProfile from "@/components/Profile";
+import InterviewModal from "@/components/Interview";
 
 export default function Home() {
   return (
@@ -43,36 +45,31 @@ export default function Home() {
         </p>
       </div>
 
+      <h1 className={`font-maru text-2xl m-8 text-pink-500`}>
+        소중한 분들을 초대합니다.
+      </h1>
+      <p className="font-maru text-gray-400 m-4">
+        오랜 기다림 끝에 저희 두사람.
+        <br />
+        한 마음 되어 이제 결실을 맺으려 합니다.
+        <br />
+        <br />
+        오셔서 함께해 주시면 감사하겠습니다.
+      </p>
+
+      <BrideGroomProfile />
+
+      <InterviewModal />
+
       <WeddingCountdown />
 
       <CalendarEventActions />
 
-      <h2 className="mt-24 font-nanumdahang text-3xl font-bold">오시는 길</h2>
-      <p className="font-maru text-gray-400 m-4">
-        건대입구 역 3번 출구
-      </p>
-
       <Kakaomap />
 
-      <h2 className="mt-24 font-nanumdahang text-3xl font-bold">Apple 지갑에 추가하기</h2>
-      <p className="font-maru text-gray-400 m-4">
-        아이폰을 사용하신다면 Apple 지갑에 추가하여 알림을 받아보세요.
-      </p>
+      <TransferButtons />
 
       <AddToAppleWalletButton />
-
-      <h2 className="mt-24 font-nanumdahang text-3xl font-bold">축하의 마음 전하기</h2>
-      <p className="font-maru text-gray-400 m-4">
-        소중한 날 함께 해 주신다면 더할 나위 없이 기쁠것입니다.
-        <span className="block m-2">
-          직접 참석이 어려우시더라도,
-          <br />
-          따뜻한 마음을 전해 주신다면 저희에게 큰 힘이 될 것입니다.
-        </span>
-        진심으로 감사드립니다.
-      </p>
-
-      <TransferButtons />
 
     </section>
   );

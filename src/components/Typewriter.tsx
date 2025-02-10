@@ -7,10 +7,10 @@ export default function AnimationHeader() {
   // 컴포넌트가 처음 마운트되면 animate 상태를 true로 변경
   useEffect(() => {
     setAnimate(true);
-    // 3초 후에 sparkle 클래스 추가 (타이핑 애니메이션 완료 직후)
+    // 2초 후에 sparkle 클래스 추가 (타이핑 애니메이션 완료 직후)
     const timer = setTimeout(() => {
       setSparkle(true);
-    }, 3000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -30,7 +30,7 @@ export default function AnimationHeader() {
           position: absolute;
           overflow: hidden;
           white-space: nowrap;
-          animation: typewriter 4s steps(120) forwards;
+          animation: typewriter 2s steps(120) forwards;
         }
 
         @keyframes sparkle {

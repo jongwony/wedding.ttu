@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <section className="font-pretendard mx-auto px-4 py-12 text-center">
-      <h1 className={`text-6xl font-goldenplains p-4 ${animate ? "typewriter" : ""}`}>We're getting Married!</h1>
+      <h1 className={`text-6xl font-goldenplains p-4 ${animate ? "typewriter" : ""}`}>We&rsquo;re getting Married!</h1>
 
       <div className="mt-12 flex justify-center">
         <Image

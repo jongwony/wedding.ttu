@@ -9,7 +9,6 @@ export default function Navbar() {
           <Link href="/" className="px-4 py-2">💒</Link>
         </h1>
         <div>
-          <Link href="/gallery" className="px-4 py-2 text-gray-600">Gallery</Link>
           <Link href="/dining" className="px-4 py-2 text-gray-600">Dining</Link>
         </div>
       </div>

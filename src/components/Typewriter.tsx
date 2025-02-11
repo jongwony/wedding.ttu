@@ -16,9 +16,14 @@ export default function AnimationHeader() {
 
   return (
     <div className="flex justify-center">
-      <h1 className={`top-40 p-4 text-4xl text-white font-goldenplains font-extraBold ${animate ? "typewriter" : ""} ${sparkle ? "sparkle" : ""}`}>
-        We&rsquo;re getting Married!
-      </h1>
+      <div className={`absolute top-40 z-10`}>
+        <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold ${animate ? "typewriter" : ""} ${sparkle ? "sparkle" : ""}`}>
+          We&rsquo;re getting Married!
+        </h1>
+        <p className="text-xl text-gray-300 font-maru font-semibold">
+          2025년 10월 19일 일요일 오후 12시
+        </p>
+      </div>
 
       <style jsx>{`
         @keyframes typewriter {
@@ -26,10 +31,6 @@ export default function AnimationHeader() {
           to { width: 100%; }
         }
         .typewriter {
-          z-index: 10;
-          position: absolute;
-          overflow: hidden;
-          white-space: nowrap;
           animation: typewriter 2s steps(120) forwards;
         }
 

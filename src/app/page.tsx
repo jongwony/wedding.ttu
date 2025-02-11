@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 import AddToAppleWalletButton from "@/components/AppleWallet";
 import Kakaomap from "@/components/KakaoMap";
@@ -9,8 +10,24 @@ import WeddingCountdown from "@/components/Countdown";
 import AnimationHeader from "@/components/Typewriter";
 import BrideGroomProfile from "@/components/Profile";
 import InterviewModal from "@/components/Interview";
+import Carousel from "@/components/Carousel";
 
 export default function Home() {
+  const [imageList, setImageList] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const res = await fetch("/api/carousel-images");
+        const data = await res.json();
+        setImageList(data.images);
+      } catch (error) {
+        console.error("이미지 목록을 불러오는데 실패했습니다:", error);
+      }
+    }
+    fetchImages();
+  }, []);
+
   return (
     <section className="flex flex-col font-pretendard text-center">
       <div className="relative max-h-screen aspect-[9/16]">
@@ -24,6 +41,8 @@ export default function Home() {
       </div>
 
       <AnimationHeader />
+
+      <Carousel images={imageList} />
 
       <div className={`font-nanumdahang text-2xl m-8`}>
         <p >
@@ -48,7 +67,7 @@ export default function Home() {
       <h1 className={`font-maru text-2xl m-8 text-pink-500`}>
         소중한 분들을 초대합니다.
       </h1>
-      <p className="font-maru text-gray-400 m-4">
+      <p className="font-maru text-gray-500 m-4">
         오랜 기다림 끝에 저희 두사람.
         <br />
         한 마음 되어 이제 결실을 맺으려 합니다.

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+export const revalidate = 300; // 300초마다 재검증
+
 export async function GET() {
   const imagesDirectory = path.join(process.cwd(), "public/images/carousel");
   // 디렉터리 내의 파일 목록을 읽습니다.

@@ -20,10 +20,11 @@ export default function Hero() {
         className="relative max-h-screen aspect-[9/16]"
       >
         <Image
-          src="/images/jeju_snap.jpg"
+          src="/images/jeju_snap.webp"
           alt="Jeju Snap"
-          fill={true}
-          priority={false}
+          fill
+          priority
+          quality={80}
           className="object-cover"
         />
         <video

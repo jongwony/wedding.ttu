@@ -27,7 +27,7 @@ const DiningPage = () => {
         </div>
         <div className="flex justify-center mt-10">
           <Link
-            href={'https://starcityarthall.com/33'}
+            href="https://starcityarthall.com/html/dining.php"
             className="px-6 py-3 bg-indigo-600 text-white font-semibold text-sm rounded-full shadow-md hover:bg-indigo-700 transition"
           >
             연회 메뉴 자세히 보기

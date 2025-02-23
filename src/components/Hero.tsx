@@ -1,17 +1,13 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import AnimationHeader from "@/components/Typewriter";
 import { ChevronsDown } from "lucide-react";
 
 export default function Hero() {
   const [showed, setShowed] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
     setTimeout(() => {
       setShowed(true)
     }, 3000)
@@ -21,8 +17,7 @@ export default function Hero() {
   return (
     <>
       <div
-        ref={scrollContainerRef}
-        className="relative max-h-screen aspect-[9/16] overflow-y-scroll"
+        className="relative max-h-screen aspect-[9/16]"
       >
         <Image
           src="/images/jeju_snap.jpg"

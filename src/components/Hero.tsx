@@ -36,6 +36,8 @@ export default function Hero() {
           autoPlay
           loop
           muted
+          draggable={false}
+          tabIndex={-1}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ mixBlendMode: 'screen' }}
         />

@@ -36,8 +36,11 @@ export default function Hero() {
           autoPlay
           loop
           muted
+          playsInline
           draggable={false}
           tabIndex={-1}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ mixBlendMode: 'screen' }}
         />

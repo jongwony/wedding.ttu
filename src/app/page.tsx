@@ -1,16 +1,19 @@
 "use client";
-import Image from "next/image";
 import { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
+
+const WeddingCountdown = dynamic(() => import('@/components/Countdown'), {
+  ssr: false,
+});
 
 import AddToAppleWalletButton from "@/components/AppleWallet";
 import Kakaomap from "@/components/KakaoMap";
 import TransferButtons from "@/components/Account";
 import CalendarEventActions from "@/components/Calendar";
-import WeddingCountdown from "@/components/Countdown";
-import AnimationHeader from "@/components/Typewriter";
 import BrideGroomProfile from "@/components/Profile";
 import InterviewModal from "@/components/Interview";
 import Carousel from "@/components/Carousel";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   const [imageList, setImageList] = useState<string[]>([]);
@@ -30,17 +33,7 @@ export default function Home() {
 
   return (
     <section className="flex flex-col font-pretendard text-center">
-      <div className="relative max-h-screen aspect-[9/16]">
-        <Image
-          src="/images/jeju_snap.jpg"
-          alt="Jeju Snap"
-          fill={true}
-          priority={false}
-          className="object-cover"
-        />
-      </div>
-
-      <AnimationHeader />
+      <Hero />
 
       <Carousel images={imageList} />
 

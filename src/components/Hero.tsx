@@ -31,6 +31,14 @@ export default function Hero() {
           priority={false}
           className="object-cover"
         />
+        <video
+          src="/videos/flower.mp4"
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ mixBlendMode: 'screen' }}
+        />
       </div>
 
       {/* 사용자가 스크롤하지 않은 경우에만 스와이프 애니메이션 표시 */}

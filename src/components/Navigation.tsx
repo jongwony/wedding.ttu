@@ -14,7 +14,7 @@ const MapButtons: React.FC = () => {
   const navermapLink = `nmap://navigation?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(placeName)}`;
 
   // 카카오내비 링크 (x: 경도, y: 위도)
-  const kakaomapLink = `kakaonmap://route?name=${encodeURIComponent(placeName)}&ep=${lat},${lng}`;
+  const kakaomapLink = `kakaomap://route?name=${encodeURIComponent(placeName)}&ep=${lat},${lng}`;
 
   // 티맵 딥링크 (goalx: 경도, goaly: 위도)
   const tmapLink = `tmap://route?goalx=${lng}&goaly=${lat}&goalname=${encodeURIComponent(placeName)}`;

@@ -14,6 +14,7 @@ import BrideGroomProfile from "@/components/Profile";
 import InterviewModal from "@/components/Interview";
 import Carousel from "@/components/Carousel";
 import Hero from "@/components/Hero";
+import MapButtons from "@/components/Navigation";
 
 export default function Home() {
   const [imageList, setImageList] = useState<string[]>([]);
@@ -78,6 +79,8 @@ export default function Home() {
       <CalendarEventActions />
 
       <Kakaomap />
+
+      <MapButtons />
 
       <TransferButtons />
 

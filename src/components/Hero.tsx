@@ -28,7 +28,8 @@ export default function Hero() {
           className="object-cover"
         />
         <video
-          src="/videos/flower.mp4"
+          // src="/videos/flower.mp4"
+          src="/videos/snow.mp4"
           autoPlay
           loop
           muted

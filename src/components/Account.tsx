@@ -9,21 +9,21 @@ const TransferButtons = () => {
       href: "supertoss://send?amount=0&bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&accountNo=100151320105&origin=qr",
       bgColor: "bg-blue-500",
       color: "text-white",
-      src: "/images/toss_logo.png",
+      src: "/images/logo/toss.png",
     },
     {
       label: "신랑에게",
       href: "https://qr.kakaopay.com/281006011000008349896956",
       bgColor: "bg-yellow-300",
       color: "text-black",
-      src: "/images/kakaopay_logo.png",
+      src: "/images/logo/kakaopay.png",
     },
     {
       label: "신부에게",
       href: "https://qr.kakaopay.com/281006011000008349896956",
       bgColor: "bg-yellow-300",
       color: "text-black",
-      src: "/images/kakaopay_logo.png",
+      src: "/images/logo/kakaopay.png",
     },
   ];
 

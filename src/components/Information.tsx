@@ -1,0 +1,72 @@
+import DiningPage from "@/app/dining/page";
+import React, { useState } from "react";
+
+type TabType = "photo" | "food" | "parking";
+
+export default function InformationTabs() {
+  const [activeTab, setActiveTab] = useState<TabType>("photo");
+
+  // 각 탭에 보여줄 내용 정의
+  const tabContent = {
+    photo: (
+      <p className="mt-4 text-gray-700 dark:text-gray-300">
+        포토부스가 설치될 예정입니다. 
+        귀한 발걸음 해주신 여러분의 환한 미소와 따뜻한 말씀 남겨주시면 
+        소중히 간직하도록 하겠습니다.
+      </p>
+    ),
+    food: (
+        <DiningPage />
+    ),
+    parking: (
+      <p className="mt-4 text-gray-700 dark:text-gray-300">
+        주차안내에 대한 내용이 들어갈 자리입니다.
+        <br />
+        (예: 주차장 위치, 주차 요금 등)
+      </p>
+    ),
+  };
+
+  return (
+    <div className="mx-auto max-w-md p-4 rounded-md">
+      <h2 className="mt-24 font-nanumdahang text-3xl font-bold">예식 안내</h2>
+
+      {/* 탭 버튼 */}
+      <div className="mt-4 flex justify-center space-x-4 border-b border-gray-200">
+        <button
+          onClick={() => setActiveTab("photo")}
+          className={`pb-2 px-4 font-medium ${
+            activeTab === "photo"
+              ? "text-pink-600 border-b-2 border-pink-600"
+              : "text-gray-500"
+          }`}
+        >
+          포토부스
+        </button>
+        <button
+          onClick={() => setActiveTab("food")}
+          className={`pb-2 px-4 font-medium ${
+            activeTab === "food"
+              ? "text-pink-600 border-b-2 border-pink-600"
+              : "text-gray-500"
+          }`}
+        >
+          식사안내
+        </button>
+        <button
+          onClick={() => setActiveTab("parking")}
+          className={`pb-2 px-4 font-medium ${
+            activeTab === "parking"
+              ? "text-pink-600 border-b-2 border-pink-600"
+              : "text-gray-500"
+          }`}
+        >
+          주차안내
+        </button>
+      </div>
+
+      {/* 탭 내용 */}
+      <div>{tabContent[activeTab]}</div>
+    </div>
+  );
+}

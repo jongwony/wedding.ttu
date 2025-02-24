@@ -31,7 +31,7 @@ export default function Carousel({ images }: CarouselProps) {
   }, [hasScrolled]);
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto">
+    <div className="relative w-full mx-auto">
       {/* 스크롤 컨테이너: scroll-snap 속성 적용 */}
       <div
         className="overflow-x-auto scroll-smooth snap-x snap-mandatory"

@@ -8,9 +8,6 @@ export default function Navbar() {
         <h1 className="text-xl">
           <Link href="/" className="px-4 py-2">💒</Link>
         </h1>
-        <div>
-          <Link href="/dining" className="px-4 py-2 text-gray-600">Dining</Link>
-        </div>
       </div>
     </nav>
   );

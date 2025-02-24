@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav className="fixed z-10 w-full">
       <div className="px-4 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">
+        <h1 className="text-xl">
           <Link href="/" className="px-4 py-2">💒</Link>
         </h1>
         <div>

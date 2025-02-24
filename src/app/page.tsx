@@ -33,7 +33,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="flex flex-col font-pretendard text-center">
+    <section className="flex flex-col text-center">
       <Hero />
 
       <Carousel images={imageList} />

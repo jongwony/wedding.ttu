@@ -16,10 +16,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`flex flex-col min-h-screen antialiased`}
+        className="font-pretendard"
       >
         <Navbar />
-        <main className="flex-1">
+        <main className="flex flex-col">
           {children}
         </main>
         <Footer />

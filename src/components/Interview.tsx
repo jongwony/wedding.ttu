@@ -17,7 +17,7 @@ const InterviewModal = () => {
       {/* 인터뷰 버튼 */}
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-pink-300 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300 hover:bg-pink-400"
+        className="bg-pink-400 text-white font-semibold py-2 px-6 rounded-md transition-colors duration-300 hover:bg-opacity-80"
       >
         신랑신부 인터뷰 읽어보기
       </button>
@@ -84,7 +84,7 @@ const InterviewModal = () => {
             <div className="p-8 text-center">
               <button
                 onClick={() => setIsOpen(false)}
-                className="bg-gray-400 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300 hover:bg-gray-500"
+                className="bg-gray-400 text-white font-semibold py-2 px-6 rounded-md transition-colors duration-300 hover:bg-opacity-80"
               >
                 닫기
               </button>

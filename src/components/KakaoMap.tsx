@@ -77,7 +77,7 @@ const Kakaomap: React.FC = () => {
       <div className="mt-8 flex justify-center">
         <div
           id="map"
-          className="w-full max-w-md h-96 border rounded-lg shadow-lg"
+          className="w-full max-w-md h-96 border rounded-md"
           ref={mapRef}
         />
       </div>

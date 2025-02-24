@@ -15,7 +15,7 @@ const BrideGroomProfile = () => {
           alt="신랑 최종원"
           width={300}
           height={300}
-          className="rounded-lg"
+          className="rounded-md"
           priority
         />
         <h3 className="text-blue-500 text-lg font-semibold mt-4">
@@ -36,7 +36,7 @@ const BrideGroomProfile = () => {
           alt="신부 윤수경"
           width={300}
           height={300}
-          className="rounded-lg"
+          className="rounded-md"
           priority
         />
         <h3 className="text-pink-500 text-lg font-semibold mt-4">

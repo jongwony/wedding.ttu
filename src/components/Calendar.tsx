@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 
 interface EventDetails {
@@ -97,25 +98,34 @@ const CalendarEventActions = () => {
                 className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-gray-100 dark:bg-gray-900"
                   }`}
               >
-                {day}
+                {day === 19 ? "💍" : day}
               </div>
             );
           })}
         </div>
       </div>
 
-      <div className="flex gap-2 mx-auto mt-4">
+      <div className="flex gap-2 mx-auto mt-4 text-sm font-semibold text-white">
         <button
           onClick={handleGoogleCalendar}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+          className="flex items-center bg-blue-500 hover:bg-opacity-80 py-2 px-4 rounded-md transition-all duration-300"
         >
-          📅 Google 캘린더에 추가
+          <Image
+            src="/images/logo/gcal.png"
+            width={24}
+            height={24}
+            alt="구글캘린더 로고"
+            className="h-[1em] w-auto align-middle"
+          />
+          <span className="ml-2">
+            Google 캘린더 추가
+          </span>
         </button>
         <button
           onClick={handleICSDownload}
-          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300"
+          className="bg-gray-500 hover:bg-opacity-80 text-white py-2 px-4 rounded-md transition-all duration-300"
         >
-          📅 .ICS 파일 다운로드
+          📅 기본 캘린더 추가
         </button>
       </div>
     </div>

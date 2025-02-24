@@ -4,7 +4,7 @@ import Link from 'next/link';
 const DiningPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <div className="w-full max-w-3xl p-6 rounded-lg shadow-md mt-10">
+      <div className="w-full max-w-3xl p-6 rounded-md mt-10">
         <h1 className="text-3xl font-extrabold text-center mb-6">
           그랑뷔페 한식다이닝
         </h1>
@@ -28,7 +28,7 @@ const DiningPage = () => {
         <div className="flex justify-center mt-10">
           <Link
             href="https://starcityarthall.com/html/dining.php"
-            className="px-6 py-3 bg-indigo-600 text-white font-semibold text-sm rounded-full shadow-md hover:bg-indigo-700 transition"
+            className="px-6 py-3 bg-indigo-600 text-white font-semibold text-sm rounded-full hover:bg-opacity-80 transition-colors"
           >
             연회 메뉴 자세히 보기
           </Link>

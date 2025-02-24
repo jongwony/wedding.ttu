@@ -44,13 +44,13 @@ const MapButtons: React.FC = () => {
   const tmapLink = `tmap://route?goalx=${lng}&goaly=${lat}&goalname=${encodeURIComponent(placeName)}`;
 
   return (
-    <div className="flex mt-4 space-x-2 justify-center font-pretendard text-sm">
+    <div className="flex mt-4 space-x-2 justify-center text-sm font-semibold">
       {isMobile ? (
         <>
           {/* 네이버 지도 버튼 */}
           <Link
             href={navermapLink}
-            className="flex items-center px-4 py-2 rounded-md text-white font-semibold"
+            className="flex items-center px-4 py-2 rounded-md text-white hover:bg-opacity-80 transition-colors duration-300"
             style={{ backgroundColor: '#03C75A' }} // 네이버 컬러
           >
             <Image
@@ -66,7 +66,7 @@ const MapButtons: React.FC = () => {
           {/* 카카오 버튼 */}
           <Link
             href={kakaomapLink}
-            className="flex items-center px-4 py-2 rounded-md font-semibold"
+            className="flex items-center px-4 py-2 rounded-md hover:bg-opacity-80 transition-colors duration-300"
             style={{ backgroundColor: '#FFE812', color: '#000000' }} // 카카오 컬러
           >
             <Image
@@ -82,8 +82,7 @@ const MapButtons: React.FC = () => {
           {/* 티맵 버튼 */}
           <Link
             href={tmapLink}
-            className="flex items-center px-4 py-2 rounded-md text-white font-semibold"
-            style={{ backgroundColor: '#6200EE' }} // 티맵 컬러
+            className="flex items-center px-4 py-2 rounded-md text-white bg-purple-800 hover:bg-opacity-80 transition-colors duration-300"
           >
             <Image
               src="/images/logo/tmap.png"
@@ -102,8 +101,7 @@ const MapButtons: React.FC = () => {
             href={naverLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center px-4 py-2 rounded-md text-white font-semibold"
-            style={{ backgroundColor: '#03C75A' }} // 네이버 컬러
+            className="flex items-center px-4 py-2 rounded-md text-white hover:bg-opacity-80 bg-green-500 transition-colors duration-300"
           >
             <Image
               src="/images/logo/navermap.png"
@@ -121,8 +119,7 @@ const MapButtons: React.FC = () => {
             href={kakaoLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center px-4 py-2 rounded-md font-semibold"
-            style={{ backgroundColor: '#FFE812', color: '#000000' }} // 카카오 컬러
+            className="flex items-center px-4 py-2 rounded-md text-black bg-yellow-300 hover:bg-opacity-80 transition-colors duration-300"
           >
             <Image
               src="/images/logo/kakaomap.png"

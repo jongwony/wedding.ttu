@@ -5,9 +5,9 @@ import React from "react";
 const TransferButtons = () => {
   const links = [
     {
-      label: "신랑 신부 함께",
+      label: "부부 살림",
       href: "supertoss://send?amount=0&bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&accountNo=100151320105&origin=qr",
-      bgColor: "bg-blue-500",
+      bgColor: "bg-blue-600",
       color: "text-white",
       src: "/images/logo/toss.png",
     },
@@ -40,17 +40,23 @@ const TransferButtons = () => {
         진심으로 감사드립니다.
       </p>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex mt-4 space-x-2 justify-center text-sm font-semibold">
         {links.map((link, index) => (
           <Link
             key={index}
             href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${link.color} ${link.bgColor} px-4 py-2 font-bold text-sm rounded-lg shadow-lg transition-colors hover:bg-opacity-80`}
+            className={`${link.color} ${link.bgColor} flex items-center px-4 py-2 rounded-md transition-colors duration-300 hover:bg-opacity-80`}
           >
-            <Image src={link.src} width={32} height={32} alt={link.label} className="inline-block mr-2" />
-            {link.label}
+            <Image
+              src={link.src}
+              width={24}
+              height={24}
+              alt={link.label}
+              className="h-[1.6em] w-auto align-middle"
+            />
+            <span className="ml-2">
+              {link.label}
+            </span>
           </Link>
         ))}
       </div>

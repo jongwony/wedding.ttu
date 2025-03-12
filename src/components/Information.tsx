@@ -29,7 +29,7 @@ export default function InformationTabs() {
 
   return (
     <div className="mx-auto max-w-md p-4 rounded-md">
-      <h2 className="mt-24 font-nanumdahang text-3xl font-bold">예식 안내</h2>
+      <h2 className="mt-24 text-3xl font-bold">예식 안내</h2>
 
       {/* 탭 버튼 */}
       <div className="mt-4 flex justify-center space-x-4 border-b border-gray-200">

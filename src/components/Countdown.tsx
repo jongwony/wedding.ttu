@@ -28,7 +28,7 @@ const WeddingCountdown = () => {
   return (
     <div className="mt-24 flex flex-col items-center p-8">
       {/* 제목 */}
-      <h2 className="text-3xl font-nanumdahang font-semibold mb-8">
+      <h2 className="text-3xl font-semibold mb-8">
         종원 ❤️ 수경 결혼식까지
       </h2>
 
@@ -39,7 +39,7 @@ const WeddingCountdown = () => {
             <div className="w-20 h-20 flex items-center justify-center bg-pink-200 rounded-full text-xl text-gray-600">
               <span className="text-xl">{value}</span>
               <div>
-                <span className="font-nanumdahang text-xs">{label}</span>
+                <span className="text-xs">{label}</span>
               </div>
             </div>
           </div>

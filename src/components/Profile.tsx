@@ -5,8 +5,8 @@ import React from "react";
 const BrideGroomProfile = () => {
   return (
     <>
-    <h2 className="mt-24 font-nanumdahang text-3xl font-bold">신랑 신부를 소개합니다!</h2>
-    <div className="mt-8 font-maru flex flex-row gap-2 justify-center items-center">
+    <h2 className="mt-24 text-3xl font-bold">신랑 신부를 소개합니다!</h2>
+    <div className="mt-8 flex flex-row gap-2 justify-center items-center">
 
       {/* 신랑 정보 */}
       <div className="flex flex-col items-center">

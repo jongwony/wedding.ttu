@@ -6,11 +6,11 @@ const InterviewModal = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="mt-24 text-3xl font-nanumdahang font-semibold">
+      <h2 className="mt-24 text-3xl font-semibold">
           신랑신부 인터뷰
       </h2>
 
-      <p className="font-maru text-gray-600 dark:text-gray-400 m-4">
+      <p className="text-gray-600 dark:text-gray-400 m-4">
         신랑과 신부의 인터뷰를 통해 서로에 대해 더 잘 알아보세요.
       </p>
 
@@ -25,7 +25,7 @@ const InterviewModal = () => {
       {/* 모달 백그라운드 */}
       {isOpen && (
         <div className="fixed inset-0 bg-white dark:bg-black flex justify-center z-50 overflow-y-scroll">
-          <div className="p-8 mt-8 font-nanumdahang">
+          <div className="p-8 mt-8">
             {/* 헤더 */}
             <div className="flex justify-center items-center border-b pb-4">
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">

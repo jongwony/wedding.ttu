@@ -67,9 +67,9 @@ const CalendarEventActions = () => {
     <div className="mt-24 flex flex-col justify-center items-center space-x-4">
 
       {/* 헤더 */}
-      <h1 className="font-nanumdahang text-4xl font-bold mb-4">시월의 열아홉번째 날.</h1>
+      <h1 className="text-4xl font-bold mb-4">시월의 열아홉번째 날.</h1>
 
-      <p className="font-maru text-gray-600 dark:text-gray-400 mb-4">
+      <p className="text-gray-600 dark:text-gray-400 mb-4">
         2025년 10월 19일 일요일 오후 12시
       </p>
 

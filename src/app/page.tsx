@@ -39,7 +39,7 @@ export default function Home() {
 
       <Carousel images={imageList} />
 
-      <div className={`font-nanumdahang text-2xl m-8`}>
+      <div className={`text-2xl m-8`}>
         <p >
           내가 그다지 사랑하는 그대여
           <br />
@@ -59,10 +59,10 @@ export default function Home() {
         </p>
       </div>
 
-      <h1 className={`font-maru text-2xl m-8 text-pink-500`}>
+      <h1 className={`text-2xl m-8 text-pink-500`}>
         소중한 분들을 초대합니다.
       </h1>
-      <p className="font-maru text-gray-600 dark:text-gray-400 m-4">
+      <p className="text-gray-600 dark:text-gray-400 m-4">
         오랜 기다림 끝에 저희 두사람.
         <br />
         한 마음 되어 이제 결실을 맺으려 합니다.

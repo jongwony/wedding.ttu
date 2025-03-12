@@ -20,7 +20,7 @@ export default function AnimationHeader() {
         <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold ${animate ? "typewriter" : ""} ${sparkle ? "sparkle" : ""}`}>
           We&rsquo;re getting Married!
         </h1>
-        <p className="text-gray-300 font-maru font-semibold">
+        <p className="text-gray-300 font-semibold">
           2025년 10월 19일 일요일 오후 12시
         </p>
       </div>

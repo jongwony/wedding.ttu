@@ -14,6 +14,8 @@ export default {
         nanumdahang: ["NanumDahang", "nanum"],
         goldenplains: ["Golden Plains", "goldenplains"],
         beyondinfinity: ["Beyond Infinity", "beyondinfinity"],
+        barunhippy: ["BarunHippy"],
+        amsterdam: ["Amsterdam"],
       },
       fontWeight: {
         extraThin: "100",

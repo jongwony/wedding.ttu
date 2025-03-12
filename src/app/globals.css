@@ -72,6 +72,20 @@
   src: url("/fonts/나눔손글씨 다행체.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "BarunHippy";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/나눔손글씨 바른히피.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Amsterdam";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/나눔손글씨 암스테르담.ttf") format("truetype");
+}
+
 /* @font-face 설정 */
 @font-face {
   font-family: "Pretendard";

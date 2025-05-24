@@ -10,7 +10,7 @@ const InterviewModal = () => {
           신랑신부 인터뷰
       </h2>
 
-      <p className="text-gray-600 dark:text-gray-400 m-4">
+      <p className="text-gray-600 m-4">
         신랑과 신부의 인터뷰를 통해 서로에 대해 더 잘 알아보세요.
       </p>
 
@@ -24,22 +24,22 @@ const InterviewModal = () => {
 
       {/* 모달 백그라운드 */}
       {isOpen && (
-        <div className="fixed inset-0 bg-white dark:bg-black flex justify-center z-50 overflow-y-scroll">
+        <div className="fixed inset-0 bg-white flex justify-center z-50 overflow-y-scroll">
           <div className="p-8 mt-8">
             {/* 헤더 */}
             <div className="flex justify-center items-center border-b pb-4">
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+              <h3 className="text-2xl font-semibold text-gray-800">
                 신랑 신부 인터뷰
               </h3>
             </div>
 
             {/* 인터뷰 내용 */}
-            <div className="flex flex-col gap-8 mt-8 text-left text-gray-700 dark:text-gray-300">
+            <div className="flex flex-col gap-8 mt-8 text-left text-gray-700">
               <div className="flex flex-col gap-4 border-b pb-8">
                 <h4 className="text-xl text-pink-500 font-semibold">
                   1. 서로의 첫인상은 어땠나요?
                 </h4>
-                <p className="flex flex-col gap-2 text-gray-700 dark:text-gray-300">
+                <p className="flex flex-col gap-2 text-gray-700">
                   <strong>신랑:</strong> 카페에서 처음 본날 환하게 웃고 있는 수경이가 너무 예뻤어요.
                   <br />
                   <strong>신부:</strong> 처음엔 수염때문에 무서웠는데 한없이 귀여운 사람이었어요.
@@ -50,7 +50,7 @@ const InterviewModal = () => {
                 <h4 className="text-xl text-pink-500 font-semibold">
                   2. 결혼을 결심하게 된 계기가 있나요?
                 </h4>
-                <p className="flex flex-col gap-2 text-gray-700 dark:text-gray-300">
+                <p className="flex flex-col gap-2 text-gray-700">
                   <strong>신랑:</strong> 수경이와 쇼핑하던 날, 그냥 평생 이렇게 같이 장보고 싶다 생각했어요.
                   <br />
                   <strong>신부:</strong> 티쳐스 프로그램을 보는데 배우면서 오빠와의 미래를 꿈꾸게 됐어요.
@@ -61,7 +61,7 @@ const InterviewModal = () => {
                 <h4 className="text-xl text-pink-500 font-semibold">
                   3. 30년 후 두 사람은 어떤 모습일 것 같나요?
                 </h4>
-                <p className="flex flex-col gap-2 text-gray-700 dark:text-gray-300">
+                <p className="flex flex-col gap-2 text-gray-700">
                   <strong>신랑:</strong> 손잡고 석촌호수를 돌고 있을 것 같아요.
                   <br />
                   <strong>신부:</strong> 오빠랑 손잡고 산책할래요!
@@ -72,7 +72,7 @@ const InterviewModal = () => {
                 <h4 className="text-xl text-pink-500 font-semibold">
                   4. 결혼생활에 대한 각오 한마디
                 </h4>
-                <p className="flex flex-col gap-2 text-gray-700 dark:text-gray-300">
+                <p className="flex flex-col gap-2 text-gray-700">
                   <strong>신랑:</strong> 수경이가 저의 평생 1순위로 살겠습니다.
                   <br />
                   <strong>신부:</strong> 오빠의 노력과 능력을 인정하며 언제나 응원할게요.

@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className="font-barunhippy"
+        className="font-pretendard"
       >
         <Navbar />
         <main className="flex flex-col">

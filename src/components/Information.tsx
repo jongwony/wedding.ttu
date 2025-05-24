@@ -9,7 +9,7 @@ export default function InformationTabs() {
   // 각 탭에 보여줄 내용 정의
   const tabContent = {
     photo: (
-      <p className="mt-4 text-gray-700 dark:text-gray-300">
+      <p className="mt-4 text-gray-700">
         포토부스가 설치될 예정입니다. 
         귀한 발걸음 해주신 여러분의 환한 미소와 따뜻한 말씀 남겨주시면 
         소중히 간직하도록 하겠습니다.
@@ -19,7 +19,7 @@ export default function InformationTabs() {
         <DiningPage />
     ),
     parking: (
-      <p className="mt-4 text-gray-700 dark:text-gray-300">
+      <p className="mt-4 text-gray-700">
         주차안내에 대한 내용이 들어갈 자리입니다.
         <br />
         (예: 주차장 위치, 주차 요금 등)

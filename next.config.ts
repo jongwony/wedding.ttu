@@ -5,7 +5,17 @@ const nextConfig: NextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
-  }
+  },
+  experimental: {
+    turbo: {
+      rules: {
+        "**/*.yaml": {
+          loaders: ['yaml-loader'],
+          as: '*.js',
+        },
+      },
+    },
+  },
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;

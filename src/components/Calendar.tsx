@@ -69,20 +69,20 @@ const CalendarEventActions = () => {
       {/* 헤더 */}
       <h1 className="text-4xl font-bold mb-4">시월의 열아홉번째 날.</h1>
 
-      <p className="text-gray-600 dark:text-gray-400 mb-4">
+      <p className="text-gray-600 mb-4">
         2025년 10월 19일 일요일 오후 12시
       </p>
 
       {/* 캘린더 */}
       <div className="p-4 w-full max-w-md">
         {/* 요일 */}
-        <div className="grid grid-cols-7 text-center text-gray-700 dark:text-gray-300 font-semibold border-b pb-2">
+        <div className="grid grid-cols-7 text-center text-gray-700 font-semibold border-b pb-2">
           {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
             <div key={day} className="py-2">{day}</div>
           ))}
         </div>
 
-        {/* 날짜 */}
+        {/* 날짜 TODO: 공휴일과 주말은 글자색 수정 */}
         <div className="grid grid-cols-7 gap-2 mt-2">
           {/* October 1, 2025 is Wednesday, so three empty spaces */}
           <div></div>
@@ -95,7 +95,7 @@ const CalendarEventActions = () => {
             return (
               <div
                 key={day}
-                className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-gray-100 dark:bg-gray-900"
+                className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-white"
                   }`}
               >
                 {day === 19 ? "💍" : day}

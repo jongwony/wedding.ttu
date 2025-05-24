@@ -30,7 +30,7 @@ const TransferButtons = () => {
   return (
     <div className="flex flex-col items-center space-y-4">
       <h2 className="mt-24 text-3xl font-bold">축하의 마음 전하기</h2>
-      <p className="text-gray-600 dark:text-gray-400 m-4">
+      <p className="text-gray-600 m-4">
         소중한 날 함께 해 주신다면 더할 나위 없이 기쁠것입니다.
         <span className="block m-2">
           직접 참석이 어려우시더라도,

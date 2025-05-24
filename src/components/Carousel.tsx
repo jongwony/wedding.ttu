@@ -57,9 +57,9 @@ export default function Carousel({ images }: CarouselProps) {
       <div className={showHint ? "" : "fadeout-carousel"}>
         {/* fade out */}
         <div className="absolute top-0 right-0 h-full w-16 pointer-events-none bg-gradient-to-l from-white to-transparent"></div>
-        <div className="absolute top-1/2 right-4 pointer-events-none translate-y-1/2">
+        <div className="absolute top-1/2 right-4 pointer-events-none">
           <div className="flex items-center space-x-2 animate-swipeHint">
-            <ChevronsRight />
+            <ChevronsRight className="text-gray-500" />
           </div>
         </div>
       </div>

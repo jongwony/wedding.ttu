@@ -43,7 +43,7 @@ export default function InformationTabs() {
         >
           포토부스
         </button>
-        <button
+        {/* <button
           onClick={() => setActiveTab("food")}
           className={`pb-2 px-4 font-medium ${
             activeTab === "food"
@@ -52,7 +52,7 @@ export default function InformationTabs() {
           }`}
         >
           식사안내
-        </button>
+        </button> */}
         <button
           onClick={() => setActiveTab("parking")}
           className={`pb-2 px-4 font-medium ${

@@ -38,25 +38,28 @@ export default function Home() {
   return (
     <section className="flex flex-col text-center">
 
-      <AnimationHeader />
-
-      <div className="h-screen">
-        <video
-          src={resourcePaths.video}
-          autoPlay
-          loop
-          muted
-          className="w-full h-screen mx-auto object-cover"
-          preload="metadata"
-        >
-          Your browser does not support the video tag.
-        </video>
+      <div className="flex flex-col justify-center items-center">
+        <div className="relative h-screen">
+          <video
+            src={resourcePaths.video}
+            autoPlay
+            muted
+            className="w-full h-full object-cover"
+            preload="metadata"
+          >
+            Your browser does not support the video tag.
+          </video>
+          <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
       </div>
 
-      <h1 className={`text-2xl m-8 text-pink-500`}>
+      <AnimationHeader />
+
+      <h1 className={`text-2xl mt-32 text-pink-500`}>
         소중한 분들을 초대합니다.
       </h1>
-      <p className="text-gray-600 m-4">
+
+      <p className="text-gray-600 m-16">
         오랜 기다림 끝에 저희 두사람.
         <br />
         한 마음 되어 이제 결실을 맺으려 합니다.

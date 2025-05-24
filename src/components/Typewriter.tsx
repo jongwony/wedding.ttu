@@ -9,7 +9,7 @@ export default function AnimationHeader() {
   useEffect(() => {
     setTimeout(() => {
       setShowed(true)
-    }, 3000)
+    }, 15000)
 
   }, [showed])
 
@@ -35,14 +35,14 @@ export default function AnimationHeader() {
         </p>
       </div>
 
-      <div className="absolute bottom-0 w-full h-16 bg-gradient-to-t from-gray-100 to-transparent">
-        {!showed && (
-          // TODO: 스와이프 안사라짐
-          <div className="fadeout-hero animate-swipeHeroHint pointer-events-none absolute bottom-4 left-1/2">
-            <ChevronsDown />
+      {!showed && (
+        <div className="fadeout-hero">
+          <div className="animate-swipeHeroHint pointer-events-none absolute bottom-4 left-1/2">
+            <ChevronsDown className="text-gray-500" />
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
 
       <style jsx>{`
         @keyframes fadeOutAnimation {
@@ -54,9 +54,9 @@ export default function AnimationHeader() {
           }
         }
         .fadeout-hero {
-          /* 1초 지연 후 애니메이션 2초 동안 실행 */
+          /* 10초 지연 후 애니메이션 2초 동안 실행 */
           animation: fadeOutAnimation 2s forwards;
-          animation-delay: 1s;
+          animation-delay: 10s;
         }
 
         @keyframes swipeHeroHint {
@@ -74,7 +74,7 @@ export default function AnimationHeader() {
           }
         }
         .animate-swipeHeroHint {
-          animation: swipeHeroHint 1.5s ease-in-out 2;
+          animation: swipeHeroHint 1.5s ease-in-out 10;
         }
 
         @keyframes typewriter {

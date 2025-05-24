@@ -24,7 +24,7 @@ const BrideGroomProfile = () => {
         </h3>
         <p className="text-gray-700 mt-2 text-center">
           1991년생, 부산남자 <br />
-          논리적인 낭만가 ENFP
+          호기심 많은 사색가 ENTP
         </p>
         <p className="text-gray-500 text-sm mt-2">#데이터엔지니어 #수학덕후</p>
         <p className="text-gray-600 text-sm mt-2">최정환 · 김해숙 의 아들</p>

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
+import GlassContainer from "./ui/GlassContainer";
 
 interface EventDetails {
   title: string;
@@ -64,70 +65,70 @@ const CalendarEventActions = () => {
   };
 
   return (
-    <div className="mt-24 flex flex-col justify-center items-center space-x-4">
+    <div className="m-16 flex flex-col items-center">
 
-      {/* 헤더 */}
-      <h1 className="text-4xl font-bold mb-4">시월의 열아홉번째 날.</h1>
+        {/* 헤더 */}
+        <h2 className="text-3xl mb-4 text-pink-500">시월의 열아홉번째 날</h2>
 
-      <p className="text-gray-600 mb-4">
-        2025년 10월 19일 일요일 오후 12시
-      </p>
+        <p className="text-gray-600 mb-4 text-lg">
+          2025년 10월 19일 일요일 오후 12시
+        </p>
 
-      {/* 캘린더 */}
-      <div className="p-4 w-full max-w-md">
-        {/* 요일 */}
-        <div className="grid grid-cols-7 text-center text-gray-700 font-semibold border-b pb-2">
-          {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
-            <div key={day} className="py-2">{day}</div>
-          ))}
+        {/* 캘린더 */}
+        <div className="p-4 w-full max-w-md">
+          {/* 요일 */}
+          <div className="grid grid-cols-7 text-center text-gray-700 border-b pb-2">
+            {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
+              <div key={day} className="py-2">{day}</div>
+            ))}
+          </div>
+
+          {/* 날짜 TODO: 공휴일과 주말은 글자색 수정 */}
+          <div className="grid grid-cols-7 gap-2 mt-2">
+            {/* October 1, 2025 is Wednesday, so three empty spaces */}
+            <div></div>
+            <div></div>
+            <div></div>
+
+            {Array.from({ length: 31 }, (_, i) => {
+              const day = i + 1;
+              const isEventDay = day === 19;
+              return (
+                <div
+                  key={day}
+                  className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-white"
+                    }`}
+                >
+                  {day === 19 ? "💍" : day}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* 날짜 TODO: 공휴일과 주말은 글자색 수정 */}
-        <div className="grid grid-cols-7 gap-2 mt-2">
-          {/* October 1, 2025 is Wednesday, so three empty spaces */}
-          <div></div>
-          <div></div>
-          <div></div>
-
-          {Array.from({ length: 31 }, (_, i) => {
-            const day = i + 1;
-            const isEventDay = day === 19;
-            return (
-              <div
-                key={day}
-                className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-white"
-                  }`}
-              >
-                {day === 19 ? "💍" : day}
-              </div>
-            );
-          })}
+        <div className="flex gap-2 mx-auto mt-4 text-sm text-white">
+          <button
+            onClick={handleGoogleCalendar}
+            className="flex items-center bg-blue-500 hover:bg-opacity-80 py-2 px-4 rounded-md transition-all duration-300"
+          >
+            <Image
+              src="/images/logo/gcal.png"
+              width={24}
+              height={24}
+              alt="구글캘린더 로고"
+              className="h-[1em] w-auto align-middle"
+            />
+            <span className="ml-2">
+              Google 캘린더 추가
+            </span>
+          </button>
+          <button
+            onClick={handleICSDownload}
+            className="bg-gray-500 hover:bg-opacity-80 text-white py-2 px-4 rounded-md transition-all duration-300"
+          >
+            📅 기본 캘린더 추가
+          </button>
         </div>
-      </div>
-
-      <div className="flex gap-2 mx-auto mt-4 text-sm font-semibold text-white">
-        <button
-          onClick={handleGoogleCalendar}
-          className="flex items-center bg-blue-500 hover:bg-opacity-80 py-2 px-4 rounded-md transition-all duration-300"
-        >
-          <Image
-            src="/images/logo/gcal.png"
-            width={24}
-            height={24}
-            alt="구글캘린더 로고"
-            className="h-[1em] w-auto align-middle"
-          />
-          <span className="ml-2">
-            Google 캘린더 추가
-          </span>
-        </button>
-        <button
-          onClick={handleICSDownload}
-          className="bg-gray-500 hover:bg-opacity-80 text-white py-2 px-4 rounded-md transition-all duration-300"
-        >
-          📅 기본 캘린더 추가
-        </button>
-      </div>
     </div>
   );
 };

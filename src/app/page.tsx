@@ -6,7 +6,7 @@ const WeddingCountdown = dynamic(() => import('@/components/Countdown'), {
   ssr: false,
 });
 
-import AddToAppleWalletButton from "@/components/AppleWallet";
+// import AddToAppleWalletButton from "@/components/AppleWallet";
 import Kakaomap from "@/components/KakaoMap";
 import TransferButtons from "@/components/Account";
 import CalendarEventActions from "@/components/Calendar";
@@ -18,6 +18,8 @@ import MapButtons from "@/components/Navigation";
 import InformationTabs from "@/components/Information";
 import AnimationHeader from "@/components/Typewriter";
 import resourcePaths from "@/config/resourcePaths.yaml";
+// import GlassContainerExamples from "@/components/examples/GlassContainerExamples";
+import GlassContainer from "@/components/ui/GlassContainer";
 
 export default function Home() {
   const [imageList, setImageList] = useState<string[]>([]);
@@ -55,22 +57,40 @@ export default function Home() {
 
       <AnimationHeader />
 
-      <h1 className={`text-2xl mt-32 text-pink-500`}>
-        소중한 분들을 초대합니다.
-      </h1>
+      <div className="mt-32 mb-32 flex flex-col items-center">
+        <GlassContainer
+          variant="default"
+          animation="gentleFloat"
+          padding="xl"
+          className="md:mx-0 md:px-10 px-6"
+        >
 
-      <p className="text-gray-600 m-16">
-        오랜 기다림 끝에 저희 두사람.
-        <br />
-        한 마음 되어 이제 결실을 맺으려 합니다.
-        <br />
-        <br />
-        오셔서 함께해 주시면 감사하겠습니다.
-      </p>
+          <h1 className={`text-3xl text-pink-500`}>
+            소중한 분들을 초대합니다.
+          </h1>
+
+          <div className="flex flex-row items-center justify-center">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl">
+              💌
+            </div>
+          </div>
+
+          <p className="mt-4 text-gray-600 text-lg">
+            오랜 기다림 끝에 저희 두사람.
+            <br />
+            한 마음 되어 이제 결실을 맺으려 합니다.
+            <br />
+            <br />
+            오셔서 함께해 주시면 감사하겠습니다.
+          </p>
+        </GlassContainer>
+      </div>
 
       <Hero />
 
       <Carousel images={imageList} />
+
+      {/* <GlassContainerExamples /> */}
 
       <BrideGroomProfile />
 
@@ -88,7 +108,7 @@ export default function Home() {
 
       <TransferButtons />
 
-      <AddToAppleWalletButton />
+      {/* <AddToAppleWalletButton /> */}
 
     </section>
   );

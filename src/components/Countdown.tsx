@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import GlassContainer from "./ui/GlassContainer";
 
 const WeddingCountdown = () => {
   const weddingDate = new Date("2025-10-19T12:00:00+09:00").getTime(); // 결혼식 날짜
@@ -43,55 +44,9 @@ const WeddingCountdown = () => {
           100% { background-position: 200% 0; }
         }
 
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         @keyframes sparkle {
           0%, 100% { opacity: 0.3; transform: scale(0.8); }
           50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .countdown-container {
-          position: relative;
-          background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.9) 0%,
-            rgba(248, 250, 252, 0.8) 50%,
-            rgba(241, 245, 249, 0.9) 100%
-          );
-          backdrop-filter: blur(10px);
-          border-radius: 30px;
-          padding: 40px;
-          box-shadow:
-            0 20px 40px rgba(190, 165, 190, 0.3),
-            0 8px 16px rgba(219, 186, 219, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
-          border: 1px solid rgba(255, 255, 255, 0.6);
-          animation: fadeInUp 1s ease-out;
-        }
-
-        .countdown-container::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle,
-            rgba(219, 186, 219, 0.1) 0%,
-            rgba(248, 187, 208, 0.05) 40%,
-            transparent 70%
-          );
-          animation: gentleFloat 6s ease-in-out infinite;
-          pointer-events: none;
-          z-index: -1;
         }
 
         .countdown-grid {
@@ -215,11 +170,6 @@ const WeddingCountdown = () => {
         }
 
         @media (max-width: 768px) {
-          .countdown-container {
-            padding: 24px;
-            margin: 0 16px;
-          }
-
           .countdown-grid {
             gap: 16px;
           }
@@ -239,15 +189,21 @@ const WeddingCountdown = () => {
         }
       `}</style>
 
-      <div className="mt-24 flex flex-col items-center p-4">
-        <div className="countdown-container">
+      <div className="mt-32 mb-32 flex flex-col items-center">
+        <GlassContainer
+          variant="default"
+          animation="fadeInUp"
+          padding="xl"
+          borderRadius="xl"
+          className="md:mx-0 mx-4 md:px-10 px-6"
+        >
           <div className="decorative-dots"></div>
           {/* 제목 */}
-          <h2 className="text-4xl font-bold text-center mb-2">
+          <h2 className="text-3xl text-center mb-2 text-pink-500">
             종원 ❤️ 수경 결혼식까지
           </h2>
 
-          <div className="text-center text-gray-500">
+          <div className="text-center text-gray-500 text-lg">
             우리의 특별한 날을 함께해 주세요
           </div>
 
@@ -262,7 +218,7 @@ const WeddingCountdown = () => {
               </div>
             ))}
           </div>
-        </div>
+        </GlassContainer>
       </div>
     </>
   );

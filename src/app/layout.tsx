@@ -15,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body
-        className="font-pretendard"
-      >
+      <body className="font-modu">
         <Navbar />
         <main className="flex flex-col">
           {children}

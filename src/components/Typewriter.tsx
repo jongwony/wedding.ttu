@@ -2,7 +2,6 @@ import { ChevronsDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function AnimationHeader() {
-  const [animate, setAnimate] = useState(false);
   const [sparkle, setSparkle] = useState(false);
   const [showed, setShowed] = useState(false);
 
@@ -16,7 +15,6 @@ export default function AnimationHeader() {
 
   // 컴포넌트가 처음 마운트되면 animate 상태를 true로 변경
   useEffect(() => {
-    setAnimate(true);
     // 2초 후에 sparkle 클래스 추가 (타이핑 애니메이션 완료 직후)
     const timer = setTimeout(() => {
       setSparkle(true);
@@ -26,14 +24,14 @@ export default function AnimationHeader() {
 
   return (
     <div className="flex justify-center">
-      <div className={`absolute top-40 z-10`}>
-        <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold neon-text ${animate ? "typewriter" : ""} ${sparkle ? "sparkle" : ""}`}>
+      {/* <div className={`absolute top-40 z-10`}>
+        <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold neon-text typewriter-then-sparkle`}>
           We&rsquo;re getting Married!
         </h1>
         <p className="text-white">
           2025년 10월 19일 일요일 오후 12시
         </p>
-      </div>
+      </div> */}
 
       {!showed && (
         <div className="fadeout-hero">
@@ -42,7 +40,6 @@ export default function AnimationHeader() {
           </div>
         </div>
       )}
-
 
       <style jsx>{`
         @keyframes fadeOutAnimation {
@@ -81,17 +78,17 @@ export default function AnimationHeader() {
           from { width: 0%; }
           to { width: 100%; }
         }
-        .typewriter {
-          animation: typewriter 2s steps(120) forwards;
-        }
 
         @keyframes sparkle {
-          0% { opacity: 0.7; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
-          50% { opacity: 1; text-shadow: 0 0 20px rgba(255, 255, 255, 1); }
-          100% { opacity: 0.7; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+          0% { opacity: 0.7; text-shadow: 0 0 rgba(255, 255, 255, 0.5); }
+          50% { opacity: 1; text-shadow: 0 0 rgba(255, 255, 255, 1); }
+          100% { opacity: 0.7; text-shadow: 0 0 rgba(255, 255, 255, 0.5); }
         }
-        .sparkle {
-          animation: sparkle 1.5s infinite;
+
+        .typewriter-then-sparkle {
+          animation:
+            typewriter 2s steps(120) forwards,
+            sparkle 1.5s infinite 2s; /* 2초 후에 sparkle 시작 */
         }
       `}</style>
 

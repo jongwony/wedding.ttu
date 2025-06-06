@@ -9,20 +9,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        modu: ["Modu", "modu"],
         pretendard: ["Pretendard", "pretendard"],
-        maru: ["MaruBuri", "maru"],
-        nanumdahang: ["NanumDahang", "nanum"],
         goldenplains: ["Golden Plains", "goldenplains"],
-        beyondinfinity: ["Beyond Infinity", "beyondinfinity"],
-        barunhippy: ["BarunHippy"],
-        amsterdam: ["Amsterdam"],
-      },
-      fontWeight: {
-        extraThin: "100",
-        thin: "200",
-        normal: "400",
-        bold: "700",
-        extraBold: "900",
       },
       colors: {
         background: "var(--background)",

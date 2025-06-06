@@ -1,23 +1,24 @@
 "use client";
 import React, { useState } from "react";
+import GlassContainer from "./ui/GlassContainer";
 
 const InterviewModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="mt-24 text-3xl font-semibold">
-          신랑신부 인터뷰
+    <div className="mt-32 mb-32 flex flex-col items-center p-4">
+      <h2 className="text-3xl text-pink-500">
+        신랑신부 인터뷰
       </h2>
 
-      <p className="text-gray-600 m-4">
+      <p className="text-gray-600 m-4 text-lg">
         신랑과 신부의 인터뷰를 통해 서로에 대해 더 잘 알아보세요.
       </p>
 
       {/* 인터뷰 버튼 */}
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-pink-400 text-white font-semibold py-2 px-6 rounded-md transition-colors duration-300 hover:bg-opacity-80"
+        className="bg-pink-400 text-white py-2 px-6 rounded-md transition-colors duration-300 hover:bg-opacity-80"
       >
         신랑신부 인터뷰 읽어보기
       </button>
@@ -28,7 +29,7 @@ const InterviewModal = () => {
           <div className="p-8 mt-8">
             {/* 헤더 */}
             <div className="flex justify-center items-center border-b pb-4">
-              <h3 className="text-2xl font-semibold text-gray-800">
+              <h3 className="text-2xl text-gray-800">
                 신랑 신부 인터뷰
               </h3>
             </div>
@@ -36,7 +37,7 @@ const InterviewModal = () => {
             {/* 인터뷰 내용 */}
             <div className="flex flex-col gap-8 mt-8 text-left text-gray-700">
               <div className="flex flex-col gap-4 border-b pb-8">
-                <h4 className="text-xl text-pink-500 font-semibold">
+                <h4 className="text-xl text-pink-500">
                   1. 서로의 첫인상은 어땠나요?
                 </h4>
                 <p className="flex flex-col gap-2 text-gray-700">
@@ -47,7 +48,7 @@ const InterviewModal = () => {
               </div>
 
               <div className="flex flex-col gap-4 border-b pb-8">
-                <h4 className="text-xl text-pink-500 font-semibold">
+                <h4 className="text-xl text-pink-500">
                   2. 결혼을 결심하게 된 계기가 있나요?
                 </h4>
                 <p className="flex flex-col gap-2 text-gray-700">
@@ -58,7 +59,7 @@ const InterviewModal = () => {
               </div>
 
               <div className="flex flex-col gap-4 border-b pb-8">
-                <h4 className="text-xl text-pink-500 font-semibold">
+                <h4 className="text-xl text-pink-500">
                   3. 30년 후 두 사람은 어떤 모습일 것 같나요?
                 </h4>
                 <p className="flex flex-col gap-2 text-gray-700">
@@ -69,7 +70,7 @@ const InterviewModal = () => {
               </div>
 
               <div className="flex flex-col gap-4 border-b pb-8">
-                <h4 className="text-xl text-pink-500 font-semibold">
+                <h4 className="text-xl text-pink-500">
                   4. 결혼생활에 대한 각오 한마디
                 </h4>
                 <p className="flex flex-col gap-2 text-gray-700">
@@ -84,7 +85,7 @@ const InterviewModal = () => {
             <div className="p-8 text-center">
               <button
                 onClick={() => setIsOpen(false)}
-                className="bg-gray-600 text-white font-semibold py-2 px-6 rounded-md transition-colors duration-300 hover:bg-opacity-80"
+                className="bg-gray-600 text-white py-2 px-6 rounded-md transition-colors duration-300 hover:bg-opacity-80"
               >
                 닫기
               </button>

@@ -18,8 +18,8 @@ const AddToAppleWalletButton = () => {
 
   return (
     <div className="flex flex-col justify-center">
-      <h2 className="mt-24 text-3xl font-bold">Apple 지갑에 추가하기</h2>
-      <p className="text-gray-600 m-4">
+      <h2 className="mt-24 text-3xl text-pink-500">Apple 지갑에 추가하기</h2>
+      <p className="text-gray-600 m-4 text-lg">
         아이폰을 사용하신다면 Apple 지갑에 추가하여 알림을 받아보세요.
       </p>
 

@@ -62,7 +62,7 @@ export default function Home() {
           variant="default"
           animation="gentleFloat"
           padding="xl"
-          className="md:mx-0 md:px-10 px-6"
+          className="mx-4"
         >
 
           <h1 className={`text-3xl text-pink-500`}>
@@ -78,7 +78,7 @@ export default function Home() {
           <p className="mt-4 text-gray-600 text-lg">
             오랜 기다림 끝에 저희 두사람.
             <br />
-            한 마음 되어 이제 결실을 맺으려 합니다.
+            한 마음 되어 이제 결실을 맞으려 합니다.
             <br />
             <br />
             오셔서 함께해 주시면 감사하겠습니다.

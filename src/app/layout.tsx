@@ -14,10 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="font-modu">
+    <html lang="ko" className="overflow-x-hidden">
+      <body className="font-modu w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto overflow-x-hidden">
         <Navbar />
-        <main className="flex flex-col">
+        <main className="flex flex-col overflow-x-hidden">
           {children}
         </main>
         <Footer />

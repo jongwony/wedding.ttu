@@ -31,11 +31,16 @@ export default function Carousel({ images }: CarouselProps) {
   }, [hasScrolled]);
 
   return (
-    <div className="relative w-full mx-auto">
+    <div className="relative w-full max-w-full overflow-hidden">
       {/* 스크롤 컨테이너: scroll-snap 속성 적용 */}
       <div
-        className="overflow-x-auto scroll-smooth snap-x snap-mandatory"
+        className="overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory"
         ref={scrollContainerRef}
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          width: '100%'
+        }}
       >
         <div className="flex">
           {images.map((src, index) => (
@@ -64,6 +69,13 @@ export default function Carousel({ images }: CarouselProps) {
         </div>
       </div>
       <style jsx>{`
+        div[ref] {
+          -webkit-scrollbar: none;
+        }
+        div[ref]::-webkit-scrollbar {
+          display: none;
+        }
+
         @keyframes fadeOutAnimation {
           from {
             opacity: 1;

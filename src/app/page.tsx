@@ -76,12 +76,13 @@ export default function Home() {
           </div>
 
           <p className="mt-4 text-gray-600 text-lg">
-            오랜 기다림 끝에 저희 두사람.
+            수많은 인연 중
             <br />
-            한 마음 되어 이제 결실을 맞으려 합니다.
+            서로를 알아본 두 사람이
             <br />
+            사랑으로 결실을 맺습니다.
             <br />
-            오셔서 함께해 주시면 감사하겠습니다.
+            소중한 걸음으로 축복해 주세요.
           </p>
         </GlassContainer>
       </div>

@@ -6,7 +6,7 @@ const resourcePaths = {
   },
   carouselImages: "/images/carousel",
   hyImages: "/images/hyfilm",
-  video: "/videos/beauty_n_beast.mp4"
+  video: "/videos/beauty_n_beast.MP4"
 };
 
 export default resourcePaths;

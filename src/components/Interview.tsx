@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import GlassContainer from "./ui/GlassContainer";
 
 const InterviewModal = () => {
   const [isOpen, setIsOpen] = useState(false);

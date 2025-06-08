@@ -24,7 +24,7 @@ const WeddingCountdown = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [getTimeLeft]);
 
   return (
     <>

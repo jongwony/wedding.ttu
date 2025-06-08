@@ -2,7 +2,7 @@ import { ChevronsDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function AnimationHeader() {
-  const [sparkle, setSparkle] = useState(false);
+  // const [sparkle, setSparkle] = useState(false);
   const [showed, setShowed] = useState(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function AnimationHeader() {
   useEffect(() => {
     // 2초 후에 sparkle 클래스 추가 (타이핑 애니메이션 완료 직후)
     const timer = setTimeout(() => {
-      setSparkle(true);
+      // setSparkle(true);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);

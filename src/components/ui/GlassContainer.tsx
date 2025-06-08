@@ -28,6 +28,9 @@ const GlassContainer: React.FC<GlassContainerProps> = ({
       return;
     }
 
+    const currentContainer = containerRef.current;
+    if (!currentContainer) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
@@ -43,14 +46,10 @@ const GlassContainer: React.FC<GlassContainerProps> = ({
       }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
+    observer.observe(currentContainer);
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
+      observer.unobserve(currentContainer);
     };
   }, [animation, hasAnimated]);
 

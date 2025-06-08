@@ -6,16 +6,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    turbo: {
-      rules: {
-        "**/*.yaml": {
-          loaders: ['yaml-loader'],
-          as: '*.js',
-        },
-      },
-    },
-  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

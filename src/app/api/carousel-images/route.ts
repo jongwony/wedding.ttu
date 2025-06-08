@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import resourcePaths from "@/config/resourcePaths.yaml";
+import resourcePaths from "@/config/resourcePaths";
 
 export const revalidate = 300; // 300초마다 재검증
 

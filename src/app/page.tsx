@@ -17,7 +17,7 @@ import Hero from "@/components/Hero";
 import MapButtons from "@/components/Navigation";
 import InformationTabs from "@/components/Information";
 import AnimationHeader from "@/components/Typewriter";
-import resourcePaths from "@/config/resourcePaths.yaml";
+import resourcePaths from "@/config/resourcePaths";
 // import GlassContainerExamples from "@/components/examples/GlassContainerExamples";
 import GlassContainer from "@/components/ui/GlassContainer";
 

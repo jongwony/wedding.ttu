@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import resourcePaths from "@/config/resourcePaths.yaml";
+import resourcePaths from "@/config/resourcePaths";
 
 const BrideGroomProfile = () => {
   return (

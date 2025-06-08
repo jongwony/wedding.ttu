@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import resourcePaths from "@/config/resourcePaths.yaml";
+import resourcePaths from "@/config/resourcePaths";
 
 export default function Hero() {
   return (

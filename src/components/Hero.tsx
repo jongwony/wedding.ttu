@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import resourcePaths from "@/config/resourcePaths";
+import AnimationHeader from "./Typewriter";
 
 export default function Hero() {
   return (
@@ -16,6 +17,7 @@ export default function Hero() {
           quality={80}
           className="object-cover"
         />
+        <AnimationHeader />
         <video
           // src="/videos/flower.mp4"
           src="/videos/snow.mp4"

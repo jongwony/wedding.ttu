@@ -24,14 +24,15 @@ export default function AnimationHeader() {
 
   return (
     <div className="flex justify-center">
-      {/* <div className={`absolute top-40 z-10`}>
-        <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold neon-text typewriter-then-sparkle`}>
+      <div className={`absolute top-40 z-10`}>
+        {/* 옵션 1: 텍스트 그림자만 사용 */}
+        <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
           We&rsquo;re getting Married!
         </h1>
-        <p className="text-white">
+        <p className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center">
           2025년 10월 19일 일요일 오후 12시
         </p>
-      </div> */}
+      </div>
 
       {!showed && (
         <div className="fadeout-hero">
@@ -79,16 +80,8 @@ export default function AnimationHeader() {
           to { width: 100%; }
         }
 
-        @keyframes sparkle {
-          0% { opacity: 0.7; text-shadow: 0 0 rgba(255, 255, 255, 0.5); }
-          50% { opacity: 1; text-shadow: 0 0 rgba(255, 255, 255, 1); }
-          100% { opacity: 0.7; text-shadow: 0 0 rgba(255, 255, 255, 0.5); }
-        }
-
-        .typewriter-then-sparkle {
-          animation:
-            typewriter 2s steps(120) forwards,
-            sparkle 1.5s infinite 2s; /* 2초 후에 sparkle 시작 */
+        .typewriter {
+          animation: typewriter 2s steps(120) forwards;
         }
       `}</style>
 

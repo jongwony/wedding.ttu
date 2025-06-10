@@ -34,7 +34,7 @@ export default function Carousel({ images }: CarouselProps) {
     <div className="relative w-full max-w-full overflow-hidden">
       {/* 스크롤 컨테이너: scroll-snap 속성 적용 */}
       <div
-        className="overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory"
+        className="overflow-x-auto scroll-smooth snap-x snap-mandatory"
         ref={scrollContainerRef}
         style={{
           scrollbarWidth: 'none',

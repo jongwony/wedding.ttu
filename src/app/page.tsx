@@ -16,8 +16,6 @@ import Carousel from "@/components/Carousel";
 import Hero from "@/components/Hero";
 import MapButtons from "@/components/Navigation";
 import InformationTabs from "@/components/Information";
-import AnimationHeader from "@/components/Typewriter";
-import resourcePaths from "@/config/resourcePaths";
 // import GlassContainerExamples from "@/components/examples/GlassContainerExamples";
 import GlassContainer from "@/components/ui/GlassContainer";
 
@@ -40,22 +38,7 @@ export default function Home() {
   return (
     <section className="flex flex-col text-center">
 
-      <div className="flex flex-col justify-center items-center">
-        <div className="relative h-screen">
-          <video
-            src={resourcePaths.video}
-            autoPlay
-            muted
-            className="w-full h-full object-cover"
-            preload="metadata"
-          >
-            Your browser does not support the video tag.
-          </video>
-          <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
-        </div>
-      </div>
-
-      <AnimationHeader />
+      <Hero />
 
       <div className="mt-32 mb-32 flex flex-col items-center">
         <GlassContainer
@@ -86,8 +69,6 @@ export default function Home() {
           </p>
         </GlassContainer>
       </div>
-
-      <Hero />
 
       <Carousel images={imageList} />
 

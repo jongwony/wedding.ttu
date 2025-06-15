@@ -145,23 +145,6 @@ const GlassContainer: React.FC<GlassContainerProps> = ({
           transition: all 0.3s ease;
         }
 
-        .glass-container::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle,
-            rgba(219, 186, 219, 0.1) 0%,
-            rgba(248, 187, 208, 0.05) 40%,
-            transparent 70%
-          );
-          animation: gentleFloat 6s ease-in-out infinite;
-          pointer-events: none;
-          z-index: -1;
-        }
-
         .animation-gentleFloat {
           animation: gentleFloat 4s ease-in-out infinite;
         }

@@ -35,9 +35,39 @@ export default function Home() {
     fetchImages();
   }, []);
 
-  return (
-    <section className="flex flex-col text-center">
+  // 전역 터치 이벤트 핸들러 추가
+  useEffect(() => {
+    const handleTouch = (e: TouchEvent) => {
+      // 이벤트 객체의 메서드들을 직접 무력화
+      Object.defineProperty(e, 'preventDefault', {
+        value: () => {},
+        writable: false
+      });
+      Object.defineProperty(e, 'stopPropagation', {
+        value: () => {},
+        writable: false
+      });
+    };
 
+    // 캡처 단계에서 이벤트를 가로채서 처리
+    document.addEventListener('touchstart', handleTouch, {
+      passive: false,
+      capture: true
+    });
+    document.addEventListener('touchmove', handleTouch, {
+      passive: false,
+      capture: true
+    });
+
+    // 정리 함수
+    return () => {
+      document.removeEventListener('touchstart', handleTouch, { capture: true });
+      document.removeEventListener('touchmove', handleTouch, { capture: true });
+    };
+  }, []);
+
+  return (
+    <div className="flex flex-col overflow-x-hidden text-center">
       <Hero />
 
       <div className="mt-32 mb-32 flex flex-col items-center">
@@ -92,6 +122,6 @@ export default function Home() {
 
       {/* <AddToAppleWalletButton /> */}
 
-    </section>
+    </div>
   );
 }

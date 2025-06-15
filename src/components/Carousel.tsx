@@ -31,15 +31,14 @@ export default function Carousel({ images }: CarouselProps) {
   }, [hasScrolled]);
 
   return (
-    <div className="relative w-full max-w-full overflow-hidden">
+    <div className="relative w-full max-w-full">
       {/* 스크롤 컨테이너: scroll-snap 속성 적용 */}
       <div
         className="overflow-x-auto scroll-smooth snap-x snap-mandatory"
         ref={scrollContainerRef}
         style={{
           scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          width: '100%'
+          msOverflowStyle: 'none'
         }}
       >
         <div className="flex">

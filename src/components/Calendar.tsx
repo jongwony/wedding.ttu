@@ -64,7 +64,7 @@ const CalendarEventActions = () => {
   };
 
   return (
-    <div className="m-16 flex flex-col items-center">
+    <div className="mt-16 flex flex-col items-center">
 
         {/* 헤더 */}
         <h2 className="text-3xl mb-4 text-pink-500">시월의 열아홉번째 날</h2>

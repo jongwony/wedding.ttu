@@ -17,7 +17,6 @@ const BrideGroomProfile = () => {
             width={300}
             height={300}
             className="rounded-md"
-            priority
           />
           <h3 className="text-blue-500 text-lg mt-4">
             신랑 최종원 <a href="tel:010-8514-0289">📞</a>
@@ -38,7 +37,6 @@ const BrideGroomProfile = () => {
             width={300}
             height={300}
             className="rounded-md"
-            priority
           />
           <h3 className="text-yellow-500 text-lg mt-4">
             신부 윤수경 <a href="tel:010-8756-4189">📞</a>

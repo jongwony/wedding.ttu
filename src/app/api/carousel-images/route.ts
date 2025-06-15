@@ -11,7 +11,7 @@ export async function GET() {
   const files = fs.readdirSync(imagesDirectory);
   // 이미지 확장자에 해당하는 파일만 필터링합니다.
   const imageList = files
-    .filter(file => /\.(jpe?g|png|gif|svg)$/i.test(file))
+    .filter(file => /\.(jpe?g|png|gif|svg|webp)$/i.test(file))
     .map(file => `/images/carousel/${file}`);
 
   return NextResponse.json({ images: imageList });

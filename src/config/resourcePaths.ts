@@ -1,8 +1,8 @@
 const resourcePaths = {
-  heroImage: "/images/DSC07684.jpg",
+  heroImage: "/images/DSC07684.jpg.webp",
   profileImages: {
-    bride: "/images/DSC07705.jpg",
-    groom: "/images/DSC08024.jpg"
+    bride: "/images/DSC07705.jpg.webp",
+    groom: "/images/DSC08024.jpg.webp"
   },
   carouselImages: "/images/carousel",
   hyImages: "/images/hyfilm",

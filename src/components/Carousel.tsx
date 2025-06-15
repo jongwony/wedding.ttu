@@ -47,7 +47,6 @@ export default function Carousel({ images }: CarouselProps) {
               <Image
                 src={src}
                 alt={`Slide ${index + 1}`}
-                priority
                 quality={80}
                 width={800}
                 height={600}

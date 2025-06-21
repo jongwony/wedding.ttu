@@ -12,7 +12,7 @@ const TransferButtons = () => {
     try {
       await navigator.clipboard.writeText(accountNumber);
       alert("계좌번호가 복사되었습니다!");
-    } catch (err) {
+    } catch {
       // 브라우저가 클립보드 API를 지원하지 않는 경우
       const textArea = document.createElement("textarea");
       textArea.value = accountNumber;

@@ -4,7 +4,7 @@ const resourcePaths = {
     bride: "/images/DSC07705.jpg.webp",
     groom: "/images/DSC08024.jpg.webp"
   },
-  carouselImages: "/images/carousel",
+  carouselImages: "/images/carousel/mobile",
   hyImages: "/images/hyfilm",
   video: "/videos/beauty_n_beast.MP4"
 };

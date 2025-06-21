@@ -12,7 +12,7 @@ export async function GET() {
   // 이미지 확장자에 해당하는 파일만 필터링합니다.
   const imageList = files
     .filter(file => /\.(jpe?g|png|gif|svg|webp)$/i.test(file))
-    .map(file => `/images/carousel/${file}`);
+    .map(file => path.join(resourcePaths.carouselImages, file).replace(/\\/g, "/"))
 
   return NextResponse.json({ images: imageList });
 }

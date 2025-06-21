@@ -13,7 +13,6 @@ import BrideGroomProfile from "@/components/Profile";
 import InterviewModal from "@/components/Interview";
 import Carousel from "@/components/Carousel";
 import Hero from "@/components/Hero";
-import MapButtons from "@/components/Navigation";
 import InformationTabs from "@/components/Information";
 // import GlassContainerExamples from "@/components/examples/GlassContainerExamples";
 import GlassContainer from "@/components/ui/GlassContainer";
@@ -110,8 +109,6 @@ export default function Home() {
       <WeddingCountdown />
 
       <CalendarEventActions />
-
-      <MapButtons />
 
       <InformationTabs />
 

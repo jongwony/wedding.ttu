@@ -2,9 +2,38 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import GlassContainer from "./ui/GlassContainer";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const TransferButtons = () => {
+  const isMobile = useIsMobile(); // 모바일 환경 감지
+  const accountNumber = "토스뱅크 100151320105";
+
+  const handleCopyAccount = async () => {
+    try {
+      await navigator.clipboard.writeText(accountNumber);
+      alert("계좌번호가 복사되었습니다!");
+    } catch (err) {
+      // 브라우저가 클립보드 API를 지원하지 않는 경우
+      const textArea = document.createElement("textarea");
+      textArea.value = accountNumber;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      alert("계좌번호가 복사되었습니다!");
+    }
+  };
+
   const links = [
+    {
+      label: "계좌번호 복사",
+      subtitle: "토스뱅크 100151320105",
+      onClick: handleCopyAccount,
+      bgColor: "bg-gray-100",
+      color: "text-gray-800",
+      icon: "📋",
+      type: "button"
+    },
     {
       label: "부부 살림",
       subtitle: "새로운 시작을 위해",
@@ -12,6 +41,7 @@ const TransferButtons = () => {
       bgColor: "bg-blue-600",
       color: "text-white",
       src: "/images/logo/toss.png",
+      type: "link"
     },
     {
       label: "신랑에게",
@@ -20,6 +50,7 @@ const TransferButtons = () => {
       bgColor: "bg-yellow-400",
       color: "text-gray-800",
       src: "/images/logo/kakaopay.png",
+      type: "link"
     },
     {
       label: "신부에게",
@@ -28,6 +59,7 @@ const TransferButtons = () => {
       bgColor: "bg-yellow-400",
       color: "text-gray-800",
       src: "/images/logo/kakaopay.png",
+      type: "link"
     },
   ];
 
@@ -69,44 +101,89 @@ const TransferButtons = () => {
 
         {/* 버튼 섹션 */}
         <div className="space-y-2">
-          {links.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              className={`
-                ${link.color} ${link.bgColor}
-                flex items-center justify-between
-                px-4 py-3
-                rounded-lg shadow-md
-                border border-white/20
-                active:scale-95 transition-transform duration-150
-              `}
-            >
-              <div className="flex items-center">
-                <div className="mr-3">
-                  <Image
-                    src={link.src}
-                    width={24}
-                    height={24}
-                    alt={link.label}
-                    className="h-6 w-6 drop-shadow-sm"
-                  />
-                </div>
+          {links
+            .filter((link) => {
+              // 모바일이 아닌 경우 "계좌번호 복사" 버튼만 표시
+              if (!isMobile) {
+                return link.label === "계좌번호 복사";
+              }
+              // 모바일인 경우 모든 버튼 표시
+              return true;
+            })
+            .map((link, index) => (
+            <div key={index}>
+              {link.type === "link" ? (
+                <Link
+                  href={link.href!}
+                  className={`
+                    ${link.color} ${link.bgColor}
+                    flex items-center justify-between
+                    px-4 py-3
+                    rounded-lg shadow-md
+                    border border-white/20
+                    active:scale-95 transition-transform duration-150
+                    w-full text-left
+                  `}
+                >
+                  <div className="flex items-center">
+                    <div className="mr-3">
+                      <Image
+                        src={link.src!}
+                        width={24}
+                        height={24}
+                        alt={link.label}
+                        className="h-6 w-6 drop-shadow-sm"
+                      />
+                    </div>
 
-                <div className="text-left">
-                  <div className="font-medium text-sm mb-0.5">
-                    {link.label}
+                    <div className="text-left">
+                      <div className="font-medium text-sm mb-0.5">
+                        {link.label}
+                      </div>
+                      <div className="text-xs opacity-75 font-light">
+                        {link.subtitle}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xs opacity-75 font-light">
-                    {link.subtitle}
-                  </div>
-                </div>
-              </div>
 
-              <div className="text-lg opacity-60">
-                →
-              </div>
-            </Link>
+                  <div className="text-lg opacity-60">
+                    →
+                  </div>
+                </Link>
+              ) : (
+                <button
+                  onClick={link.onClick}
+                  className={`
+                    ${link.color} ${link.bgColor}
+                    flex items-center justify-between
+                    px-4 py-3
+                    rounded-lg shadow-md
+                    border border-white/20
+                    active:scale-95 transition-transform duration-150
+                    w-full text-left
+                  `}
+                >
+                  <div className="flex items-center">
+                    <div className="mr-3">
+                      <span className="text-xl">{link.icon}</span>
+                    </div>
+
+                    <div className="text-left">
+                      <div className="font-medium text-sm mb-0.5">
+                        {link.label}
+                      </div>
+                      <div className="text-xs opacity-75 font-light">
+                        {link.subtitle}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-lg opacity-60">
+                    📋
+                  </div>
+                </button>
+              )}
+            </div>
           ))}
         </div>
 

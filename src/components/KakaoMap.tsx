@@ -68,20 +68,11 @@ const Kakaomap: React.FC = () => {
   };
 
   return (
-    <div className="mt-32 flex flex-col justify-center">
-      <h2 className="text-3xl font-bold text-pink-500">오시는 길</h2>
-      <p className="text-gray-600 m-4 text-lg">
-        건대입구 역 3번 출구
-      </p>
-
-      <div className="mt-8 flex justify-center">
-        <div
-          id="map"
-          className="w-full max-w-md h-96 border rounded-md"
-          ref={mapRef}
-        />
-      </div>
-    </div>
+    <div
+      id="map"
+      className="w-full max-w-md h-96 border rounded-md"
+      ref={mapRef}
+    />
   );
 };
 

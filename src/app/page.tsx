@@ -7,7 +7,6 @@ const WeddingCountdown = dynamic(() => import('@/components/Countdown'), {
 });
 
 // import AddToAppleWalletButton from "@/components/AppleWallet";
-import Kakaomap from "@/components/KakaoMap";
 import TransferButtons from "@/components/Account";
 import CalendarEventActions from "@/components/Calendar";
 import BrideGroomProfile from "@/components/Profile";
@@ -111,8 +110,6 @@ export default function Home() {
       <WeddingCountdown />
 
       <CalendarEventActions />
-
-      <Kakaomap />
 
       <MapButtons />
 

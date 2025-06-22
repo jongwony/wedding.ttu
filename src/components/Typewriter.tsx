@@ -24,9 +24,9 @@ export default function AnimationHeader() {
 
   return (
     <div className="flex justify-center">
-      <div className={`absolute top-40 z-10`}>
+      <div className={`absolute top-20 z-10`}>
         {/* 옵션 1: 텍스트 그림자만 사용 */}
-        <h1 className={`p-4 text-4xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
+        <h1 className={`p-4 sm:text-4xl text-3xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
           We&rsquo;re getting Married!
         </h1>
         <p className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center">

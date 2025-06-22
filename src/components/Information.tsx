@@ -80,7 +80,7 @@ export default function InformationTabs() {
   };
 
   return (
-    <div className="py-20 px-4 max-w-4xl mx-auto">
+    <div className="py-20 px-4">
       {/* 헤더 섹션 */}
       <div className="text-center mb-12">
         <div className="inline-block p-3 bg-pink-100 rounded-full mb-4">

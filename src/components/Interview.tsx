@@ -28,9 +28,9 @@ const InterviewModal = () => {
             transform: translateY(0) scale(1);
             opacity: 1;
           }
-          50% {
-            transform: translateY(-20px) scale(1.05);
-            opacity: 0.8;
+          30% {
+            transform: translateY(-2px) scale(1.02);
+            opacity: 0.95;
           }
           100% {
             transform: translateY(0) scale(1);
@@ -52,15 +52,11 @@ const InterviewModal = () => {
 
         @keyframes letterUnfold {
           0% {
-            transform: scaleY(0.3) translateY(-50px);
+            transform: translateY(20px) scale(0.95);
             opacity: 0;
           }
-          50% {
-            transform: scaleY(0.7) translateY(-20px);
-            opacity: 0.5;
-          }
           100% {
-            transform: scaleY(1) translateY(0);
+            transform: translateY(0) scale(1);
             opacity: 1;
           }
         }
@@ -75,7 +71,7 @@ const InterviewModal = () => {
         }
 
         .letter-opening {
-          animation: letterOpen 1s ease-in-out;
+          animation: letterOpen 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .envelope-button {
@@ -88,9 +84,8 @@ const InterviewModal = () => {
         }
 
         .letter-content {
-          animation: letterUnfold 0.8s ease-out;
-          transform-origin: top center;
-        }
+           animation: letterUnfold 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+         }
 
         .question-card {
           backdrop-filter: blur(10px);
@@ -170,13 +165,13 @@ const InterviewModal = () => {
               <GlassContainer
                 variant="default"
                 animation="none"
-                padding="lg"
-                borderRadius="lg"
+                padding="sm"
+                borderRadius="md"
                 className={`letter-content ${!isLetterOpening ? 'animate-in' : ''}`}
               >
                 {/* 편지 헤더 */}
                 <div className="text-center mb-8 pb-6 border-b-2 border-pink-200">
-                  <h3 className="text-3xl font-bold text-gray-800 mb-2">
+                  <h3 className="text-2xl font-bold text-pink-500 mb-2">
                     💝 신랑 신부 인터뷰
                   </h3>
                   <p className="text-gray-600">
@@ -262,7 +257,7 @@ const InterviewModal = () => {
                   <div className="question-card bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-6 border border-indigo-200">
                     <h4 className="text-xl font-bold text-indigo-600 mb-4 flex items-center gap-2">
                       <span className="text-2xl">💒</span>
-                      결혼생활에 대한 각오 한마디
+                      결혼생활에 대한 한마디
                     </h4>
                     <div className="space-y-4 text-left">
                       <div className="bg-white rounded-lg p-4 shadow-sm">

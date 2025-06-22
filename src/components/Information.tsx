@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Image from "next/image";
+import resourcePaths from "@/config/resourcePaths";
 import Kakaomap from "./KakaoMap";
 import MapButtons from "./Navigation";
 
@@ -9,25 +11,36 @@ export default function InformationTabs() {
 
   // 각 탭에 보여줄 내용 정의
   const tabContent = {
-          subway: (
-        <div className="mt-8 p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100">
-          <div className="flex items-center mb-4">
-            <div className="text-2xl mr-3">🚊</div>
-            <h3 className="text-xl font-semibold text-emerald-800">지하철</h3>
-          </div>
-          <div className="text-emerald-700">
-            <p className="mb-2">🌿 2호선 건대입구역 2번 출구</p>
-            <p>🌿 7호선 건대입구역 3번 출구</p>
-            <p className="text-sm mt-3 text-emerald-600">출구 앞 건물 5층</p>
-          </div>
+    subway: (
+      <div className="mt-8 p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100">
+        <div className="flex items-center mb-4">
+          <div className="text-2xl mr-3">🚊</div>
+          <h3 className="text-xl font-semibold text-emerald-800">지하철</h3>
         </div>
-      ),
-          bus: (
-        <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100">
-          <div className="flex items-center mb-4">
-            <div className="text-2xl mr-3">🚌</div>
-            <h3 className="text-xl font-semibold text-indigo-800">버스</h3>
+        <div className="text-emerald-700">
+
+          <div className="flex justify-center my-4">
+            <div className="bg-white rounded-lg p-1 shadow-sm border border-amber-200">
+              <Image
+                src={resourcePaths.subway}
+                alt="지하철 정거장"
+                width={200}
+                height={200}
+                className="rounded-lg"
+              />
+            </div>
           </div>
+          <p>❇️ 건대입구역 3번 출구</p>
+          <p className="text-sm mt-3 text-emerald-600">출구 앞 건물 5층</p>
+        </div>
+      </div>
+    ),
+    bus: (
+      <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100">
+        <div className="flex items-center mb-4">
+          <div className="text-2xl mr-3">🚌</div>
+          <h3 className="text-xl font-semibold text-indigo-800">버스</h3>
+        </div>
         <div className="text-indigo-700 space-y-2 text-left">
           <p className="font-medium mb-3">건대입구역, 건대입구역 사거리 하차</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
@@ -62,6 +75,17 @@ export default function InformationTabs() {
             <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
             건물 내 주차장 이용 가능
           </p>
+          <div className="flex justify-center my-4">
+            <div className="bg-white rounded-lg p-1 shadow-sm border border-amber-200">
+              <Image
+                src={resourcePaths.parking}
+                alt="주차 약도"
+                width={200}
+                height={200}
+                className="rounded-lg"
+              />
+            </div>
+          </div>
           <p className="text-sm text-amber-600 bg-amber-50 p-3 rounded-lg border border-amber-200">
             자세한 주차 요금 및 이용 시간은 예식장으로 문의해주세요.
           </p>
@@ -69,7 +93,7 @@ export default function InformationTabs() {
             <span className="text-amber-600 font-medium">예식장 문의</span>
             <a
               href="tel:02-430-8000"
-              className="ml-3 px-4 py-2 bg-amber-500 text-white rounded-full hover:bg-amber-600 transition-colors duration-200 flex items-center"
+              className="ml-3 px-4 py-2 bg-amber-500 text-white text-sm rounded-full hover:bg-amber-600 transition-colors duration-200 flex items-center"
             >
               📞 02-430-8000
             </a>

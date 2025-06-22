@@ -46,7 +46,8 @@ const TransferButtons = () => {
     {
       label: "신랑에게",
       subtitle: "따뜻한 마음을",
-      href: "https://qr.kakaopay.com/281006011000008349896956",
+      // href: "https://qr.kakaopay.com/281006011000008349896956",
+      href: "https://qr.kakaopay.com/Ej7r2tVT2",
       bgColor: "bg-yellow-400",
       color: "text-gray-800",
       src: "/images/logo/kakaopay.png",
@@ -55,7 +56,7 @@ const TransferButtons = () => {
     {
       label: "신부에게",
       subtitle: "축복의 인사를",
-      href: "https://qr.kakaopay.com/281006011000008349896956",
+      href: "https://qr.kakaopay.com/Ej78j8hw7",
       bgColor: "bg-yellow-400",
       color: "text-gray-800",
       src: "/images/logo/kakaopay.png",

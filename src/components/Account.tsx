@@ -27,7 +27,7 @@ const TransferButtons = () => {
   const links = [
     {
       label: "계좌번호 복사",
-      subtitle: "토스뱅크 100151320105",
+      subtitle: "토스뱅크 1001-5132-0105",
       onClick: handleCopyAccount,
       bgColor: "bg-gray-100",
       color: "text-gray-800",

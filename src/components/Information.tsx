@@ -12,7 +12,7 @@ export default function InformationTabs() {
   // 각 탭에 보여줄 내용 정의
   const tabContent = {
     subway: (
-      <div className="mt-8 p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100">
+      <div className="mt-8 w-full p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100">
         <div className="flex items-center mb-4">
           <div className="text-2xl mr-3">🚊</div>
           <h3 className="text-xl font-semibold text-emerald-800">지하철</h3>
@@ -36,7 +36,7 @@ export default function InformationTabs() {
       </div>
     ),
     bus: (
-      <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100">
+      <div className="mt-8 w-full p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100">
         <div className="flex items-center mb-4">
           <div className="text-2xl mr-3">🚌</div>
           <h3 className="text-xl font-semibold text-indigo-800">버스</h3>
@@ -65,7 +65,7 @@ export default function InformationTabs() {
       </div>
     ),
     parking: (
-      <div className="mt-8 p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border border-amber-100">
+      <div className="mt-8 w-full p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border border-amber-100">
         <div className="flex items-center mb-4">
           <div className="text-2xl mr-3">🅿️</div>
           <h3 className="text-xl font-semibold text-amber-800">주차 안내</h3>
@@ -106,17 +106,17 @@ export default function InformationTabs() {
   return (
     <div className="py-20 px-4">
       {/* 헤더 섹션 */}
-      <div className="text-center mb-12">
-        <div className="inline-block p-3 bg-pink-100 rounded-full mb-4">
+      <div className="text-center">
+        <div className="inline-block p-3 bg-pink-100 rounded-full mt-4">
           <div className="text-3xl">🌸</div>
         </div>
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent mb-4">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent mt-4">
           오시는 길
         </h2>
       </div>
 
       {/* 탭 버튼 */}
-      <div className="flex justify-center mb-8">
+      <div className="flex justify-center mt-4">
         <div className="inline-flex bg-white rounded-full p-1 shadow-lg border border-pink-100">
           {[
             { key: "subway", label: "지하철", icon: "🚊" },
@@ -139,12 +139,12 @@ export default function InformationTabs() {
       </div>
 
       {/* 탭 내용 */}
-      <div className="min-h-[200px]">
+      <div className="flex flex-col justify-center items-center">
         {tabContent[activeTab]}
       </div>
 
       {/* 지도 섹션 */}
-      <div className="mt-4">
+      <div className="flex flex-col justify-center items-center mt-4">
         <Kakaomap />
         <MapButtons />
       </div>

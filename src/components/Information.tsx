@@ -12,7 +12,7 @@ export default function InformationTabs() {
   // 각 탭에 보여줄 내용 정의
   const tabContent = {
     subway: (
-      <div className="mt-8 w-full p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100">
+      <div className="mt-8 w-full max-w-md p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl shadow-sm border border-green-100">
         <div className="flex items-center mb-4">
           <div className="text-2xl mr-3">🚊</div>
           <h3 className="text-xl font-semibold text-emerald-800">지하철</h3>
@@ -20,7 +20,7 @@ export default function InformationTabs() {
         <div className="text-emerald-700">
 
           <div className="flex justify-center my-4">
-            <div className="bg-white rounded-lg p-1 shadow-sm border border-amber-200">
+            <div className="bg-white rounded-lg p-1 shadow-sm border border-emerald-200">
               <Image
                 src={resourcePaths.subway}
                 alt="지하철 정거장"
@@ -36,7 +36,7 @@ export default function InformationTabs() {
       </div>
     ),
     bus: (
-      <div className="mt-8 w-full p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100">
+      <div className="mt-8 w-full max-w-md p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100">
         <div className="flex items-center mb-4">
           <div className="text-2xl mr-3">🚌</div>
           <h3 className="text-xl font-semibold text-indigo-800">버스</h3>
@@ -65,16 +65,22 @@ export default function InformationTabs() {
       </div>
     ),
     parking: (
-      <div className="mt-8 w-full p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border border-amber-100">
+      <div className="mt-8 w-full max-w-md p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border border-amber-100">
         <div className="flex items-center mb-4">
           <div className="text-2xl mr-3">🅿️</div>
           <h3 className="text-xl font-semibold text-amber-800">주차 안내</h3>
         </div>
         <div className="text-amber-700 space-y-3">
-          <p className="flex items-center">
-            <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
-            건물 내 주차장 이용 가능
-          </p>
+          <div className="space-y-3">
+            <p className="flex items-center font-medium">
+              <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
+              건물 내 B1 ~ B5 | 2시간 무료 주차
+            </p>
+            <p className="flex items-center font-medium">
+              <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
+              건국대학교 병원 지상·지하 주차장 | 1시간 30분 무료주차
+            </p>
+          </div>
           <div className="flex justify-center my-4">
             <div className="bg-white rounded-lg p-1 shadow-sm border border-amber-200">
               <Image

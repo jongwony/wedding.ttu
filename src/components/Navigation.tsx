@@ -12,7 +12,8 @@ const MapButtons: React.FC = () => {
   const lng = 127.0714632;
   const placeName = '스타시티아트홀';
 
-  // 네이버 길찾기 링크
+  // 네이버 길찾기 링크: https://naver.me/FlZ0LhOz
+  // https://map.naver.com/p/entry/place/13541226?c=17.59,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202506250729&locale=ko&svcName=map_pcv5
   const naverLink = `https://nmap.place.naver.com/launchApp/route?path=route&type=place&dlat=${lat}&dlng=${lng}&did=13541226&dname=${encodeURIComponent(placeName)}`;
 
   // 카카오 길찾기 링크

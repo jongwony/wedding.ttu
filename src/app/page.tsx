@@ -15,14 +15,16 @@ import Carousel from "@/components/Carousel";
 import Hero from "@/components/Hero";
 import InformationTabs from "@/components/Information";
 import Invite from "@/components/Invite";
+import { useHyfilm } from "@/hooks/useHyfilm";
 
 export default function Home() {
   const [imageList, setImageList] = useState<string[]>([]);
+  const { isHyfilm } = useHyfilm();
 
   useEffect(() => {
     async function fetchImages() {
       try {
-        const res = await fetch("/api/carousel-images");
+        const res = isHyfilm ? await fetch("/api/hyfilm-carousel-images") : await fetch("/api/carousel-images");
         const data = await res.json();
         setImageList(data.images);
       } catch (error) {
@@ -30,7 +32,7 @@ export default function Home() {
       }
     }
     fetchImages();
-  }, []);
+  }, [isHyfilm]); // isHyfilm이 변경될 때마다 API 재호출
 
   // 전역 터치 이벤트 핸들러 추가
   useEffect(() => {

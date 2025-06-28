@@ -2,15 +2,18 @@
 import Image from "next/image";
 import resourcePaths from "@/config/resourcePaths";
 import AnimationHeader from "./Typewriter";
+import { useHyfilm } from "@/hooks/useHyfilm";
 
 export default function Hero() {
+  const { isHyfilm } = useHyfilm()
+
   return (
     <>
       <div
         className="relative max-h-screen aspect-[9/16]"
       >
         <Image
-          src={resourcePaths.heroImage}
+          src={isHyfilm ? resourcePaths.heroHyfilm : resourcePaths.heroImage}
           alt="Jeju Snap"
           fill
           priority

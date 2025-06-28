@@ -1,13 +1,22 @@
-import Link from "next/link";
+"use client";
+import { useHyfilm } from "@/hooks/useHyfilm";
 
 export default function Navbar() {
-  // Navbar 컴포넌트
+  const { isHyfilm, toggleHyfilm } = useHyfilm();
+
   return (
-    <nav className="fixed z-10 w-full sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl left-1/2 transform -translate-x-1/2">
-      <div className="py-4 flex justify-between items-center">
-        <h1 className="text-xl text-pink-500">
-          <Link href="/" className="px-4 py-2">💒</Link>
-        </h1>
+    <nav className="fixed z-10 w-full left-1/2 transform -translate-x-1/2">
+      <div className="py-4 flex justify-end items-center">
+        <button
+          onClick={toggleHyfilm}
+          className={`px-3 py-1 mx-4 rounded-full text-sm font-medium transition-all duration-300 ${
+            isHyfilm
+              ? 'bg-gray/20 text-white shadow-md'
+              : 'bg-white/20 text-gray-600 border border-gray-300'
+          }`}
+        >
+          {isHyfilm ? '📸 Soopia' : '💒 Saaii'}
+        </button>
       </div>
     </nav>
   );

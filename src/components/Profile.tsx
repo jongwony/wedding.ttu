@@ -2,8 +2,11 @@
 import Image from "next/image";
 import React from "react";
 import resourcePaths from "@/config/resourcePaths";
+import { useHyfilm } from "@/hooks/useHyfilm";
 
 const BrideGroomProfile = () => {
+  const { isHyfilm } = useHyfilm();
+
   return (
     <div className="flex flex-col items-center mt-32 mb-32">
       <h2 className="text-3xl text-pink-500">신랑 신부를 소개합니다!</h2>
@@ -32,7 +35,7 @@ const BrideGroomProfile = () => {
         {/* 신부 정보 */}
         <div className="flex flex-col items-center">
           <Image
-            src={resourcePaths.profileImages.bride}
+            src={isHyfilm ? resourcePaths.profileImagesHyfilm.bride : resourcePaths.profileImages.bride}
             alt="신부 윤수경"
             width={300}
             height={300}

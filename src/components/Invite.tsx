@@ -20,14 +20,19 @@ const Invite = () => {
           </div>
         </div>
 
-        <p className="mt-4 text-[var(--subtitle)] text-lg" style={{ letterSpacing: 1.50, wordWrap: 'break-word' }}>
-          수많은 인연 중
-          <br />
-          서로를 알아본 두 사람이
-          <br />
+        <p className="text-[var(--subtitle)] text-lg" style={{ letterSpacing: 1.05, wordWrap: 'break-word' }}>
+          <span className="block">
+            수많은 인연 중
+          </span>
+          <span className="block">
+            서로를 알아본 두 사람이
+          </span>
+          <span className="block">
           사랑으로 결실을 맺습니다.
-          <br />
-          소중한 걸음으로 축복해 주세요.
+          </span>
+          <span className="block">
+            소중한 걸음으로 축복해 주세요.
+          </span>
         </p>
       </GlassContainer>
     </div>

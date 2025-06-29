@@ -117,7 +117,11 @@ const InterviewModal = () => {
         .heart-float:nth-child(3) {
           animation-delay: 1s;
         }
-      `}</style>
+
+        .heart-float:nth-child(4) {
+          animation-delay: 1.5s;
+        }
+      }`}</style>
 
       <div className="flex flex-col items-center p-4 relative">
         <GlassContainer
@@ -131,6 +135,7 @@ const InterviewModal = () => {
             <div className="heart-float text-pink-400 text-lg">💕</div>
             <div className="heart-float text-pink-500 text-lg">💖</div>
             <div className="heart-float text-pink-600 text-lg">💝</div>
+            <div className="heart-float text-pink-700 text-lg">💗</div>
           </div>
 
           <div className="flex flex-col items-center">

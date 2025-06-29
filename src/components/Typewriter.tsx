@@ -38,7 +38,7 @@ export default function AnimationHeader() {
         <div className="fadeout-hero">
           <div className="absolute bottom-0 left-0 w-full h-16 pointer-events-none bg-gradient-to-t from-[var(--fadeout)] to-transparent"></div>
           <div className="animate-swipeHeroHint pointer-events-none absolute bottom-4 left-1/2">
-            <ChevronsDown className="text-gray-500" />
+            <ChevronsDown className="text-[var(--subtitle)]" />
           </div>
         </div>
       )}

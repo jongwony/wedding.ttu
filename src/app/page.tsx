@@ -81,17 +81,31 @@ export default function Home() {
 
       <Invite />
 
+      <div className="w-screen h-[50vh]"></div>
+
       <BrideGroomProfile />
+
+      <div className="w-screen h-[50vh]"></div>
 
       <InterviewModal />
 
+      <div className="w-screen h-[50vh]"></div>
+
       <WeddingCountdown />
+
+      <div className="w-screen h-[50vh]"></div>
 
       <CalendarEventActions />
 
+      <div className="w-screen h-[50vh]"></div>
+
       <InformationTabs />
 
+      <div className="w-screen h-[50vh]"></div>
+
       <TransferButtons />
+
+      <div className="w-screen h-[50vh]"></div>
 
       {/* <AddToAppleWalletButton /> */}
 

@@ -8,7 +8,7 @@ const BrideGroomProfile = () => {
   const { isHyfilm } = useHyfilm();
 
   return (
-    <div className="flex flex-col items-center mt-32 mb-32">
+    <div className="flex flex-col items-center">
       <h2 className="text-3xl text-[var(--header)]">신랑 신부를 소개합니다!</h2>
       <div className="mt-8 flex flex-row gap-2 justify-center items-center">
 

@@ -156,12 +156,12 @@ const TransferButtons = () => {
 
   const tabs = [
     { id: "couple", label: "부부", icon: "💑" },
-    { id: "groom", label: "신랑 부모님", icon: "👨" },
-    { id: "bride", label: "신부 부모님", icon: "👩" },
+    { id: "groom", label: "신랑 혼주", icon: "👨" },
+    { id: "bride", label: "신부 혼주", icon: "👩" },
   ];
 
   return (
-    <div className="mt-32 mb-32 flex flex-col items-center px-4">
+    <div className="flex flex-col items-center px-4">
       <GlassContainer
         variant="default"
         animation="fadeInUp"
@@ -213,7 +213,7 @@ const TransferButtons = () => {
                   }
                 `}
               >
-                <span className="text-xs">{tab.icon}</span>
+                <span className="text-xs mr-2">{tab.icon}</span>
                 <span>{tab.label}</span>
               </button>
             ))}
@@ -276,7 +276,7 @@ const TransferButtons = () => {
                   `}
                 >
                   <div className="flex items-center">
-                    <div className="mr-3">
+                    <div className="mr-4">
                       <span className="text-xl">{link.icon}</span>
                     </div>
 

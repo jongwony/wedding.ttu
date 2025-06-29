@@ -110,13 +110,10 @@ export default function InformationTabs() {
   };
 
   return (
-    <div className="py-20 px-4">
+    <div className="flex flex-col items-center px-4">
       {/* 헤더 섹션 */}
       <div className="text-center">
-        <div className="inline-block p-3 bg-pink-100 rounded-full mt-4">
-          <div className="text-3xl">🌸</div>
-        </div>
-        <h2 className="text-4xl font-bold text-[var(--header)] mt-4">
+        <h2 className="text-3xl font-bold text-[var(--header)] mt-4">
           오시는 길
         </h2>
       </div>

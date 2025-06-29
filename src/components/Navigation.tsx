@@ -29,7 +29,7 @@ const MapButtons: React.FC = () => {
   const tmapLink = `tmap://route?goalx=${lng}&goaly=${lat}&goalname=${encodeURIComponent(placeName)}`;
 
   return (
-    <div className="flex mt-4 mb-32 space-x-2 justify-center text-sm font-semibold">
+    <div className="flex mt-4 space-x-2 justify-center text-sm font-semibold">
       {isMobile ? (
         <>
           {/* 네이버 지도 버튼 */}

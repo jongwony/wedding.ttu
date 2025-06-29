@@ -2,7 +2,7 @@ import GlassContainer from "./ui/GlassContainer";
 
 const Invite = () => {
   return (
-    <div className="mt-64 mb-32 flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <GlassContainer
         variant="default"
         animation="gentleFloat"

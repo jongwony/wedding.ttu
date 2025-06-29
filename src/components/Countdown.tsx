@@ -318,7 +318,7 @@ const WeddingCountdown = () => {
         }
       `}</style>
 
-      <div className="mt-32 mb-32 flex flex-col items-center relative">
+      <div className="flex flex-col items-center relative">
         <GlassContainer
           variant="default"
           animation="fadeInUp"

@@ -70,8 +70,8 @@ const TransferButtons = () => {
   const brideParentLinks: AccountLink[] = [
     {
       label: "신부 아버지: 윤혁",
-      subtitle: "KB국민은행 555302-91-121317",
-      onClick: () => handleCopyAccount("KB국민은행 55530291121317"),
+      subtitle: "우리은행 1002-440-342943",
+      onClick: () => handleCopyAccount("우리은행 1002440342943"),
       bgColor: "bg-gray-100",
       color: "text-gray-800",
       icon: "📋",
@@ -79,8 +79,8 @@ const TransferButtons = () => {
     },
     {
       label: "신부 어머니: 이은영",
-      subtitle: "부산은행 112-2306-8192-08",
-      onClick: () => handleCopyAccount("부산은행 1122306819208"),
+      subtitle: "국민은행 021-24-0398-601",
+      onClick: () => handleCopyAccount("국민은행 021240398601"),
       bgColor: "bg-gray-100",
       color: "text-gray-800",
       icon: "📋",

@@ -76,11 +76,8 @@ const InterviewModal = () => {
 
         .envelope-button {
           transition: all 0.3s ease;
-        }
-
-        .envelope-button:hover {
-          transform: translateY(-5px);
-          animation: heartBeat 1s ease-in-out infinite;
+          transform: translateY(-1px);
+          animation: heartBeat 3s ease-in-out infinite;
         }
 
         .letter-content {
@@ -125,7 +122,7 @@ const InterviewModal = () => {
       <div className="flex flex-col items-center p-4 relative">
         <GlassContainer
           variant="vibrant"
-          animation="fadeInUp"
+          animation="gentleFloat"
           padding="xl"
           borderRadius="xl"
           className="text-center max-w-md mx-auto relative"
@@ -136,11 +133,11 @@ const InterviewModal = () => {
             <div className="heart-float text-pink-600 text-lg">💝</div>
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-3xl text-pink-500 font-bold mb-2">
-              💌 러브레터
+          <div className="flex flex-col items-center">
+            <h2 className="text-3xl text-[var(--header)] font-bold">
+               러브레터
             </h2>
-            <p className="text-[var(--subtitle)] text-base leading-relaxed">
+            <p className="text-[var(--subtitle)] text-lg leading-relaxed p-4">
               신랑과 신부의 진솔한 이야기를
               <br />
               편지로 담았습니다
@@ -151,7 +148,7 @@ const InterviewModal = () => {
             onClick={handleOpenLetter}
             className="envelope-button bg-gradient-to-r from-pink-400 to-pink-500 text-white py-4 px-8 rounded-full text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto"
           >
-            <span className="text-2xl">📧</span>
+            <span className="text-2xl">💌</span>
             편지 열어보기
           </button>
         </GlassContainer>
@@ -284,7 +281,7 @@ const InterviewModal = () => {
                     onClick={handleCloseLetter}
                     className="bg-gradient-to-r from-gray-400 to-gray-500 text-white py-3 px-8 rounded-full text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:from-gray-500 hover:to-gray-600"
                   >
-                    편지 접기 📧
+                   💌 편지 접기
                   </button>
                 </div>
               </GlassContainer>

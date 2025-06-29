@@ -26,7 +26,7 @@ export default function InformationTabs() {
                 alt="지하철 정거장"
                 width={200}
                 height={200}
-                className="rounded-lg"
+                className="w-full rounded-lg"
               />
             </div>
           </div>
@@ -44,19 +44,19 @@ export default function InformationTabs() {
         <div className="text-indigo-700 space-y-2 text-left">
           <p className="font-medium mb-3">건대입구역, 건대입구역 사거리 하차</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div>
+            <div className="flex items-center">
               <span className="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium mr-2">간선</span>
               <span>240, 721, N61, N62번</span>
             </div>
-            <div>
+            <div className="flex items-center">
               <span className="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium mr-2">지선</span>
               <span>2016, 2222, 3217, 3220, 4212번</span>
             </div>
-            <div>
+            <div className="flex items-center">
               <span className="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium mr-2">직행</span>
               <span>102, 3500번</span>
             </div>
-            <div>
+            <div className="flex items-center">
               <span className="inline-block bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium mr-2">공항</span>
               <span>6013번</span>
             </div>
@@ -88,7 +88,7 @@ export default function InformationTabs() {
                 alt="주차 약도"
                 width={200}
                 height={200}
-                className="rounded-lg"
+                className="w-full rounded-lg"
               />
             </div>
           </div>
@@ -142,12 +142,12 @@ export default function InformationTabs() {
       </div>
 
       {/* 탭 내용 */}
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col w-full justify-center items-center">
         {tabContent[activeTab]}
       </div>
 
       {/* 지도 섹션 */}
-      <div className="flex flex-col justify-center items-center mt-4">
+      <div className="flex flex-col w-full justify-center items-center mt-4">
         <Kakaomap />
         <MapButtons />
       </div>

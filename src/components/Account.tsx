@@ -182,12 +182,20 @@ const TransferButtons = () => {
           </h2>
 
           <p className="text-[var(--subtitle)] text-base leading-relaxed">
-            소중한 날 함께 해 주신다면 더할 나위 없이 기쁠 것입니다.
-            <span className="block mt-3 mb-2">
+            <span className="block">
+              소중한 날 함께 해 주신다면 더할 나위 없이
+            </span>
+            <span className="block">
+              기쁠 것입니다.
+            </span>
+            <span className="block mt-2 mb-2">
               직접 참석이 어려우시더라도,
             </span>
             <span className="block">
-              따뜻한 마음을 전해 주신다면 저희에게 큰 힘이 될 것입니다.
+              따뜻한 마음을 전해 주신다면 저희에게
+            </span>
+            <span className="block">
+              큰 힘이 될 것입니다.
             </span>
           </p>
 
@@ -200,16 +208,15 @@ const TransferButtons = () => {
         <div className="flex justify-center mb-6">
           <div className="inline-flex bg-[var(--background)] rounded-full p-1 shadow-lg border border-[var(--border)] gap-2">
             {tabs.map((tab) => (
-            <button
+              <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
                   px-4 py-2 rounded-full text-xs transition-all duration-300 flex
                   flex items-center justify-center
-                  ${
-                    activeTab === tab.id
-                      ? "bg-[var(--header)] text-[var(--background)] rounded-full shadow-md"
-                      : "text-[var(--subtitle)] hover:bg-[var(--header)] hover:text-[var(--background)]"
+                  ${activeTab === tab.id
+                    ? "bg-[var(--header)] text-[var(--background)] rounded-full shadow-md"
+                    : "text-[var(--subtitle)] hover:bg-[var(--header)] hover:text-[var(--background)]"
                   }
                 `}
               >
@@ -297,6 +304,16 @@ const TransferButtons = () => {
               )}
             </div>
           ))}
+
+          <p className="text-[var(--subtitle)] text-sm leading-relaxed p-8 text-center opacity-50">
+            <span className="block text-[var(--header)]">
+              현장에 계신 분들을 위해
+            </span>
+            <span className="block">
+              건국대학교 병원 지하 1층의
+              신한은행 ATM을 이용하실 수 있습니다.
+            </span>
+          </p>
         </div>
 
       </GlassContainer>

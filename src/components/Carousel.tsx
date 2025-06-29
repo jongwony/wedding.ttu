@@ -59,7 +59,7 @@ export default function Carousel({ images }: CarouselProps) {
       {/* 사용자가 스크롤하지 않은 경우에만 스와이프 애니메이션 표시 */}
       <div className={showHint ? "" : "fadeout-carousel"}>
         {/* fade out */}
-        <div className="absolute top-0 right-0 h-full w-16 pointer-events-none bg-gradient-to-l from-white to-transparent"></div>
+        <div className="absolute top-0 right-0 h-full w-16 pointer-events-none bg-gradient-to-l from-[var(--fadeout)] to-transparent"></div>
         <div className="absolute top-1/2 right-4 pointer-events-none">
           <div className="flex items-center space-x-2 animate-swipeHint">
             <ChevronsRight className="text-gray-500" />

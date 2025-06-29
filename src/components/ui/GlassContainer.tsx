@@ -55,17 +55,9 @@ const GlassContainer: React.FC<GlassContainerProps> = ({
 
   const variantStyles = {
     default: {
-      background: `linear-gradient(135deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(248, 250, 252, 0.8) 50%,
-        rgba(241, 245, 249, 0.9) 100%
-      )`,
-      boxShadow: `
-        0 20px 40px rgba(190, 165, 190, 0.3),
-        0 8px 16px rgba(219, 186, 219, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8)
-      `,
-      border: '1px solid rgba(255, 255, 255, 0.6)'
+      background: `var(--glass-bg)`,
+      boxShadow: `var(--glass-box-shadow)`,
+      border: `var(--glass-border)`
     },
     subtle: {
       background: `linear-gradient(135deg,

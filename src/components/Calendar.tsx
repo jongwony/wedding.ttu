@@ -67,16 +67,16 @@ const CalendarEventActions = () => {
     <div className="mt-16 flex flex-col items-center">
 
         {/* 헤더 */}
-        <h2 className="text-3xl mb-4 text-pink-500">시월의 열아홉번째 날</h2>
+        <h2 className="text-3xl mb-4 text-[var(--header)]">시월의 열아홉번째 날</h2>
 
-        <p className="text-gray-600 mb-4 text-lg">
+        <p className="text-[var(--subtitle)] mb-4 text-lg">
           2025년 10월 19일 일요일 오후 12시
         </p>
 
         {/* 캘린더 */}
         <div className="p-4 w-full max-w-md">
           {/* 요일 */}
-          <div className="grid grid-cols-7 text-center text-gray-700 border-b pb-2">
+          <div className="grid grid-cols-7 text-center text-[var(--subtitle)] border-b pb-2">
             {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
               <div key={day} className="py-2">{day}</div>
             ))}
@@ -95,7 +95,7 @@ const CalendarEventActions = () => {
               return (
                 <div
                   key={day}
-                  className={`py-3 text-center rounded-full ${isEventDay ? "bg-pink-500 text-white font-bold relative" : "bg-white"
+                  className={`py-3 text-center rounded-full ${isEventDay ? "bg-[var(--header)] font-bold relative" : "text-[var(--subtitle)] bg-[var(--background)]"
                     }`}
                 >
                   {day === 19 ? "💍" : day}

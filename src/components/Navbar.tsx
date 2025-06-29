@@ -9,11 +9,7 @@ export default function Navbar() {
       <div className="py-4 flex justify-end items-center">
         <button
           onClick={toggleHyfilm}
-          className={`px-3 py-1 mx-4 rounded-full text-sm font-medium transition-all duration-300 ${
-            isHyfilm
-              ? 'bg-gray/20 text-white shadow-md'
-              : 'bg-white/20 text-gray-600 border border-gray-300'
-          }`}
+          className={`px-3 py-1 mx-4 rounded-full text-sm font-medium transition-all duration-300 bg-[var(--background)] text-[var(--foreground)] shadow-md`}
         >
           {isHyfilm ? '📸 Soopia' : '💒 Saaii'}
         </button>

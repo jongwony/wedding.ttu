@@ -1,8 +1,9 @@
 import GlassContainer from "./ui/GlassContainer";
+import resourcePaths from "../config/resourcePaths";
 
 const Invite = () => {
   return (
-    <div className="mt-32 mb-32 flex flex-col items-center">
+    <div className="mt-64 mb-32 flex flex-col items-center">
       <GlassContainer
         variant="default"
         animation="gentleFloat"
@@ -10,7 +11,7 @@ const Invite = () => {
         className="mx-4"
       >
 
-        <h1 className={`text-3xl text-pink-500`}>
+        <h1 className={`text-3xl text-[var(--header)]`}>
           소중한 분들을 초대합니다.
         </h1>
 
@@ -20,7 +21,7 @@ const Invite = () => {
           </div>
         </div>
 
-        <p className="mt-4 text-gray-600 text-lg">
+        <p className="mt-4 text-[var(--subtitle)] text-lg" style={{ letterSpacing: 1.50, wordWrap: 'break-word' }}>
           수많은 인연 중
           <br />
           서로를 알아본 두 사람이

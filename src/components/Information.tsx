@@ -70,15 +70,15 @@ export default function InformationTabs() {
           <div className="text-2xl mr-3">🅿️</div>
           <h3 className="text-xl font-semibold text-amber-800">주차 안내</h3>
         </div>
-        <div className="text-amber-700 space-y-3">
+        <div className="text-amber-700 space-y-3 text-left">
           <div className="space-y-3">
             <p className="flex items-center font-medium">
               <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
-              건물 내 B1 ~ B5 | 2시간 무료 주차
+              건물 내 B1 ~ B5 2시간 무료 주차
             </p>
             <p className="flex items-center font-medium">
               <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
-              건국대학교 병원 지상·지하 주차장 | 1시간 30분 무료주차
+              건국대학교 병원 지상·지하 1시간 30분 무료주차
             </p>
           </div>
           <div className="flex justify-center my-4">
@@ -116,14 +116,14 @@ export default function InformationTabs() {
         <div className="inline-block p-3 bg-pink-100 rounded-full mt-4">
           <div className="text-3xl">🌸</div>
         </div>
-        <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent mt-4">
+        <h2 className="text-4xl font-bold text-[var(--header)] mt-4">
           오시는 길
         </h2>
       </div>
 
       {/* 탭 버튼 */}
       <div className="flex justify-center mt-4">
-        <div className="inline-flex bg-white rounded-full p-1 shadow-lg border border-pink-100">
+        <div className="inline-flex bg-[var(--background)] rounded-full p-1 shadow-lg border border-[var(--border)]">
           {[
             { key: "subway", label: "지하철", icon: "🚊" },
             { key: "bus", label: "버스", icon: "🚌" },
@@ -133,8 +133,8 @@ export default function InformationTabs() {
               key={key}
               onClick={() => setActiveTab(key as TabType)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center ${activeTab === key
-                ? "bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-md"
-                : "text-gray-600 hover:text-pink-500 hover:bg-pink-50"
+                ? "bg-[var(--header)] text-white shadow-md"
+                : "text-[var(--subtitle)] hover:text-[var(--header)] hover:bg-[var(--background)]"
                 }`}
             >
               <span className="mr-2">{icon}</span>

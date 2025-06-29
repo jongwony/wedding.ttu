@@ -22,6 +22,12 @@ export default function Home() {
   const { isHyfilm } = useHyfilm();
 
   useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', isHyfilm ? 'hyfilm' : 'default');
+    }
+  }, [isHyfilm]);
+
+  useEffect(() => {
     async function fetchImages() {
       try {
         const res = isHyfilm ? await fetch("/api/hyfilm-carousel-images") : await fetch("/api/carousel-images");
@@ -69,9 +75,11 @@ export default function Home() {
     <div className="flex flex-col overflow-x-hidden text-center">
       <Hero />
 
-      <Invite />
-
       <Carousel images={imageList} />
+
+      <div className="w-screen h-screen" style={{ background: 'var(--boundary)' }}></div>
+
+      <Invite />
 
       <BrideGroomProfile />
 

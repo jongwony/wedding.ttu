@@ -199,7 +199,7 @@ const WeddingCountdown = () => {
         >
           <div className="decorative-dots"></div>
           {/* 제목 */}
-          <h2 className="text-3xl text-center mb-2 text-pink-500">
+          <h2 className="text-3xl text-center mb-2 text-[var(--header)]">
             종원 ❤️ 수경 결혼식까지
           </h2>
 

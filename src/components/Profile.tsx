@@ -9,7 +9,7 @@ const BrideGroomProfile = () => {
 
   return (
     <div className="flex flex-col items-center mt-32 mb-32">
-      <h2 className="text-3xl text-pink-500">신랑 신부를 소개합니다!</h2>
+      <h2 className="text-3xl text-[var(--header)]">신랑 신부를 소개합니다!</h2>
       <div className="mt-8 flex flex-row gap-2 justify-center items-center">
 
         {/* 신랑 정보 */}
@@ -24,12 +24,12 @@ const BrideGroomProfile = () => {
           <h3 className="text-blue-500 text-lg mt-4">
             신랑 최종원 <a href="tel:010-8514-0289">📞</a>
           </h3>
-          <p className="text-gray-600 mt-2 text-center">
+          <p className="text-[var(--subtitle)] mt-2 text-center">
             1991년생, 부산남자 <br />
             호기심 많은 사색가 ENTP
           </p>
-          <p className="text-gray-400 text-sm mt-2">#데이터엔지니어 #수학덕후</p>
-          <p className="text-gray-600 text-sm mt-2">최정환 · 김해숙 의 아들</p>
+          <p className="text-gray-500 text-sm mt-2">#데이터엔지니어 #수학덕후</p>
+          <p className="text-[var(--subtitle)] text-sm mt-2">최정환 · 김해숙 의 아들</p>
         </div>
 
         {/* 신부 정보 */}
@@ -44,12 +44,12 @@ const BrideGroomProfile = () => {
           <h3 className="text-yellow-500 text-lg mt-4">
             신부 윤수경 <a href="tel:010-8756-4189">📞</a>
           </h3>
-          <p className="text-gray-600 mt-2 text-center">
+          <p className="text-[var(--subtitle)] mt-2 text-center">
             1998년생, 서울여자 <br />
             현실적인 해결사 ISTJ
           </p>
-          <p className="text-gray-400 text-sm mt-2">#응급구조사 #책임감100%</p>
-          <p className="text-gray-600 text-sm mt-2">윤혁 · 이은영 의 딸</p>
+          <p className="text-gray-500 text-sm mt-2">#응급구조사 #책임감100%</p>
+          <p className="text-[var(--subtitle)] text-sm mt-2">윤혁 · 이은영 의 딸</p>
         </div>
       </div>
     </div>

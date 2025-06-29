@@ -28,6 +28,10 @@ export default function Hero() {
           loop
           muted
           playsInline
+          // @ts-ignore - Safari 전용 속성
+          webkit-playsinline="true"
+          controls={false}
+          preload="auto"
           draggable={false}
           tabIndex={-1}
           onMouseDown={(e) => e.preventDefault()}

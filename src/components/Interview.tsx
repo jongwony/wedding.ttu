@@ -140,7 +140,7 @@ const InterviewModal = () => {
             <h2 className="text-3xl text-pink-500 font-bold mb-2">
               💌 러브레터
             </h2>
-            <p className="text-gray-600 text-base leading-relaxed">
+            <p className="text-[var(--subtitle)] text-base leading-relaxed">
               신랑과 신부의 진솔한 이야기를
               <br />
               편지로 담았습니다
@@ -171,10 +171,10 @@ const InterviewModal = () => {
               >
                 {/* 편지 헤더 */}
                 <div className="text-center mb-8 pb-6 border-b-2 border-pink-200">
-                  <h3 className="text-2xl font-bold text-pink-500 mb-2">
+                  <h3 className="text-2xl font-bold text-[var(--header)] mb-2">
                     💝 신랑 신부 인터뷰
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-[var(--subtitle)]">
                     사랑이 담긴 진솔한 이야기
                   </p>
                 </div>

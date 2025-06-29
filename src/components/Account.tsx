@@ -76,16 +76,16 @@ const TransferButtons = () => {
         {/* 헤더 섹션 */}
         <div className="text-center mb-8">
           <div className="flex justify-center items-center mb-4">
-            <div className="h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent w-16"></div>
-            <div className="mx-4 text-pink-400">❤</div>
-            <div className="h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent w-16"></div>
+            <div className="h-px bg-gradient-to-r from-transparent via-[var(--header)] to-transparent w-16"></div>
+            <div className="mx-4 text-[var(--header)]">❤</div>
+            <div className="h-px bg-gradient-to-r from-transparent via-[var(--header)] to-transparent w-16"></div>
           </div>
 
-          <h2 className="text-2xl text-pink-500 font-light mb-3">
+          <h2 className="text-2xl text-[var(--header)] font-light mb-3">
             마음을 전해주세요
           </h2>
 
-          <p className="text-gray-600 text-base leading-relaxed">
+          <p className="text-[var(--subtitle)] text-base leading-relaxed">
             소중한 날 함께 해 주신다면 더할 나위 없이 기쁠 것입니다.
             <span className="block mt-3 mb-2">
               직접 참석이 어려우시더라도,
@@ -95,7 +95,7 @@ const TransferButtons = () => {
             </span>
           </p>
 
-          <p className="text-pink-400 text-sm mt-4 font-light">
+          <p className="text-[var(--header)] text-sm mt-4 font-light">
             진심으로 감사드립니다.
           </p>
         </div>
@@ -188,10 +188,6 @@ const TransferButtons = () => {
           ))}
         </div>
 
-        {/* 하단 장식 */}
-        <div className="flex justify-center items-center mt-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-pink-200 to-transparent w-full max-w-xs"></div>
-        </div>
       </GlassContainer>
     </div>
   );

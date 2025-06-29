@@ -23,7 +23,7 @@ export default function Hero() {
         <AnimationHeader />
         <video
           // src="/videos/flower.mp4"
-          src="/videos/snow.mp4"
+          src={isHyfilm ? "/videos/snow.mp4" : "/videos/flower.mp4"}
           autoPlay
           loop
           muted

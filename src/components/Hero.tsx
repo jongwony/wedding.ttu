@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <>
       <div
-        className="relative max-h-screen aspect-[9/16]"
+        className="relative max-h-screen min-w-full aspect-[9/16] overflow-hidden"
       >
         <Image
           src={isHyfilm ? resourcePaths.heroHyfilm : resourcePaths.heroImage}
@@ -28,7 +28,6 @@ export default function Hero() {
           loop
           muted
           playsInline
-          // @ts-ignore - Safari 전용 속성
           webkit-playsinline="true"
           controls={false}
           preload="auto"

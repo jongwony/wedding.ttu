@@ -1,5 +1,4 @@
 import GlassContainer from "./ui/GlassContainer";
-import resourcePaths from "../config/resourcePaths";
 
 const Invite = () => {
   return (

@@ -1,21 +1,43 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import GlassContainer from "./ui/GlassContainer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
+type ButtonLink = {
+  type: 'button';
+  label: string;
+  subtitle: string;
+  onClick: () => void;
+  bgColor: string;
+  color: string;
+  icon: string;
+};
+
+type ExternalLink = {
+  type: 'link';
+  label: string;
+  subtitle: string;
+  href: string;
+  bgColor: string;
+  color: string;
+  src: string;
+};
+
+type AccountLink = ButtonLink | ExternalLink;
+
 const TransferButtons = () => {
   const isMobile = useIsMobile(); // 모바일 환경 감지
-  const accountNumber = "토스뱅크 100151320105";
+  const [activeTab, setActiveTab] = useState("couple"); // 탭 상태 관리
 
-  const handleCopyAccount = async () => {
+  const handleCopyAccount = async (accountInfo: string) => {
     try {
-      await navigator.clipboard.writeText(accountNumber);
+      await navigator.clipboard.writeText(accountInfo);
       alert("계좌번호가 복사되었습니다!");
     } catch {
       // 브라우저가 클립보드 API를 지원하지 않는 경우
       const textArea = document.createElement("textarea");
-      textArea.value = accountNumber;
+      textArea.value = accountInfo;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
@@ -24,11 +46,53 @@ const TransferButtons = () => {
     }
   };
 
-  const links = [
+  const groomParentLinks: AccountLink[] = [
+    {
+      label: "신랑 아버지: 최정환",
+      subtitle: "KB국민은행 555302-91-121317",
+      onClick: () => handleCopyAccount("KB국민은행 55530291121317"),
+      bgColor: "bg-gray-100",
+      color: "text-gray-800",
+      icon: "📋",
+      type: "button"
+    },
+    {
+      label: "신랑 어머니: 김해숙",
+      subtitle: "부산은행 112-2306-8192-08",
+      onClick: () => handleCopyAccount("부산은행 1122306819208"),
+      bgColor: "bg-gray-100",
+      color: "text-gray-800",
+      icon: "📋",
+      type: "button"
+    },
+  ]
+
+  const brideParentLinks: AccountLink[] = [
+    {
+      label: "신부 아버지: 윤혁",
+      subtitle: "KB국민은행 555302-91-121317",
+      onClick: () => handleCopyAccount("KB국민은행 55530291121317"),
+      bgColor: "bg-gray-100",
+      color: "text-gray-800",
+      icon: "📋",
+      type: "button"
+    },
+    {
+      label: "신부 어머니: 이은영",
+      subtitle: "부산은행 112-2306-8192-08",
+      onClick: () => handleCopyAccount("부산은행 1122306819208"),
+      bgColor: "bg-gray-100",
+      color: "text-gray-800",
+      icon: "📋",
+      type: "button"
+    },
+  ]
+
+  const links: AccountLink[] = [
     {
       label: "계좌번호 복사",
       subtitle: "토스뱅크 1001-5132-0105",
-      onClick: handleCopyAccount,
+      onClick: () => handleCopyAccount("토스뱅크 100151320105"),
       bgColor: "bg-gray-100",
       color: "text-gray-800",
       icon: "📋",
@@ -62,6 +126,38 @@ const TransferButtons = () => {
       src: "/images/logo/kakaopay.png",
       type: "link"
     },
+  ];
+
+  // 탭에 따른 링크 선택
+  const getCurrentLinks = () => {
+    switch (activeTab) {
+      case "groom":
+        return groomParentLinks;
+      case "bride":
+        return brideParentLinks;
+      default:
+        return links;
+    }
+  };
+
+  // 현재 링크를 모바일 환경에 따라 필터링
+  const filteredLinks = getCurrentLinks().filter((link) => {
+    // 부모님 탭인 경우는 필터링하지 않음
+    if (activeTab === "groom" || activeTab === "bride") {
+      return true;
+    }
+    // 모바일이 아닌 경우 "계좌번호 복사" 버튼만 표시
+    if (!isMobile) {
+      return link.label === "계좌번호 복사";
+    }
+    // 모바일인 경우 모든 버튼 표시
+    return true;
+  });
+
+  const tabs = [
+    { id: "couple", label: "부부", icon: "💑" },
+    { id: "groom", label: "신랑 부모님", icon: "👨" },
+    { id: "bride", label: "신부 부모님", icon: "👩" },
   ];
 
   return (
@@ -100,18 +196,33 @@ const TransferButtons = () => {
           </p>
         </div>
 
+        {/* 탭 섹션 */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex bg-[var(--background)] rounded-full p-1 shadow-lg border border-[var(--border)] gap-2">
+            {tabs.map((tab) => (
+            <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`
+                  px-4 py-2 rounded-full text-xs transition-all duration-300 flex
+                  flex items-center justify-center
+                  ${
+                    activeTab === tab.id
+                      ? "bg-[var(--header)] text-[var(--background)] rounded-full shadow-md"
+                      : "text-[var(--subtitle)] hover:bg-[var(--header)] hover:text-[var(--background)]"
+                  }
+                `}
+              >
+                <span className="text-xs">{tab.icon}</span>
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* 버튼 섹션 */}
         <div className="space-y-2">
-          {links
-            .filter((link) => {
-              // 모바일이 아닌 경우 "계좌번호 복사" 버튼만 표시
-              if (!isMobile) {
-                return link.label === "계좌번호 복사";
-              }
-              // 모바일인 경우 모든 버튼 표시
-              return true;
-            })
-            .map((link, index) => (
+          {filteredLinks.map((link, index) => (
             <div key={index}>
               {link.type === "link" ? (
                 <Link

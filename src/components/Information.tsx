@@ -123,7 +123,7 @@ export default function InformationTabs() {
 
       {/* 탭 버튼 */}
       <div className="flex justify-center mt-4">
-        <div className="inline-flex bg-[var(--background)] rounded-full p-1 shadow-lg border border-[var(--border)]">
+        <div className="inline-flex bg-[var(--background)] rounded-full p-1 shadow-lg border border-[var(--border)] gap-2">
           {[
             { key: "subway", label: "지하철", icon: "🚊" },
             { key: "bus", label: "버스", icon: "🚌" },
@@ -132,8 +132,8 @@ export default function InformationTabs() {
             <button
               key={key}
               onClick={() => setActiveTab(key as TabType)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center ${activeTab === key
-                ? "bg-[var(--header)] text-white shadow-md"
+              className={`px-4 py-2 rounded-full transition-all duration-300 flex items-center ${activeTab === key
+                ? "bg-[var(--header)] text-[var(--background)] shadow-md"
                 : "text-[var(--subtitle)] hover:text-[var(--header)] hover:bg-[var(--background)]"
                 }`}
             >

@@ -160,7 +160,17 @@ const InterviewModal = () => {
 
         {/* 편지 모달 */}
         {isOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start z-50 overflow-y-auto p-4">
+          <div className="fixed inset-0 flex justify-center items-start z-50 overflow-y-auto p-2" style={{
+            /* Liquid Glass 배경 */
+            background: `var(--glass-bg)`,
+            /* Specular Highlights - 유리 반사광 효과 */
+            boxShadow: 'var(--glass-box-shadow)',
+            /* 유리 테두리 */
+            border: 'var(--glass-border)',
+            /* Backdrop Filter - 배경 블러 및 색상 강조 */
+            backdropFilter: 'var(--glass-backdrop)',
+            WebkitBackdropFilter: 'var(--glass-backdrop)',
+          }}>
             <div
               className={`w-full max-w-4xl mt-4 mb-8 ${isLetterOpening ? 'letter-opening' : ''}`}
             >
@@ -184,20 +194,20 @@ const InterviewModal = () => {
                 {/* 인터뷰 내용 - 모바일 최적화 */}
                 <div className="space-y-8">
                   {/* 질문 1 */}
-                  <div className="question-card bg-gradient-to-r from-pink-50 to-pink-100 rounded-xl p-6 border border-pink-200">
+                  <div className="question-card rounded-xl">
                     <h4 className="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
                       <span className="text-2xl">💗</span>
                       서로의 첫인상은 어땠나요?
                     </h4>
                     <div className="space-y-4 text-left">
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
                           <span className="md:ml-2">카페에서 처음 본날 환하게 웃고 있는 수경이가 너무 예뻤어요.</span>
                         </p>
                       </div>
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
@@ -208,20 +218,20 @@ const InterviewModal = () => {
                   </div>
 
                   {/* 질문 2 */}
-                  <div className="question-card bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
+                  <div className="question-card rounded-xl">
                     <h4 className="text-xl font-bold text-purple-600 mb-4 flex items-center gap-2">
                       <span className="text-2xl">💕</span>
                       결혼을 결심하게 된 계기가 있나요?
                     </h4>
                     <div className="space-y-4 text-left">
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
                           <span className="md:ml-2">수경이와 쇼핑하던 날, 그냥 평생 이렇게 같이 장보고 싶다 생각했어요.</span>
                         </p>
                       </div>
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
@@ -232,20 +242,20 @@ const InterviewModal = () => {
                   </div>
 
                   {/* 질문 3 */}
-                  <div className="question-card bg-gradient-to-r from-rose-50 to-rose-100 rounded-xl p-6 border border-rose-200">
+                  <div className="question-card rounded-xl">
                     <h4 className="text-xl font-bold text-rose-600 mb-4 flex items-center gap-2">
                       <span className="text-2xl">🌹</span>
                       30년 후 두 사람은 어떤 모습일 것 같나요?
                     </h4>
                     <div className="space-y-4 text-left">
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
                           <span className="md:ml-2">손잡고 석촌호수를 돌고 있을 것 같아요.</span>
                         </p>
                       </div>
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
@@ -256,20 +266,20 @@ const InterviewModal = () => {
                   </div>
 
                   {/* 질문 4 */}
-                  <div className="question-card bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-6 border border-indigo-200">
+                  <div className="question-card rounded-xl">
                     <h4 className="text-xl font-bold text-indigo-600 mb-4 flex items-center gap-2">
                       <span className="text-2xl">💒</span>
                       결혼생활에 대한 한마디
                     </h4>
                     <div className="space-y-4 text-left">
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
                           <span className="md:ml-2">수경이가 저의 평생 1순위로 살겠습니다.</span>
                         </p>
                       </div>
-                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />

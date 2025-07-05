@@ -77,35 +77,36 @@ export default function Home() {
 
       <Carousel images={imageList} />
 
-      <div className="w-screen h-[25vh]" style={{ background: 'var(--boundary)' }}></div>
+      <div className="w-screen h-[8vh]" style={{ background: 'var(--boundary)' }}></div>
+      <div className="w-screen h-[8vh]"></div>
 
       <Invite />
 
-      <div className="w-screen h-[25vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       <BrideGroomProfile />
 
-      <div className="w-screen h-[25vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       <InterviewModal />
 
-      <div className="w-screen h-[25vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       <WeddingCountdown />
 
-      <div className="w-screen h-[25vh]"></div>
+        <div className="w-screen h-[16vh]"></div>
 
       <CalendarEventActions />
 
-      <div className="w-screen h-[25vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       <InformationTabs />
 
-      <div className="w-screen h-[25vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       <TransferButtons />
 
-      <div className="w-screen h-[25vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       {/* <AddToAppleWalletButton /> */}
 

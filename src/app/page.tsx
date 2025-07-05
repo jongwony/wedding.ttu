@@ -94,7 +94,7 @@ export default function Home() {
 
       <WeddingCountdown />
 
-        <div className="w-screen h-[16vh]"></div>
+      <div className="w-screen h-[16vh]"></div>
 
       <CalendarEventActions />
 

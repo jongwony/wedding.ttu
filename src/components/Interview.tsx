@@ -197,21 +197,21 @@ const InterviewModal = () => {
                   <div className="question-card rounded-xl">
                     <h4 className="text-xl font-bold text-pink-600 mb-4 flex items-center gap-2">
                       <span className="text-2xl">💗</span>
-                      서로의 첫인상은 어땠나요?
+                      서로의 첫 인상은 어땠나요?
                     </h4>
                     <div className="space-y-4 text-left">
                       <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">카페에서 처음 본날 환하게 웃고 있는 수경이가 너무 예뻤어요.</span>
+                          <span className="md:ml-2">처음 카페에서 만난 수경이의 밝은 미소가 아직도 기억에 남아요. 그 미소를 보는 순간 괜히 마음이 설레더라고요. 그리고 수경이와 이야기를 나누다 보니, 자연스럽게 더 알고 싶다는 생각이 들었습니다.</span>
                         </p>
                       </div>
                       <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">처음엔 수염때문에 무서웠는데 한없이 귀여운 사람이었어요.</span>
+                          <span className="md:ml-2">솔직히… 처음엔 수염도 있고 인상이 조금 강해서 살짝 무서웠어요. 근데 자꾸 보다 보니까 잘생겼다? 싶었고, 알고 보니 정말 따뜻한 사람이었어요!</span>
                         </p>
                       </div>
                     </div>
@@ -228,14 +228,14 @@ const InterviewModal = () => {
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">수경이와 쇼핑하던 날, 그냥 평생 이렇게 같이 장보고 싶다 생각했어요.</span>
+                          <span className="md:ml-2">수경이와 함께 있을 때면 사소한 일상도 특별하게 느껴졌어요. 가끔 티격태격해도, 그 순간조차 우리 미래를 그리게 해줬죠. 결혼 준비를 하면서 평생 이 사람과 함께할 수 있겠다는 확신이 들었습니다.</span>
                         </p>
                       </div>
                       <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">티쳐스 프로그램을 보는데 배우면서 오빠와의 미래를 꿈꾸게 됐어요.</span>
+                          <span className="md:ml-2">특별한 계기보다는, 함께한 평범한 순간들이 마음을 바꿨어요. 꾸미지 않은 나의 모습까지 따뜻하게 바라봐 주는 사람과 함께 있는 시간이 참 좋았고, 이 순간이 오래 계속되길 바라는 마음이 어느새 함께할 미래를 그리고, 그 미래를 함께하고 싶다는 결심으로 이어졌어요.</span>
                         </p>
                       </div>
                     </div>
@@ -252,14 +252,14 @@ const InterviewModal = () => {
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">손잡고 석촌호수를 돌고 있을 것 같아요.</span>
+                          <span className="md:ml-2">아마 아이들과 함께 시끌벅적하게, 주말마다 여기저기 여행 다니며 소소한 행복을 나누고 있을 것 같아요. 여전히 수경이 손 꼭 잡고 다니면서요.</span>
                         </p>
                       </div>
                       <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">오빠랑 손잡고 산책할래요!</span>
+                          <span className="md:ml-2">늙어서도 쉬는 날이면 둘이 손잡고 예쁜 카페를 찾아다닐 것 같아요. 오빠는 노트북 펴서 코딩하고, 저는 그 옆에서 맛있는 빵을 먹으며 함께 있는 시간을 즐기고 있겠죠.</span>
                         </p>
                       </div>
                     </div>
@@ -276,14 +276,14 @@ const InterviewModal = () => {
                         <p className="text-gray-700">
                           <span className="font-bold text-blue-600">🤵 신랑:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">수경이가 저의 평생 1순위로 살겠습니다.</span>
+                          <span className="md:ml-2">수경이가 제 인생의 1순위라는 마음은 앞으로도 변치 않을 거예요. 함께하는 모든 순간을 소중히 여기며 사랑할게요</span>
                         </p>
                       </div>
                       <div className="rounded-lg pt-4 pb-4">
                         <p className="text-gray-700">
                           <span className="font-bold text-pink-600">👰 신부:</span>
                           <br className="md:hidden" />
-                          <span className="md:ml-2">오빠의 노력과 능력을 인정하며 언제나 응원할게요.</span>
+                          <span className="md:ml-2"> 오빠의 노력과 능력을 인정하며, 언제나 든든한 편이 되어줄게요.</span>
                         </p>
                       </div>
                     </div>

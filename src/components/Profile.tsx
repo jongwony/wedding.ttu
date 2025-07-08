@@ -15,7 +15,7 @@ const BrideGroomProfile = () => {
         {/* 신랑 정보 */}
         <div className="flex flex-col items-center">
           <Image
-            src={resourcePaths.profileImages.groom}
+            src={isHyfilm ? resourcePaths.profileImagesHyfilm.groom : resourcePaths.profileImages.groom}
             alt="신랑 최종원"
             width={300}
             height={300}

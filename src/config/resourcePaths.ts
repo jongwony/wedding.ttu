@@ -1,13 +1,13 @@
 const resourcePaths = {
-  heroImage: "/images/DSC07684.jpg.webp",
+  heroImage: "/images/06~07_DSC07684  2p용.jpg.webp",
   heroHyfilm: "/images/hyfilm/하연필름_0409_필름색감88.jpg.webp",
   profileImages: {
-    bride: "/images/profile/mobile/DSC07705.jpg-mobile.webp",
-    groom: "/images/profile/mobile/DSC08024.jpg-mobile-flipped.webp"
+    bride: "/images/profile/mobile/03_DSC07705.jpg-mobile.webp",
+    groom: "/images/profile/mobile/24_DSC08417.jpg-mobile.webp"
   },
   profileImagesHyfilm: {
     bride: "/images/hyfilm/mobile/profile/하연필름_0409_색감원본675.JPG-mobile.webp",
-    groom: "/images/profile/mobile/DSC08024.jpg-mobile-flipped.webp"
+    groom: "/images/profile/mobile/15_DSC08043.jpg-mobile.webp"
   },
   carouselImages: "/images/carousel/mobile",
   carouselImagesHyfilm: "/images/hyfilm/mobile/carousel",

@@ -69,7 +69,7 @@ const TransferButtons = () => {
 
   const brideParentLinks: AccountLink[] = [
     {
-      label: "신부 아버지: 윤혁",
+      label: "신부 아버지: 윤 혁",
       subtitle: "우리은행 1002-440-342943",
       onClick: () => handleCopyAccount("우리은행 1002440342943"),
       bgColor: "bg-gray-100",

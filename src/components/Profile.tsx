@@ -49,7 +49,7 @@ const BrideGroomProfile = () => {
             현실적인 해결사 ISTJ
           </p>
           <p className="text-gray-500 text-sm mt-2">#응급구조사 #책임감100%</p>
-          <p className="text-[var(--subtitle)] text-sm mt-2">윤혁 · 이은영 의 딸</p>
+          <p className="text-[var(--subtitle)] text-sm mt-2">윤 혁 · 이은영 의 딸</p>
         </div>
       </div>
     </div>

@@ -166,18 +166,18 @@ const WeddingCountdown = () => {
           position: relative;
         }
 
-        .time-unit {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          animation: cloudFloat 6s ease-in-out infinite;
-        }
+        // .time-unit {
+        //   position: relative;
+        //   display: flex;
+        //   flex-direction: column;
+        //   align-items: center;
+        //   animation: cloudFloat 6s ease-in-out infinite;
+        // }
 
-        .time-unit:nth-child(1) { animation-delay: 0s; }
-        .time-unit:nth-child(2) { animation-delay: 1.5s; }
-        .time-unit:nth-child(3) { animation-delay: 3s; }
-        .time-unit:nth-child(4) { animation-delay: 4.5s; }
+        // .time-unit:nth-child(1) { animation-delay: 0s; }
+        // .time-unit:nth-child(2) { animation-delay: 1.5s; }
+        // .time-unit:nth-child(3) { animation-delay: 3s; }
+        // .time-unit:nth-child(4) { animation-delay: 4.5s; }
 
         .time-circle {
           position: relative;
@@ -290,7 +290,7 @@ const WeddingCountdown = () => {
 
         .title-container {
           position: relative;
-          animation: gentleBreathe 5s ease-in-out infinite;
+          // animation: gentleBreathe 5s ease-in-out infinite;
         }
 
         @media (max-width: 768px) {

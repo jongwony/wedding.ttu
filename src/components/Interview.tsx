@@ -77,7 +77,7 @@ const InterviewModal = () => {
         .envelope-button {
           transition: all 0.3s ease;
           transform: translateY(-1px);
-          animation: heartBeat 3s ease-in-out infinite;
+          // animation: heartBeat 3s ease-in-out infinite;
         }
 
         .letter-content {

@@ -9,7 +9,6 @@
   --header: #ec4899;
   --border: #fce7f3;
   --subtitle: #4b5563;
-  --boundary: #ffffff;
   --glass-bg: linear-gradient(135deg,
       rgba(255, 255, 255, 0.9) 0%,
       rgba(248, 250, 252, 0.8) 50%,
@@ -25,13 +24,10 @@
   /* --background: #101010fe; */
   --background: #ffffff;
   --foreground: #171717;
-  --fadeout: #171717;
+  --fadeout: #ffffff;
   --header: #ec4899;
   --border: #fce7f3;
   --subtitle: #4b5563;
-  --boundary: linear-gradient(180deg,
-      #101010ff 0%,
-      #ffffffff 100%);
   --glass-bg: linear-gradient(135deg,
       rgba(255, 255, 255, 0.9) 0%,
       rgba(248, 250, 252, 0.8) 50%,

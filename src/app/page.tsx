@@ -77,7 +77,7 @@ export default function Home() {
 
       <Carousel images={imageList} />
 
-      <div className="w-screen h-[8vh]" style={{ background: 'var(--boundary)' }}></div>
+      <div className="w-screen h-[8vh]"></div>
       <div className="w-screen h-[8vh]"></div>
 
       <Invite />

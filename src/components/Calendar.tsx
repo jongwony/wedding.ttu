@@ -47,7 +47,7 @@ END:VCALENDAR`;
 
 const CalendarEventActions = () => {
   const eventDetails = {
-    title: "Jongwon ❤️ Ttu 💍",
+    title: "Choi ❤️ Ttu 💍",
     startDate: "20251019T030000Z",
     endDate: "20251019T060000Z",
     description: "소중한 시간을 내어 참석해 주셔서 진심으로 감사드립니다. 💖",

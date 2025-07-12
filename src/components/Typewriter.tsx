@@ -2,7 +2,6 @@ import { ChevronsDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function AnimationHeader() {
-  // const [sparkle, setSparkle] = useState(false);
   const [showed, setShowed] = useState(false);
 
   useEffect(() => {
@@ -12,21 +11,17 @@ export default function AnimationHeader() {
 
   }, [showed])
 
-
-  // 컴포넌트가 처음 마운트되면 animate 상태를 true로 변경
-  useEffect(() => {
-    // 2초 후에 sparkle 클래스 추가 (타이핑 애니메이션 완료 직후)
-    const timer = setTimeout(() => {
-      // setSparkle(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="flex justify-center">
-      <div className={`absolute top-20 z-1`}>
+      <div className={`absolute top-20 z-1 p-4`}>
         {/* 옵션 1: 텍스트 그림자만 사용 */}
-        <h1 className={`p-4 sm:text-4xl text-3xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
+        <h1 className={`p-2 pb-4 sm:text-4xl text-3xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter`} style={{
+          background: 'var(--hero)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          filter: 'var(--hero-drop-shadow)',
+        }}>
           We&rsquo;re getting Married!
         </h1>
         <p className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center">
@@ -85,7 +80,6 @@ export default function AnimationHeader() {
           animation: typewriter 2s steps(120) forwards;
         }
       `}</style>
-
-    </div >
+    </div>
   );
 }

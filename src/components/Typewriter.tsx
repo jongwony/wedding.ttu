@@ -15,8 +15,8 @@ export default function AnimationHeader() {
     <div className="flex justify-center">
       <div className={`absolute top-20 z-1 p-4`}>
         {/* 옵션 1: 텍스트 그림자만 사용 */}
-        <h1 className={`p-2 pb-4 sm:text-4xl text-3xl text-white whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter`} style={{
-          background: 'var(--hero)',
+        <h1 className={`p-2 sm:text-[2.5em] text-[2em] whitespace-nowrap overflow-hidden font-goldenplains font-extraBold typewriter`} style={{
+          background: 'white',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
@@ -24,7 +24,13 @@ export default function AnimationHeader() {
         }}>
           We&rsquo;re getting Married!
         </h1>
-        <p className="text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] text-center">
+        <p className="text-[var(--hero-subtitle)] sm:text-[1.2em] text-[1em]" style={{
+          background: 'white',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          filter: 'var(--hero-drop-shadow)',
+        }}>
           2025년 10월 19일 일요일 오후 12시
         </p>
       </div>

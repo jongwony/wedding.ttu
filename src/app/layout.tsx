@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description: description,
     images: [
       {
-        url: "https://wedding.ttu.world/images/og_image.jpg",
+        url: "https://wedding.ttu.world/images/og_image.jpg.webp",
         width: 1200,
         height: 630,
         alt: title,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: title,
     description: description,
-    images: ["https://wedding.ttu.world/images/og_image.jpg"],
+    images: ["https://wedding.ttu.world/images/og_image.jpg.webp"],
   },
 };
 

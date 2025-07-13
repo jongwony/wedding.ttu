@@ -1,18 +1,36 @@
 "use client";
 import { useHyfilm } from "@/hooks/useHyfilm";
+import LiquidGlass from "./ui/LiquidGlass";
 
 export default function Navbar() {
   const { isHyfilm, toggleHyfilm } = useHyfilm();
 
+  const handleButtonClick = () => {
+    toggleHyfilm();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
-    <nav className="fixed z-10 w-full left-1/2 transform -translate-x-1/2">
-      <div className="py-4 flex justify-end items-center">
-        <button
-          onClick={toggleHyfilm}
-          className={`px-3 py-1 mx-4 rounded-full text-sm font-medium transition-all duration-300 bg-[var(--background)] text-[var(--foreground)] shadow-md`}
-        >
-          {isHyfilm ? '📸 Soopia' : '💒 Saaii'}
-        </button>
+    <nav
+      className="fixed z-10 w-full left-1/2 transform -translate-x-1/2 bottom-4"
+    >
+      <div
+        className="py-4 flex justify-center items-center"
+      >
+        <LiquidGlass width={92} height={36}>
+          <button
+            onClick={handleButtonClick}
+          >
+            <span
+              className="text-md font-medium relative transition-all duration-300 ease-out"
+            >
+              {isHyfilm ? '📸 Soopia' : '💒 Saaii'}
+            </span>
+          </button>
+        </LiquidGlass>
       </div>
     </nav>
   );

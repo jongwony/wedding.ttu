@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
-import { ChevronsRight, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronsRight, X } from "lucide-react";
 import { useHyfilm } from "@/hooks/useHyfilm";
 
 interface CarouselProps {
@@ -15,6 +15,7 @@ export default function Carousel({ images }: CarouselProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const modalScrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -34,6 +35,35 @@ export default function Carousel({ images }: CarouselProps) {
     return () => container.removeEventListener("scroll", handleScroll);
   }, [hasScrolled]);
 
+  // 모달이 열릴 때 선택된 이미지로 즉시 이동
+  useEffect(() => {
+    if (isModalOpen && modalScrollContainerRef.current) {
+      const container = modalScrollContainerRef.current;
+      const imageWidth = container.scrollWidth / images.length;
+      container.scrollTo({
+        left: selectedImageIndex * imageWidth,
+        behavior: 'instant'
+      });
+    }
+  }, [isModalOpen, selectedImageIndex, images.length]);
+
+  // 모달 스크롤 이벤트 핸들러
+  useEffect(() => {
+    const container = modalScrollContainerRef.current;
+    if (!container) return;
+
+    const handleModalScroll = () => {
+      const imageWidth = container.scrollWidth / images.length;
+      const currentIndex = Math.round(container.scrollLeft / imageWidth);
+      // 인덱스 범위 체크
+      const clampedIndex = Math.max(0, Math.min(currentIndex, images.length - 1));
+      setSelectedImageIndex(clampedIndex);
+    };
+
+    container.addEventListener("scroll", handleModalScroll);
+    return () => container.removeEventListener("scroll", handleModalScroll);
+  }, [images.length]);
+
   // 모달 관련 이벤트 핸들러
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
@@ -44,33 +74,13 @@ export default function Carousel({ images }: CarouselProps) {
     setIsModalOpen(false);
   };
 
-  const goToPrevious = () => {
-    setSelectedImageIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
-  };
-
-  const goToNext = () => {
-    setSelectedImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
-  };
-
   // 키보드 이벤트 핸들러
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isModalOpen) return;
 
-      switch (e.key) {
-        case 'Escape':
-          closeModal();
-          break;
-        case 'ArrowLeft':
-          goToPrevious();
-          break;
-        case 'ArrowRight':
-          goToNext();
-          break;
+      if (e.key === 'Escape') {
+        closeModal();
       }
     };
 
@@ -85,10 +95,6 @@ export default function Carousel({ images }: CarouselProps) {
     } else {
       document.body.style.overflow = 'unset';
     }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isModalOpen]);
 
   return (
@@ -140,7 +146,7 @@ export default function Carousel({ images }: CarouselProps) {
           />
 
           {/* 모달 콘텐츠 */}
-          <div className="relative max-w-full max-h-full p-4">
+          <div className="relative w-full h-full flex items-center justify-center">
             {/* 닫기 버튼 */}
             <button
               onClick={closeModal}
@@ -149,38 +155,34 @@ export default function Carousel({ images }: CarouselProps) {
               <X size={24} />
             </button>
 
-            {/* 이전 버튼 */}
-            <button
-              onClick={goToPrevious}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-all"
+            {/* 스와이프 가능한 이미지 컨테이너 */}
+            <div
+              className="overflow-x-auto scroll-smooth snap-x snap-mandatory w-full h-full"
+              ref={modalScrollContainerRef}
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
+              }}
             >
-              <ChevronLeft size={24} />
-            </button>
+              <div className="flex h-full">
+                {images.map((src, index) => (
+                  <div key={index} className="flex-shrink-0 w-[80%] snap-center flex items-center justify-center p-4">
+                    <Image
+                      src={src}
+                      alt={`확대된 이미지 ${index + 1}`}
+                      quality={100}
+                      width={1200}
+                      height={800}
+                      className="max-w-full max-h-[90vh] object-contain"
+                      priority={index === selectedImageIndex}
+                    />
+                  </div>
+                ))}
+              </div>
 
-            {/* 다음 버튼 */}
-            <button
-              onClick={goToNext}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-all"
-            >
-              <ChevronRight size={24} />
-            </button>
-
-            {/* 확대된 이미지 */}
-            <div className="relative">
-              <Image
-                src={images[selectedImageIndex]}
-                alt={`확대된 이미지 ${selectedImageIndex + 1}`}
-                quality={100}
-                width={1200}
-                height={800}
-                className="max-w-full max-h-[90vh] object-contain"
-                priority
-              />
-            </div>
-
-            {/* 이미지 카운터 */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-black bg-opacity-50 px-3 py-1 rounded-full text-sm">
-              {selectedImageIndex + 1} / {images.length}
+              {/* 좌우 그라데이션 효과로 다음 이미지 힌트 */}
+              <div className="absolute left-0 top-0 w-12 h-full bg-gradient-to-r from-black from-0% to-transparent to-100% opacity-30 pointer-events-none"></div>
+              <div className="absolute right-0 top-0 w-12 h-full bg-gradient-to-l from-black from-0% to-transparent to-100% opacity-30 pointer-events-none"></div>
             </div>
           </div>
         </div>

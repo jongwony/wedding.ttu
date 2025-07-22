@@ -9,11 +9,18 @@ on:
         required: true
         default: "Update the API documentation in README.md to reflect the changes made to the API endpoints in this PR."
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
   claude-response:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the repository
+      - uses: actions/checkout@v4
+      
       # Generate a token from your custom app
       - name: Generate GitHub App token
         id: app-token

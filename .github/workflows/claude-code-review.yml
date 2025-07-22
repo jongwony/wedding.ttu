@@ -18,6 +18,9 @@ jobs:
   claude-response:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the repository
+      - uses: actions/checkout@v4
+      
       # Generate a token from your custom app
       - name: Generate GitHub App token
         id: app-token

@@ -9,6 +9,10 @@ on:
         required: true
         default: "Update the API documentation in README.md to reflect the changes made to the API endpoints in this PR."
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
   claude-response:

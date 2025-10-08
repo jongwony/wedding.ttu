@@ -43,7 +43,7 @@ const Kakaomap: React.FC = () => {
       center: coords,
       level: 3, // 확대 레벨
       draggable: false, // 드래그 비활성화
-      zoomable: true, // 줌 활성화
+      zoomable: false, // 줌 활성화
       scrollwheel: false, // 마우스 휠 줌 비활성화
       disableDoubleClick: true, // 더블클릭 비활성화
       disableDoubleClickZoom: true, // 더블클릭 줌 비활성화

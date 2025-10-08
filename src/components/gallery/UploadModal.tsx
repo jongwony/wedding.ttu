@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { X, Upload, Image as ImageIcon, Video, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { MediaItem } from "./GalleryItem";
@@ -24,6 +24,10 @@ const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const MAX_FILES = 50;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/x-msvideo"];
+const ALLOWED_EXTENSIONS = {
+  image: ['.jpg', '.jpeg', '.png', '.webp', '.gif'],
+  video: ['.mp4', '.mov', '.avi']
+};
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jongwony.com";
 
 export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
@@ -32,12 +36,19 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [globalError, setGlobalError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const readersRef = useRef<FileReader[]>([]);
 
   const validateFile = (file: File): string | null => {
+    // 1. 파일 크기 검증
     if (file.size > MAX_FILE_SIZE) {
       return "파일 크기는 50MB 이하여야 합니다";
     }
 
+    if (file.size === 0) {
+      return "빈 파일은 업로드할 수 없습니다";
+    }
+
+    // 2. MIME type 검증
     const isImage = ACCEPTED_IMAGE_TYPES.includes(file.type);
     const isVideo = ACCEPTED_VIDEO_TYPES.includes(file.type);
 
@@ -45,44 +56,84 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
       return "이미지 또는 동영상 파일만 업로드 가능합니다";
     }
 
+    // 3. 파일 확장자 검증
+    const ext = file.name.toLowerCase().match(/\.[^.]+$/)?.[0];
+    if (!ext) {
+      return "파일 확장자가 없습니다";
+    }
+
+    const allowedExts = isImage
+      ? ALLOWED_EXTENSIONS.image
+      : ALLOWED_EXTENSIONS.video;
+
+    if (!allowedExts.includes(ext)) {
+      return `허용되지 않는 파일 확장자입니다: ${ext}`;
+    }
+
+    // 4. 파일명 길이 검증
+    if (file.name.length > 255) {
+      return "파일명이 너무 깁니다 (최대 255자)";
+    }
+
+    // 5. 위험한 문자 검사
+    if (/[<>:"|?*\x00-\x1f]/.test(file.name)) {
+      return "파일명에 허용되지 않는 문자가 포함되어 있습니다";
+    }
+
     return null;
   };
 
-  const addFiles = (newFiles: FileList | File[]) => {
+  const addFiles = useCallback((newFiles: FileList | File[]) => {
     const fileArray = Array.from(newFiles);
-    const currentCount = files.size;
 
-    if (currentCount + fileArray.length > MAX_FILES) {
-      setGlobalError(`최대 ${MAX_FILES}개의 파일만 업로드할 수 있습니다`);
-      return;
-    }
+    setFiles((prev) => {
+      const currentCount = prev.size;
 
-    setGlobalError("");
-
-    fileArray.forEach((file) => {
-      const error = validateFile(file);
-      if (error) {
-        setGlobalError(error);
-        return;
+      if (currentCount + fileArray.length > MAX_FILES) {
+        setGlobalError(`최대 ${MAX_FILES}개의 파일만 업로드할 수 있습니다`);
+        return prev;
       }
 
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setFiles((prev) => {
-          const newMap = new Map(prev);
-          newMap.set(file.name, {
-            file,
-            preview: e.target?.result as string,
-            progress: 0,
-            status: "pending",
+      setGlobalError("");
+
+      fileArray.forEach((file) => {
+        const error = validateFile(file);
+        if (error) {
+          setGlobalError(error);
+          return;
+        }
+
+        // Create preview
+        const reader = new FileReader();
+        readersRef.current.push(reader);
+
+        reader.onload = (e) => {
+          // Remove from ref after completion
+          readersRef.current = readersRef.current.filter(r => r !== reader);
+
+          setFiles((prevFiles) => {
+            const newMap = new Map(prevFiles);
+            newMap.set(file.name, {
+              file,
+              preview: e.target?.result as string,
+              progress: 0,
+              status: "pending",
+            });
+            return newMap;
           });
-          return newMap;
-        });
-      };
-      reader.readAsDataURL(file);
+        };
+
+        reader.onerror = () => {
+          readersRef.current = readersRef.current.filter(r => r !== reader);
+          setGlobalError(`${file.name} 미리보기 생성 실패`);
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      return prev;
     });
-  };
+  }, []);
 
   const removeFile = (filename: string) => {
     setFiles((prev) => {
@@ -110,7 +161,24 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     if (droppedFiles.length > 0) {
       addFiles(droppedFiles);
     }
-  }, [files.size]);
+  }, [addFiles]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    const currentFiles = files;
+
+    return () => {
+      // Abort all ongoing reads
+      readersRef.current.forEach(reader => reader.abort());
+
+      // Revoke object URLs to free memory
+      currentFiles.forEach((fileState) => {
+        if (fileState.preview.startsWith('blob:')) {
+          URL.revokeObjectURL(fileState.preview);
+        }
+      });
+    };
+  }, [files]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -170,6 +238,29 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     });
   };
 
+  interface UploadInfo {
+    uploadId: string;
+    filename: string;
+    presignedUrl: string;
+    s3Key: string;
+  }
+
+  interface CompleteResponseItem {
+    id: string;
+    type: 'image' | 'video';
+    original_url: string;
+    optimized_url?: string;
+    thumbnail_url?: string;
+    likes?: number;
+    uploaded_at: string;
+  }
+
+  interface CompleteResponse {
+    items: CompleteResponseItem[];
+    success: number;
+    failed: number;
+  }
+
   const handleUpload = async () => {
     if (files.size === 0) return;
 
@@ -178,7 +269,6 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
     try {
       // Step 1: Initialize upload
-      console.log(API_BASE_URL)
       const filesArray = Array.from(files.values());
       const initResponse = await fetch(`${API_BASE_URL}/iac/gallery/v1/upload/init`, {
         method: "POST",
@@ -196,10 +286,10 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         throw new Error("업로드 초기화 실패");
       }
 
-      const { uploads } = await initResponse.json();
+      const { uploads }: { uploads: UploadInfo[] } = await initResponse.json();
 
       // Step 2: Upload to S3 (parallel)
-      const uploadPromises = uploads.map((upload: any) => {
+      const uploadPromises = uploads.map((upload: UploadInfo) => {
         const fileState = files.get(upload.filename);
         if (!fileState) {
           return Promise.reject(new Error(`File ${upload.filename} not found`));
@@ -214,8 +304,18 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         .filter((r): r is PromiseFulfilledResult<{ uploadId: string; s3Key: string }> => r.status === "fulfilled")
         .map((r) => r.value);
 
+      const failedUploads = uploadResults
+        .map((r, idx) => r.status === 'rejected' ? uploads[idx].filename : null)
+        .filter(Boolean);
+
       if (successfulUploads.length === 0) {
         throw new Error("모든 파일 업로드 실패");
+      }
+
+      if (failedUploads.length > 0) {
+        setGlobalError(
+          `${failedUploads.length}개 파일 업로드 실패: ${failedUploads.join(', ')}`
+        );
       }
 
       const completeResponse = await fetch(`${API_BASE_URL}/iac/gallery/v1/upload/complete`, {
@@ -228,10 +328,10 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         throw new Error("업로드 완료 처리 실패");
       }
 
-      const result = await completeResponse.json();
+      const result: CompleteResponse = await completeResponse.json();
 
       // Convert API response to MediaItem format
-      const newItems: MediaItem[] = result.items.map((item: any) => ({
+      const newItems: MediaItem[] = result.items.map((item: CompleteResponseItem) => ({
         id: item.id,
         type: item.type,
         src: item.optimized_url || item.original_url,
@@ -240,7 +340,10 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         uploadedAt: item.uploaded_at,
       }));
 
-      onSuccess(newItems);
+      // Short delay to show success message
+      setTimeout(() => {
+        onSuccess(newItems);
+      }, 500);
     } catch (error) {
       console.error("Upload failed:", error);
       setGlobalError("업로드에 실패했습니다. 다시 시도해주세요.");

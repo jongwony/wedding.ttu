@@ -9,24 +9,50 @@ import UploadModal from "./UploadModal";
 const ITEMS_PER_PAGE = 30;
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jongwony.com";
 
+interface ApiMediaItem {
+  id: string;
+  type: string;
+  src: string;
+  likes: number;
+  uploadedAt: string;
+  thumbnail?: string;
+}
+
+function validateMediaItem(item: unknown): item is MediaItem {
+  const candidate = item as ApiMediaItem;
+  return (
+    typeof candidate.id === 'string' &&
+    (candidate.type === 'image' || candidate.type === 'video') &&
+    typeof candidate.src === 'string' &&
+    typeof candidate.likes === 'number' &&
+    typeof candidate.uploadedAt === 'string'
+  );
+}
+
 export default function ExploreGallery() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
+  const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
+  const isLoadingRef = useRef(false);
 
   // Load initial items
   useEffect(() => {
     loadMore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadMore = useCallback(async () => {
-    if (isLoading || !hasMore) return;
+    if (isLoadingRef.current || !hasMore) return;
 
+    isLoadingRef.current = true;
     setIsLoading(true);
+    setError(null);
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/iac/gallery/v1/items?page=${page}&limit=${ITEMS_PER_PAGE}`
@@ -35,7 +61,12 @@ export default function ExploreGallery() {
       if (!response.ok) throw new Error("Failed to fetch items");
 
       const data = await response.json();
-      const newItems: MediaItem[] = data.items || [];
+      const rawItems: unknown[] = data.items || [];
+      const newItems: MediaItem[] = rawItems.filter(validateMediaItem);
+
+      if (newItems.length !== rawItems.length) {
+        console.warn('Some items failed validation');
+      }
 
       if (newItems.length === 0 || newItems.length < ITEMS_PER_PAGE) {
         setHasMore(false);
@@ -45,12 +76,13 @@ export default function ExploreGallery() {
       setPage((prev) => prev + 1);
     } catch (error) {
       console.error("Failed to load gallery items:", error);
-      // For development, show empty state or mock data
+      setError("사진을 불러오는데 실패했습니다. 다시 시도해주세요.");
       setHasMore(false);
     } finally {
       setIsLoading(false);
+      isLoadingRef.current = false;
     }
-  }, [isLoading, hasMore, page]);
+  }, [hasMore, page]);
 
   // Infinite scroll observer
   useEffect(() => {
@@ -76,19 +108,28 @@ export default function ExploreGallery() {
   }, [loadMore, isLoading, hasMore]);
 
   const handleLike = async (id: string) => {
+    // Optimistic update
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, likes: item.likes + 1 } : item
+      )
+    );
+
     try {
-      await fetch(`${API_BASE_URL}/iac/gallery/v1/items/${id}/like`, {
+      const response = await fetch(`${API_BASE_URL}/iac/gallery/v1/items/${id}/like`, {
         method: "POST",
       });
 
-      // Optimistically update UI
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, likes: item.likes + 1 } : item
-        )
-      );
+      if (!response.ok) throw new Error('Like failed');
     } catch (error) {
       console.error("Failed to like item:", error);
+
+      // Rollback on error
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, likes: item.likes - 1 } : item
+        )
+      );
     }
   };
 
@@ -117,7 +158,20 @@ export default function ExploreGallery() {
 
       {/* Gallery Grid */}
       <div className="container mx-auto px-1 py-4 md:px-4">
-        {items.length === 0 && !isLoading ? (
+        {/* Error message */}
+        {error && (
+          <div className="flex flex-col items-center justify-center py-8 text-red-600">
+            <p>{error}</p>
+            <button
+              onClick={() => { setError(null); setHasMore(true); loadMore(); }}
+              className="mt-2 rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
+            >
+              다시 시도
+            </button>
+          </div>
+        )}
+
+        {items.length === 0 && !isLoading && !error ? (
           <div className="flex min-h-[50vh] items-center justify-center text-gray-500">
             <div className="text-center">
               <p className="text-lg">아직 업로드된 사진이 없습니다</p>
@@ -153,7 +207,7 @@ export default function ExploreGallery() {
         <div ref={observerTarget} className="h-10" />
 
         {/* No more items */}
-        {!hasMore && items.length > 0 && (
+        {!hasMore && items.length > 0 && !error && (
           <div className="flex justify-center py-8 text-gray-500">
             <p>모든 사진을 불러왔습니다</p>
           </div>

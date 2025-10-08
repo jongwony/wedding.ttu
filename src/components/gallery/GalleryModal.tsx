@@ -24,31 +24,40 @@ export default function GalleryModal({
   const [isLiked, setIsLiked] = useState(false);
   const [showHeartAnimation, setShowHeartAnimation] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTapRef = useRef<number>(0);
 
   const currentItem = items[currentIndex];
 
-  // Keyboard navigation
+  // Keyboard navigation (fixed stale closure)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       } else if (e.key === "ArrowLeft") {
-        handlePrevious();
+        setCurrentIndex((prev) => Math.max(0, prev - 1));
+        setIsLiked(false);
       } else if (e.key === "ArrowRight") {
-        handleNext();
+        setCurrentIndex((prev) => Math.min(items.length - 1, prev + 1));
+        setIsLiked(false);
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [currentIndex]);
+  }, [items.length, onClose]);
 
-  // Prevent body scroll
+  // Focus trap and prevent body scroll
   useEffect(() => {
+    // Focus on close button when modal opens
+    closeButtonRef.current?.focus();
+
+    // Prevent body scroll
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = originalOverflow;
     };
   }, []);
 
@@ -106,7 +115,9 @@ export default function GalleryModal({
       >
         {/* Close button */}
         <button
+          ref={closeButtonRef}
           onClick={onClose}
+          aria-label="모달 닫기"
           className="absolute right-4 top-4 z-20 rounded-full bg-black/50 p-2 text-white transition-all hover:bg-black/70"
         >
           <X size={24} />
@@ -116,6 +127,7 @@ export default function GalleryModal({
         {currentIndex > 0 && (
           <button
             onClick={handlePrevious}
+            aria-label="이전 항목"
             className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all hover:bg-black/70"
           >
             <ChevronLeft size={32} />
@@ -126,6 +138,7 @@ export default function GalleryModal({
         {currentIndex < items.length - 1 && (
           <button
             onClick={handleNext}
+            aria-label="다음 항목"
             className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-all hover:bg-black/70"
           >
             <ChevronRight size={32} />
@@ -138,7 +151,7 @@ export default function GalleryModal({
             currentItem.src ? (
               <Image
                 src={currentItem.src}
-                alt=""
+                alt={`갤러리 이미지 ${currentIndex + 1} / ${items.length}`}
                 width={1200}
                 height={800}
                 className="max-h-[90vh] max-w-full object-contain"
@@ -154,6 +167,7 @@ export default function GalleryModal({
               autoPlay
               loop
               className="max-h-[90vh] max-w-full"
+              aria-label={`갤러리 동영상 ${currentIndex + 1} / ${items.length}`}
             />
           )}
 
@@ -189,23 +203,6 @@ export default function GalleryModal({
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes ping {
-          0% {
-            transform: scale(0.8);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.2);
-            opacity: 0.5;
-          }
-          100% {
-            transform: scale(0.8);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </div>
   );
 }

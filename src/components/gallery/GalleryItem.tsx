@@ -26,22 +26,21 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
   const videoRef = useRef<HTMLVideoElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
   const lastTapRef = useRef<number>(0);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  // Format number (K, M)
+  // Format number using Intl API
   const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-      return `${(num / 1000000).toFixed(1)}M`;
-    }
-    if (num >= 1000) {
-      return `${(num / 1000).toFixed(1)}K`;
-    }
-    return num.toString();
+    return new Intl.NumberFormat('ko-KR', {
+      notation: 'compact',
+      compactDisplay: 'short'
+    }).format(num);
   };
 
   // Video autoplay when in viewport
   useEffect(() => {
     if (item.type !== "video" || !videoRef.current) return;
 
+    const currentRef = itemRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -57,62 +56,87 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
       { threshold: 0.5 }
     );
 
-    if (itemRef.current) {
-      observer.observe(itemRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (itemRef.current) {
-        observer.unobserve(itemRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
+      observer.disconnect();
     };
   }, [item.type]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Double tap to like
   const handleDoubleTap = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
+
+    if (!isLiked) {
+      setIsLiked(true);
+      onLike(item.id);
+      setShowHeartAnimation(true);
+      setTimeout(() => setShowHeartAnimation(false), 1000);
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
     const now = Date.now();
     const timeDiff = now - lastTapRef.current;
 
     if (timeDiff < 300 && timeDiff > 0) {
       // Double tap detected
-      if (!isLiked) {
-        setIsLiked(true);
-        onLike(item.id);
-        setShowHeartAnimation(true);
-        setTimeout(() => setShowHeartAnimation(false), 1000);
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
       }
+      handleDoubleTap(e);
+    } else {
+      // Single tap with slight delay
+      clickTimeoutRef.current = setTimeout(() => {
+        onClick(item);
+      }, 300);
     }
 
     lastTapRef.current = now;
   };
 
-  const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
-    // Single click/tap opens modal
-    const timeDiff = Date.now() - lastTapRef.current;
-    if (timeDiff > 300) {
-      onClick(item);
-    }
-  };
-
   return (
     <div
       ref={itemRef}
+      role="button"
+      tabIndex={0}
+      aria-label={`${item.type === 'image' ? '이미지' : '동영상'} 보기`}
       className="group relative aspect-square cursor-pointer overflow-hidden bg-gray-200"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
       onDoubleClick={handleDoubleTap}
       onTouchEnd={handleDoubleTap}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick(item);
+        }
+      }}
     >
       {/* Media */}
       {item.type === "image" ? (
         item.src ? (
           <Image
             src={item.src}
-            alt=""
+            alt={`갤러리 이미지 ${item.id}`}
             fill
             sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
+            loading="lazy"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (

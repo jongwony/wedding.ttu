@@ -30,10 +30,10 @@ interface UploadInfo {
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const MAX_FILES = 50;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/heic", "image/heif"];
 const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/quicktime", "video/x-msvideo"];
 const ALLOWED_EXTENSIONS = {
-  image: ['.jpg', '.jpeg', '.png', '.webp', '.gif'],
+  image: ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.heic', '.heif'],
   video: ['.mp4', '.mov', '.avi']
 };
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jongwony.com";
@@ -409,7 +409,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
               파일을 드래그하거나 클릭하여 선택
             </p>
             <p className="text-sm text-gray-500">
-              이미지: JPG, PNG, WebP, GIF (최대 50MB)
+              이미지: JPG, PNG, WebP, GIF, HEIC (최대 50MB)
             </p>
             <p className="text-sm text-gray-500">
               동영상: MP4, MOV, AVI (최대 50MB)

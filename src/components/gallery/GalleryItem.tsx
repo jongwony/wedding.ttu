@@ -119,8 +119,7 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      onDoubleClick={handleDoubleTap}
-      onTouchEnd={handleDoubleTap}
+      onTouchEnd={handleClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();

@@ -9,23 +9,35 @@ import UploadModal from "./UploadModal";
 const ITEMS_PER_PAGE = 30;
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jongwony.com";
 
-interface ApiMediaItem {
+interface ApiResponseItem {
   id: string;
   type: string;
-  src: string;
+  original_url: string;
+  optimized_url: string;
+  thumbnail_url?: string;
   likes: number;
-  uploadedAt: string;
-  thumbnail?: string;
+  uploaded_at: string;
 }
 
-function validateMediaItem(item: unknown): item is MediaItem {
-  const candidate = item as ApiMediaItem;
+function convertToMediaItem(apiItem: ApiResponseItem): MediaItem {
+  return {
+    id: apiItem.id,
+    type: apiItem.type as "image" | "video",
+    src: apiItem.optimized_url || apiItem.original_url,
+    thumbnail: apiItem.thumbnail_url,
+    likes: apiItem.likes,
+    uploadedAt: apiItem.uploaded_at,
+  };
+}
+
+function validateApiItem(item: unknown): item is ApiResponseItem {
+  const candidate = item as ApiResponseItem;
   return (
     typeof candidate.id === 'string' &&
     (candidate.type === 'image' || candidate.type === 'video') &&
-    typeof candidate.src === 'string' &&
+    (typeof candidate.original_url === 'string' || typeof candidate.optimized_url === 'string') &&
     typeof candidate.likes === 'number' &&
-    typeof candidate.uploadedAt === 'string'
+    typeof candidate.uploaded_at === 'string'
   );
 }
 
@@ -62,11 +74,13 @@ export default function ExploreGallery() {
 
       const data = await response.json();
       const rawItems: unknown[] = data.items || [];
-      const newItems: MediaItem[] = rawItems.filter(validateMediaItem);
+      const validApiItems = rawItems.filter(validateApiItem);
 
-      if (newItems.length !== rawItems.length) {
+      if (validApiItems.length !== rawItems.length) {
         console.warn('Some items failed validation');
       }
+
+      const newItems: MediaItem[] = validApiItems.map(convertToMediaItem);
 
       if (newItems.length === 0 || newItems.length < ITEMS_PER_PAGE) {
         setHasMore(false);

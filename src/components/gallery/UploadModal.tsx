@@ -20,6 +20,14 @@ interface FileUploadState {
   s3Key?: string;
 }
 
+interface UploadInfo {
+  uploadId: string;
+  filename: string;
+  presignedUrl: string;
+  s3Key: string;
+  contentType?: string; // 백엔드에서 presigned URL 생성 시 사용한 ContentType (optional)
+}
+
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const MAX_FILES = 50;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -199,7 +207,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
   };
 
   const uploadToS3 = async (
-    uploadInfo: { uploadId: string; filename: string; presignedUrl: string; s3Key: string },
+    uploadInfo: UploadInfo,
     fileState: FileUploadState
   ): Promise<{ uploadId: string; s3Key: string }> => {
     return new Promise((resolve, reject) => {
@@ -232,18 +240,15 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         reject(new Error(error));
       });
 
+      // 백엔드가 contentType을 반환하면 그것을 사용, 아니면 file.type 사용
+      const contentType = uploadInfo.contentType || fileState.file.type || 'application/octet-stream';
+      console.log(`[S3 PUT] ${uploadInfo.filename}: contentType="${contentType}" (backend: ${uploadInfo.contentType}, file: ${fileState.file.type})`);
+
       xhr.open("PUT", uploadInfo.presignedUrl);
-      xhr.setRequestHeader("Content-Type", fileState.file.type);
+      xhr.setRequestHeader("Content-Type", contentType);
       xhr.send(fileState.file);
     });
   };
-
-  interface UploadInfo {
-    uploadId: string;
-    filename: string;
-    presignedUrl: string;
-    s3Key: string;
-  }
 
   interface CompleteResponseItem {
     id: string;
@@ -274,11 +279,15 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          files: filesArray.map((f) => ({
-            filename: f.file.name,
-            contentType: f.file.type,
-            size: f.file.size,
-          })),
+          files: filesArray.map((f) => {
+            const contentType = f.file.type || 'application/octet-stream';
+            console.log(`[Upload Init] ${f.file.name}: contentType="${contentType}"`);
+            return {
+              filename: f.file.name,
+              contentType,
+              size: f.file.size,
+            };
+          }),
         }),
       });
 

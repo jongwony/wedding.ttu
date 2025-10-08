@@ -26,6 +26,7 @@ interface UploadItem {
   presignedUrl: string;
   s3Key: string;
   expiresIn: number;
+  contentType?: string; // 백엔드에서 presigned URL 생성 시 사용한 ContentType (optional)
 }
 
 export async function apiClient<T>(

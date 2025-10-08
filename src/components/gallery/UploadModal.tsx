@@ -46,6 +46,52 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const readersRef = useRef<FileReader[]>([]);
 
+  const isHeifFile = (file: File): boolean => {
+    return file.type === 'image/heic' || file.type === 'image/heif' ||
+           file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
+  };
+
+  const convertHeifToJpeg = async (file: File): Promise<File> => {
+    try {
+      // Create image bitmap from HEIF file
+      const imageBitmap = await createImageBitmap(file);
+
+      // Create canvas and draw image
+      const canvas = document.createElement('canvas');
+      canvas.width = imageBitmap.width;
+      canvas.height = imageBitmap.height;
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        throw new Error('Canvas context not available');
+      }
+
+      ctx.drawImage(imageBitmap, 0, 0);
+
+      // Convert to JPEG blob
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('Failed to create JPEG blob'));
+            }
+          },
+          'image/jpeg',
+          0.9
+        );
+      });
+
+      // Create new File from blob with .jpg extension
+      const newFileName = file.name.replace(/\.(heic|heif)$/i, '.jpg');
+      return new File([blob], newFileName, { type: 'image/jpeg' });
+    } catch (error) {
+      console.error('HEIF conversion failed:', error);
+      throw new Error('HEIF 파일 변환에 실패했습니다. 브라우저가 HEIF를 지원하지 않을 수 있습니다.');
+    }
+  };
+
   const validateFile = (file: File): string | null => {
     // 1. 파일 크기 검증
     if (file.size > MAX_FILE_SIZE) {
@@ -91,24 +137,33 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     return null;
   };
 
-  const addFiles = useCallback((newFiles: FileList | File[]) => {
+  const addFiles = useCallback(async (newFiles: FileList | File[]) => {
     const fileArray = Array.from(newFiles);
 
-    setFiles((prev) => {
-      const currentCount = prev.size;
+    const currentCount = files.size;
 
-      if (currentCount + fileArray.length > MAX_FILES) {
-        setGlobalError(`최대 ${MAX_FILES}개의 파일만 업로드할 수 있습니다`);
-        return prev;
+    if (currentCount + fileArray.length > MAX_FILES) {
+      setGlobalError(`최대 ${MAX_FILES}개의 파일만 업로드할 수 있습니다`);
+      return;
+    }
+
+    setGlobalError("");
+
+    // Process files (with HEIF conversion if needed)
+    for (const file of fileArray) {
+      const error = validateFile(file);
+      if (error) {
+        setGlobalError(error);
+        continue;
       }
 
-      setGlobalError("");
-
-      fileArray.forEach((file) => {
-        const error = validateFile(file);
-        if (error) {
-          setGlobalError(error);
-          return;
+      try {
+        // Convert HEIF to JPEG if needed
+        let processedFile = file;
+        if (isHeifFile(file)) {
+          console.log(`Converting HEIF file: ${file.name}`);
+          processedFile = await convertHeifToJpeg(file);
+          console.log(`Converted to JPEG: ${processedFile.name}`);
         }
 
         // Create preview
@@ -121,8 +176,8 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
           setFiles((prevFiles) => {
             const newMap = new Map(prevFiles);
-            newMap.set(file.name, {
-              file,
+            newMap.set(processedFile.name, {
+              file: processedFile,
               preview: e.target?.result as string,
               progress: 0,
               status: "pending",
@@ -133,15 +188,16 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
         reader.onerror = () => {
           readersRef.current = readersRef.current.filter(r => r !== reader);
-          setGlobalError(`${file.name} 미리보기 생성 실패`);
+          setGlobalError(`${processedFile.name} 미리보기 생성 실패`);
         };
 
-        reader.readAsDataURL(file);
-      });
-
-      return prev;
-    });
-  }, []);
+        reader.readAsDataURL(processedFile);
+      } catch (error) {
+        console.error(`Failed to process file ${file.name}:`, error);
+        setGlobalError((error as Error).message || `${file.name} 처리 실패`);
+      }
+    }
+  }, [files]);
 
   const removeFile = (filename: string) => {
     setFiles((prev) => {
@@ -416,6 +472,9 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
             </p>
             <p className="mt-2 text-sm text-gray-500">
               최대 {MAX_FILES}개 파일
+            </p>
+            <p className="mt-1 text-xs text-gray-400">
+              * HEIC/HEIF 파일은 자동으로 JPEG로 변환됩니다
             </p>
             <input
               ref={fileInputRef}

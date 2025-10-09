@@ -531,7 +531,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     id: string;
     type: 'image' | 'video';
     original_url: string;
-    thumbnail_url?: string; // WebP 썸네일 (이미지와 비디오 모두)
+    thumbnail_url: string; // WebP 썸네일 (이미지와 비디오 모두)
     likes?: number;
     uploaded_at: string;
   }

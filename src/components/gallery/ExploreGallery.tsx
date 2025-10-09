@@ -13,7 +13,7 @@ interface ApiResponseItem {
   id: string;
   type: string;
   original_url: string;
-  thumbnail_url?: string;
+  thumbnail_url: string;
   likes: number;
   uploaded_at: string;
 }

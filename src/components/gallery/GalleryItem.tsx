@@ -8,7 +8,7 @@ export interface MediaItem {
   id: string;
   type: "image" | "video";
   originalUrl: string;
-  thumbnailUrl?: string;
+  thumbnailUrl: string;
   likes: number;
   uploadedAt: string;
 }
@@ -75,24 +75,18 @@ export default function GalleryItem({ item, onClick }: GalleryItemProps) {
     >
       {/* Media */}
       {item.type === "image" ? (
-        item.thumbnailUrl ? (
-          <Image
-            src={item.thumbnailUrl}
-            alt={`갤러리 이미지 ${item.id}`}
-            fill
-            sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
-            loading="lazy"
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gray-300">
-            <span className="text-gray-500">이미지 없음</span>
-          </div>
-        )
+        <Image
+          src={item.thumbnailUrl}
+          alt={`갤러리 이미지 ${item.id}`}
+          fill
+          sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
+          loading="lazy"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+        />
       ) : (
         <video
           ref={videoRef}
-          src={item.thumbnailUrl || item.originalUrl}
+          src={item.thumbnailUrl}
           poster={item.thumbnailUrl}
           loop
           muted

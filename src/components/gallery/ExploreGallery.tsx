@@ -50,6 +50,7 @@ export default function ExploreGallery() {
   const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [likedItems, setLikedItems] = useState<Set<string>>(new Set());
   const observerTarget = useRef<HTMLDivElement>(null);
   const isLoadingRef = useRef(false);
 
@@ -123,12 +124,18 @@ export default function ExploreGallery() {
   }, [loadMore, isLoading, hasMore]);
 
   const handleLike = async (id: string) => {
-    // Optimistic update
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, likes: item.likes + 1 } : item
-      )
-    );
+    // Optimistic UI update: toggle liked state only
+    const isCurrentlyLiked = likedItems.has(id);
+
+    setLikedItems((prev) => {
+      const newSet = new Set(prev);
+      if (isCurrentlyLiked) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
 
     try {
       const response = await fetch(`${API_BASE_URL}/iac/gallery/v1/items/${id}/like`, {
@@ -136,15 +143,22 @@ export default function ExploreGallery() {
       });
 
       if (!response.ok) throw new Error('Like failed');
+
+      // Note: Server doesn't return updated count, so we keep the optimistic state
+      // Count will be updated on next page load from server
     } catch (error) {
       console.error("Failed to like item:", error);
 
       // Rollback on error
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, likes: item.likes - 1 } : item
-        )
-      );
+      setLikedItems((prev) => {
+        const newSet = new Set(prev);
+        if (isCurrentlyLiked) {
+          newSet.add(id);
+        } else {
+          newSet.delete(id);
+        }
+        return newSet;
+      });
     }
   };
 
@@ -204,6 +218,7 @@ export default function ExploreGallery() {
               <GalleryItem
                 key={item.id}
                 item={item}
+                isLiked={likedItems.has(item.id)}
                 onLike={handleLike}
                 onClick={setSelectedItem}
               />
@@ -234,6 +249,7 @@ export default function ExploreGallery() {
         <GalleryModal
           item={selectedItem}
           items={items}
+          likedItems={likedItems}
           onClose={() => setSelectedItem(null)}
           onLike={handleLike}
         />

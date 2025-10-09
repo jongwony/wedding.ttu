@@ -8,6 +8,7 @@ import { MediaItem } from "./GalleryItem";
 interface GalleryModalProps {
   item: MediaItem;
   items: MediaItem[];
+  likedItems: Set<string>;
   onClose: () => void;
   onLike: (id: string) => void;
 }
@@ -15,19 +16,20 @@ interface GalleryModalProps {
 export default function GalleryModal({
   item,
   items,
+  likedItems,
   onClose,
   onLike,
 }: GalleryModalProps) {
   const [currentIndex, setCurrentIndex] = useState(
     items.findIndex((i) => i.id === item.id)
   );
-  const [isLiked, setIsLiked] = useState(false);
   const [showHeartAnimation, setShowHeartAnimation] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTapRef = useRef<number>(0);
 
   const currentItem = items[currentIndex];
+  const isLiked = likedItems.has(currentItem.id);
 
   // Keyboard navigation (fixed stale closure)
   useEffect(() => {
@@ -36,10 +38,8 @@ export default function GalleryModal({
         onClose();
       } else if (e.key === "ArrowLeft") {
         setCurrentIndex((prev) => Math.max(0, prev - 1));
-        setIsLiked(false);
       } else if (e.key === "ArrowRight") {
         setCurrentIndex((prev) => Math.min(items.length - 1, prev + 1));
-        setIsLiked(false);
       }
     };
 
@@ -64,14 +64,12 @@ export default function GalleryModal({
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
-      setIsLiked(false);
     }
   };
 
   const handleNext = () => {
     if (currentIndex < items.length - 1) {
       setCurrentIndex((prev) => prev + 1);
-      setIsLiked(false);
     }
   };
 
@@ -83,22 +81,16 @@ export default function GalleryModal({
 
     if (timeDiff < 300 && timeDiff > 0) {
       // Double tap detected
-      if (!isLiked) {
-        setIsLiked(true);
-        onLike(currentItem.id);
-        setShowHeartAnimation(true);
-        setTimeout(() => setShowHeartAnimation(false), 1000);
-      }
+      onLike(currentItem.id);
+      setShowHeartAnimation(true);
+      setTimeout(() => setShowHeartAnimation(false), 1000);
     }
 
     lastTapRef.current = now;
   };
 
   const handleLikeClick = () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      onLike(currentItem.id);
-    }
+    onLike(currentItem.id);
   };
 
   return (
@@ -193,7 +185,7 @@ export default function GalleryModal({
                   }`}
                 />
                 <span className="text-sm font-semibold">
-                  {currentItem.likes + (isLiked ? 1 : 0)}
+                  {currentItem.likes}
                 </span>
               </button>
             </div>

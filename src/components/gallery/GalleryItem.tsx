@@ -16,13 +16,13 @@ export interface MediaItem {
 
 interface GalleryItemProps {
   item: MediaItem;
+  isLiked: boolean;
   onLike: (id: string) => void;
   onClick: (item: MediaItem) => void;
 }
 
-export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps) {
+export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryItemProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const [showHeartAnimation, setShowHeartAnimation] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
@@ -82,12 +82,10 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
   const handleDoubleTap = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
 
-    if (!isLiked) {
-      setIsLiked(true);
-      onLike(item.id);
-      setShowHeartAnimation(true);
-      setTimeout(() => setShowHeartAnimation(false), 1000);
-    }
+    // Always trigger like on double tap (parent will handle toggle)
+    onLike(item.id);
+    setShowHeartAnimation(true);
+    setTimeout(() => setShowHeartAnimation(false), 1000);
   };
 
   const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
@@ -171,7 +169,7 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
       >
         <div className="flex items-center gap-2 text-white">
           <Heart className={`h-6 w-6 ${isLiked ? "fill-red-500 text-red-500" : "fill-white"}`} />
-          <span className="font-semibold">{formatNumber(item.likes + (isLiked ? 1 : 0))}</span>
+          <span className="font-semibold">{formatNumber(item.likes)}</span>
         </div>
       </div>
 

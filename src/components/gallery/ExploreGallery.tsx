@@ -23,8 +23,9 @@ function convertToMediaItem(apiItem: ApiResponseItem): MediaItem {
   return {
     id: apiItem.id,
     type: apiItem.type as "image" | "video",
-    src: apiItem.optimized_url || apiItem.original_url,
-    thumbnail: apiItem.thumbnail_url,
+    originalUrl: apiItem.original_url,
+    optimizedUrl: apiItem.optimized_url,
+    thumbnailUrl: apiItem.thumbnail_url,
     likes: apiItem.likes,
     uploadedAt: apiItem.uploaded_at,
   };

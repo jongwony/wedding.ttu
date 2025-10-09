@@ -7,8 +7,9 @@ import Image from "next/image";
 export interface MediaItem {
   id: string;
   type: "image" | "video";
-  src: string;
-  thumbnail?: string;
+  originalUrl: string;
+  optimizedUrl: string;
+  thumbnailUrl?: string;
   likes: number;
   uploadedAt: string;
 }
@@ -129,9 +130,9 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
     >
       {/* Media */}
       {item.type === "image" ? (
-        item.src ? (
+        item.thumbnailUrl || item.optimizedUrl || item.originalUrl ? (
           <Image
-            src={item.src}
+            src={item.thumbnailUrl || item.optimizedUrl || item.originalUrl}
             alt={`갤러리 이미지 ${item.id}`}
             fill
             sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
@@ -146,8 +147,8 @@ export default function GalleryItem({ item, onLike, onClick }: GalleryItemProps)
       ) : (
         <video
           ref={videoRef}
-          src={item.src}
-          poster={item.thumbnail}
+          src={item.optimizedUrl || item.originalUrl}
+          poster={item.thumbnailUrl}
           loop
           muted
           playsInline

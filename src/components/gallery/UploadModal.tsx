@@ -399,8 +399,9 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
       const newItems: MediaItem[] = result.items.map((item: CompleteResponseItem) => ({
         id: item.id,
         type: item.type,
-        src: item.optimized_url || item.original_url,
-        thumbnail: item.thumbnail_url,
+        originalUrl: item.original_url,
+        optimizedUrl: item.optimized_url || '',
+        thumbnailUrl: item.thumbnail_url,
         likes: item.likes || 0,
         uploadedAt: item.uploaded_at,
       }));

@@ -11,7 +11,9 @@ interface UploadModalProps {
 }
 
 interface FileUploadState {
-  file: File;
+  id: string; // 고유 ID (타임스탬프 기반)
+  file: File; // 파일명이 고유 ID로 변경됨 (ex. 1728467234567-abc123.jpg)
+  originalName: string; // 원본 파일명 (UI 표시용)
   preview: string;
   progress: number;
   status: "pending" | "uploading" | "success" | "error";
@@ -40,6 +42,11 @@ const ALLOWED_EXTENSIONS = {
   video: ['.mp4', '.mov', '.avi']
 };
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.jongwony.com";
+
+// UUID 생성 함수
+const generateId = (): string => {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+};
 
 export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
   const [files, setFiles] = useState<Map<string, FileUploadState>>(new Map());
@@ -270,6 +277,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
   const addFiles = useCallback(async (newFiles: FileList | File[]) => {
     const fileArray = Array.from(newFiles);
+    console.log(`[addFiles] 선택된 파일 수: ${fileArray.length}`, fileArray.map(f => f.name));
 
     const currentCount = files.size;
 
@@ -282,22 +290,38 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
     // Process files (with HEIF conversion if needed)
     for (const file of fileArray) {
+      console.log(`[addFiles] 처리 시작: ${file.name}`);
       const error = validateFile(file);
       if (error) {
+        console.log(`[addFiles] 검증 실패: ${file.name} - ${error}`);
         setGlobalError(error);
         continue;
       }
 
       try {
-        // Convert HEIF to JPEG if needed
+        // Step 1: 고유 ID 생성
+        const fileId = generateId();
+        const originalName = file.name;
+
+        // Step 2: HEIF 변환 (필요시)
         let processedFile = file;
         if (isHeifFile(file)) {
-          console.log(`Converting HEIF file: ${file.name}`);
+          console.log(`[addFiles] HEIF 변환 시작: ${originalName}`);
           processedFile = await convertHeifToJpeg(file);
-          console.log(`Converted to JPEG: ${processedFile.name}`);
+          console.log(`[addFiles] HEIF 변환 완료: ${originalName} → JPEG`);
         }
 
-        // Create preview
+        // Step 3: 파일 확장자 추출
+        const extension = processedFile.name.match(/\.([^.]+)$/)?.[1] || 'bin';
+
+        // Step 4: 새 파일명 생성 (고유 ID + 확장자)
+        const newFileName = `${fileId}.${extension}`;
+        const renamedFile = new File([processedFile], newFileName, {
+          type: processedFile.type
+        });
+        console.log(`[addFiles] 파일명 변경: ${originalName} → ${newFileName}`);
+
+        // Step 5: 미리보기 생성
         const reader = new FileReader();
         readersRef.current.push(reader);
 
@@ -307,8 +331,11 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
           setFiles((prevFiles) => {
             const newMap = new Map(prevFiles);
-            newMap.set(processedFile.name, {
-              file: processedFile,
+            console.log(`[addFiles] Map에 추가: ${newFileName} (원본: ${originalName})`);
+            newMap.set(newFileName, {
+              id: fileId,
+              file: renamedFile,
+              originalName,
               preview: e.target?.result as string,
               progress: 0,
               status: "pending",
@@ -319,20 +346,27 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
         reader.onerror = () => {
           readersRef.current = readersRef.current.filter(r => r !== reader);
-          setGlobalError(`${processedFile.name} 미리보기 생성 실패`);
+          console.error(`[addFiles] FileReader 에러: ${originalName}`);
+          setGlobalError(`${originalName} 미리보기 생성 실패`);
         };
 
-        reader.readAsDataURL(processedFile);
+        reader.readAsDataURL(renamedFile);
       } catch (error) {
-        console.error(`Failed to process file ${file.name}:`, error);
+        console.error(`[addFiles] 파일 처리 실패: ${file.name}`, error);
         setGlobalError((error as Error).message || `${file.name} 처리 실패`);
       }
     }
+
+    console.log(`[addFiles] 처리 완료. 현재 Map 크기: ${files.size}`);
   }, [files]);
 
   const removeFile = (filename: string) => {
     setFiles((prev) => {
       const newMap = new Map(prev);
+      const fileState = newMap.get(filename);
+      if (fileState) {
+        console.log(`[removeFile] 삭제: ${fileState.originalName}`);
+      }
       newMap.delete(filename);
       return newMap;
     });
@@ -387,7 +421,10 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
       const newMap = new Map(prev);
       const fileState = newMap.get(filename);
       if (fileState) {
+        console.log(`[updateFileProgress] ${fileState.originalName}: ${progress}% - ${status}`);
         newMap.set(filename, { ...fileState, progress, status, error });
+      } else {
+        console.error(`[updateFileProgress] 파일을 찾을 수 없음: ${filename}`);
       }
       return newMap;
     });
@@ -433,18 +470,19 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
    * 원본 + 썸네일을 S3에 업로드
    */
   const uploadToS3 = async (
+    filename: string,
     uploadInfo: UploadInfo,
     fileState: FileUploadState
   ): Promise<{ uploadId: string; s3Key: string; thumbnailS3Key: string }> => {
     try {
-      updateFileProgress(uploadInfo.filename, 0, "uploading");
+      updateFileProgress(filename, 0, "uploading");
 
       const isImage = fileState.file.type.startsWith("image/");
       const isVideo = fileState.file.type.startsWith("video/");
 
       // Step 1: 원본 업로드
       const contentType = uploadInfo.contentType || fileState.file.type || 'application/octet-stream';
-      console.log(`[S3 PUT Original] ${uploadInfo.filename}: contentType="${contentType}"`);
+      console.log(`[S3 PUT Original] ${fileState.originalName} (${filename}): contentType="${contentType}"`);
 
       await uploadToS3WithRetry(
         uploadInfo.presignedUrl,
@@ -452,29 +490,29 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         contentType
       );
 
-      updateFileProgress(uploadInfo.filename, 50, "uploading");
+      updateFileProgress(filename, 50, "uploading");
 
       // Step 2: 썸네일 생성
       let thumbnailBlob: Blob;
       if (isImage) {
-        console.log(`[Thumbnail] Generating WebP thumbnail for image: ${uploadInfo.filename}`);
+        console.log(`[Thumbnail] ${fileState.originalName}: WebP 썸네일 생성 중...`);
         thumbnailBlob = await convertToWebPThumbnail(fileState.file);
       } else if (isVideo) {
-        console.log(`[Thumbnail] Generating WebP thumbnail for video: ${uploadInfo.filename}`);
+        console.log(`[Thumbnail] ${fileState.originalName}: 비디오 썸네일 생성 중...`);
         thumbnailBlob = await extractVideoThumbnailWebP(fileState.file);
       } else {
         throw new Error("지원하지 않는 파일 형식");
       }
 
       // Step 3: 썸네일 업로드
-      console.log(`[S3 PUT Thumbnail] ${uploadInfo.filename}: size=${thumbnailBlob.size} bytes`);
+      console.log(`[S3 PUT Thumbnail] ${fileState.originalName}: size=${thumbnailBlob.size} bytes`);
       await uploadToS3WithRetry(
         uploadInfo.presignedThumbnailUrl,
         thumbnailBlob,
         'image/webp'
       );
 
-      updateFileProgress(uploadInfo.filename, 100, "success");
+      updateFileProgress(filename, 100, "success");
 
       return {
         uploadId: uploadInfo.uploadId,
@@ -482,9 +520,9 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         thumbnailS3Key: uploadInfo.thumbnailS3Key,
       };
     } catch (error) {
-      console.error(`Upload failed for ${uploadInfo.filename}:`, error);
+      console.error(`[uploadToS3] 업로드 실패: ${fileState.originalName}`, error);
       const errorMessage = (error as Error).message || "업로드 실패";
-      updateFileProgress(uploadInfo.filename, 0, "error", errorMessage);
+      updateFileProgress(filename, 0, "error", errorMessage);
       throw error;
     }
   };
@@ -514,13 +552,15 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     try {
       // Step 1: Initialize upload
       const filesArray = Array.from(files.values());
+      console.log(`[handleUpload] 업로드 시작: ${filesArray.length}개 파일`);
+
       const initResponse = await fetch(`${API_BASE_URL}/iac/gallery/v1/upload/init`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           files: filesArray.map((f) => {
             const contentType = f.file.type || 'application/octet-stream';
-            console.log(`[Upload Init] ${f.file.name}: contentType="${contentType}"`);
+            console.log(`[Upload Init] ${f.file.name} (원본: ${f.originalName}): contentType="${contentType}"`);
             return {
               filename: f.file.name,
               contentType,
@@ -538,11 +578,13 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
       // Step 2: Upload to S3 (parallel)
       const uploadPromises = uploads.map((upload: UploadInfo) => {
+        // 파일명이 곧 Map 키이므로 직접 조회
         const fileState = files.get(upload.filename);
         if (!fileState) {
-          return Promise.reject(new Error(`File ${upload.filename} not found`));
+          return Promise.reject(new Error(`File state not found for ${upload.filename}`));
         }
-        return uploadToS3(upload, fileState);
+
+        return uploadToS3(upload.filename, upload, fileState);
       });
 
       const uploadResults = await Promise.allSettled(uploadPromises);
@@ -679,7 +721,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
                 return (
                   <div
-                    key={fileState.file.name}
+                    key={fileState.id}
                     className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3"
                   >
                     {/* Preview */}
@@ -708,7 +750,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
                           <Video className="h-4 w-4 text-gray-500" />
                         )}
                         <span className="truncate text-sm font-medium">
-                          {fileState.file.name}
+                          {fileState.originalName}
                         </span>
                         <span className="text-xs text-gray-400">
                           ({(fileState.file.size / (1024 * 1024)).toFixed(2)} MB)

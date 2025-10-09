@@ -279,23 +279,40 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     const fileArray = Array.from(newFiles);
     console.log(`[addFiles] 선택된 파일 수: ${fileArray.length}`, fileArray.map(f => f.name));
 
-    const currentCount = files.size;
+    // 현재 파일 수 확인 (prevFiles를 사용하여 최신 상태 반영)
+    setFiles((prevFiles) => {
+      const currentCount = prevFiles.size;
 
-    if (currentCount + fileArray.length > MAX_FILES) {
-      setGlobalError(`최대 ${MAX_FILES}개의 파일만 업로드할 수 있습니다`);
-      return;
-    }
+      if (currentCount + fileArray.length > MAX_FILES) {
+        setGlobalError(`최대 ${MAX_FILES}개의 파일만 업로드할 수 있습니다`);
+        return prevFiles;
+      }
 
-    setGlobalError("");
+      setGlobalError("");
+      return prevFiles;
+    });
 
-    // Process files (with HEIF conversion if needed)
-    for (const file of fileArray) {
-      console.log(`[addFiles] 처리 시작: ${file.name}`);
+    // 파일 처리 결과 타입 정의
+    type FileProcessingSuccess = {
+      success: true;
+      newFileName: string;
+      fileState: FileUploadState;
+    };
+
+    type FileProcessingFailure = {
+      success: false;
+      fileName: string;
+      error: string;
+    };
+
+    type FileProcessingResult = FileProcessingSuccess | FileProcessingFailure;
+
+    // 모든 파일을 병렬로 처리
+    const fileProcessingPromises = fileArray.map(async (file): Promise<FileProcessingResult> => {
       const error = validateFile(file);
       if (error) {
         console.log(`[addFiles] 검증 실패: ${file.name} - ${error}`);
-        setGlobalError(error);
-        continue;
+        return { success: false, error, fileName: file.name };
       }
 
       try {
@@ -303,7 +320,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         const fileId = generateId();
         const originalName = file.name;
 
-        // Step 2: HEIF 변환 (필요시)
+        // Step 2: HEIF 변환 (필요시) - 병렬 처리
         let processedFile = file;
         if (isHeifFile(file)) {
           console.log(`[addFiles] HEIF 변환 시작: ${originalName}`);
@@ -311,54 +328,106 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
           console.log(`[addFiles] HEIF 변환 완료: ${originalName} → JPEG`);
         }
 
-        // Step 3: 파일 확장자 추출
+        // Step 3-4: 파일명 생성
         const extension = processedFile.name.match(/\.([^.]+)$/)?.[1] || 'bin';
-
-        // Step 4: 새 파일명 생성 (고유 ID + 확장자)
         const newFileName = `${fileId}.${extension}`;
         const renamedFile = new File([processedFile], newFileName, {
           type: processedFile.type
         });
         console.log(`[addFiles] 파일명 변경: ${originalName} → ${newFileName}`);
 
-        // Step 5: 미리보기 생성
-        const reader = new FileReader();
-        readersRef.current.push(reader);
+        // Step 5: 미리보기 생성 (FileReader를 Promise로 래핑)
+        const preview = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          readersRef.current.push(reader);
 
-        reader.onload = (e) => {
-          // Remove from ref after completion
-          readersRef.current = readersRef.current.filter(r => r !== reader);
+          reader.onload = (e) => {
+            readersRef.current = readersRef.current.filter(r => r !== reader);
+            resolve(e.target?.result as string);
+          };
 
-          setFiles((prevFiles) => {
-            const newMap = new Map(prevFiles);
-            console.log(`[addFiles] Map에 추가: ${newFileName} (원본: ${originalName})`);
-            newMap.set(newFileName, {
-              id: fileId,
-              file: renamedFile,
-              originalName,
-              preview: e.target?.result as string,
-              progress: 0,
-              status: "pending",
-            });
-            return newMap;
-          });
+          reader.onerror = () => {
+            readersRef.current = readersRef.current.filter(r => r !== reader);
+            reject(new Error('미리보기 생성 실패'));
+          };
+
+          reader.readAsDataURL(renamedFile);
+        });
+
+        return {
+          success: true,
+          fileState: {
+            id: fileId,
+            file: renamedFile,
+            originalName,
+            preview,
+            progress: 0,
+            status: "pending" as const,
+          },
+          newFileName,
         };
-
-        reader.onerror = () => {
-          readersRef.current = readersRef.current.filter(r => r !== reader);
-          console.error(`[addFiles] FileReader 에러: ${originalName}`);
-          setGlobalError(`${originalName} 미리보기 생성 실패`);
-        };
-
-        reader.readAsDataURL(renamedFile);
       } catch (error) {
         console.error(`[addFiles] 파일 처리 실패: ${file.name}`, error);
-        setGlobalError((error as Error).message || `${file.name} 처리 실패`);
+        return {
+          success: false,
+          error: (error as Error).message || '처리 실패',
+          fileName: file.name
+        };
       }
+    });
+
+    // 모든 파일 처리 완료 대기
+    const results = await Promise.allSettled(fileProcessingPromises);
+
+    // 성공/실패 파일 분류
+    const successfulFiles: Array<{ newFileName: string; fileState: FileUploadState }> = [];
+    const failedFiles: Array<{ fileName: string; error: string }> = [];
+
+    results.forEach((result) => {
+      if (result.status === 'fulfilled') {
+        const value = result.value;
+        if (value.success) {
+          successfulFiles.push({
+            newFileName: value.newFileName,
+            fileState: value.fileState,
+          });
+        } else {
+          failedFiles.push({
+            fileName: value.fileName,
+            error: value.error || '처리 실패',
+          });
+        }
+      } else if (result.status === 'rejected') {
+        failedFiles.push({
+          fileName: '알 수 없는 파일',
+          error: result.reason?.message || '처리 실패',
+        });
+      }
+    });
+
+    // 한 번의 상태 업데이트로 모든 성공한 파일 추가
+    if (successfulFiles.length > 0) {
+      setFiles((prevFiles) => {
+        const newMap = new Map(prevFiles);
+        successfulFiles.forEach(({ newFileName, fileState }) => {
+          console.log(`[addFiles] Map에 추가: ${newFileName} (원본: ${fileState.originalName})`);
+          newMap.set(newFileName, fileState);
+        });
+        return newMap;
+      });
     }
 
-    console.log(`[addFiles] 처리 완료. 현재 Map 크기: ${files.size}`);
-  }, [files]);
+    // 실패한 파일이 있으면 에러 메시지 표시
+    if (failedFiles.length > 0) {
+      const errorMsg = `${failedFiles.length}개 파일 처리 실패: ${failedFiles.map(f => f.fileName).join(', ')}`;
+      setGlobalError(errorMsg);
+      console.error(`[addFiles] ${errorMsg}`);
+    } else if (successfulFiles.length > 0) {
+      setGlobalError('');
+    }
+
+    console.log(`[addFiles] 처리 완료. 추가된 파일: ${successfulFiles.length}, 실패: ${failedFiles.length}`);
+  }, []);
 
   const removeFile = (filename: string) => {
     setFiles((prev) => {

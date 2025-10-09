@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Heart, Play } from "lucide-react";
+import { useRef, useEffect } from "react";
+import { Play } from "lucide-react";
 import Image from "next/image";
 
 export interface MediaItem {
   id: string;
   type: "image" | "video";
   originalUrl: string;
-  optimizedUrl: string;
   thumbnailUrl?: string;
   likes: number;
   uploadedAt: string;
@@ -16,26 +15,12 @@ export interface MediaItem {
 
 interface GalleryItemProps {
   item: MediaItem;
-  isLiked: boolean;
-  onLike: (id: string) => void;
   onClick: (item: MediaItem) => void;
 }
 
-export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryItemProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showHeartAnimation, setShowHeartAnimation] = useState(false);
+export default function GalleryItem({ item, onClick }: GalleryItemProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
-  const lastTapRef = useRef<number>(0);
-  const clickTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
-
-  // Format number using Intl API
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat('ko-KR', {
-      notation: 'compact',
-      compactDisplay: 'short'
-    }).format(num);
-  };
 
   // Video autoplay when in viewport
   useEffect(() => {
@@ -69,43 +54,8 @@ export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryI
     };
   }, [item.type]);
 
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (clickTimeoutRef.current) {
-        clearTimeout(clickTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  // Double tap to like
-  const handleDoubleTap = (e: React.MouseEvent | React.TouchEvent) => {
-    e.stopPropagation();
-
-    // Always trigger like on double tap (parent will handle toggle)
-    onLike(item.id);
-    setShowHeartAnimation(true);
-    setTimeout(() => setShowHeartAnimation(false), 1000);
-  };
-
-  const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
-    const now = Date.now();
-    const timeDiff = now - lastTapRef.current;
-
-    if (timeDiff < 300 && timeDiff > 0) {
-      // Double tap detected
-      if (clickTimeoutRef.current) {
-        clearTimeout(clickTimeoutRef.current);
-      }
-      handleDoubleTap(e);
-    } else {
-      // Single tap with slight delay
-      clickTimeoutRef.current = setTimeout(() => {
-        onClick(item);
-      }, 300);
-    }
-
-    lastTapRef.current = now;
+  const handleClick = () => {
+    onClick(item);
   };
 
   return (
@@ -115,10 +65,7 @@ export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryI
       tabIndex={0}
       aria-label={`${item.type === 'image' ? '이미지' : '동영상'} 보기`}
       className="group relative aspect-square cursor-pointer overflow-hidden bg-gray-200"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      onTouchEnd={handleClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -128,9 +75,9 @@ export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryI
     >
       {/* Media */}
       {item.type === "image" ? (
-        item.thumbnailUrl || item.optimizedUrl || item.originalUrl ? (
+        item.thumbnailUrl ? (
           <Image
-            src={item.thumbnailUrl || item.optimizedUrl || item.originalUrl}
+            src={item.thumbnailUrl}
             alt={`갤러리 이미지 ${item.id}`}
             fill
             sizes="(max-width: 768px) 33vw, (max-width: 1200px) 25vw, 20vw"
@@ -145,7 +92,7 @@ export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryI
       ) : (
         <video
           ref={videoRef}
-          src={item.optimizedUrl || item.originalUrl}
+          src={item.thumbnailUrl || item.originalUrl}
           poster={item.thumbnailUrl}
           loop
           muted
@@ -158,25 +105,6 @@ export default function GalleryItem({ item, isLiked, onLike, onClick }: GalleryI
       {item.type === "video" && (
         <div className="absolute right-2 top-2 z-10">
           <Play className="h-5 w-5 fill-white text-white drop-shadow-lg" />
-        </div>
-      )}
-
-      {/* Hover overlay */}
-      <div
-        className={`absolute inset-0 flex items-center justify-center gap-6 bg-black/40 transition-opacity duration-200 ${
-          isHovered ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <div className="flex items-center gap-2 text-white">
-          <Heart className={`h-6 w-6 ${isLiked ? "fill-red-500 text-red-500" : "fill-white"}`} />
-          <span className="font-semibold">{formatNumber(item.likes)}</span>
-        </div>
-      </div>
-
-      {/* Double tap heart animation */}
-      {showHeartAnimation && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <Heart className="h-24 w-24 fill-red-500 text-red-500 animate-ping" />
         </div>
       )}
     </div>

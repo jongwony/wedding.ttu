@@ -13,7 +13,6 @@ interface ApiResponseItem {
   id: string;
   type: string;
   original_url: string;
-  optimized_url: string;
   thumbnail_url?: string;
   likes: number;
   uploaded_at: string;
@@ -24,7 +23,6 @@ function convertToMediaItem(apiItem: ApiResponseItem): MediaItem {
     id: apiItem.id,
     type: apiItem.type as "image" | "video",
     originalUrl: apiItem.original_url,
-    optimizedUrl: apiItem.optimized_url,
     thumbnailUrl: apiItem.thumbnail_url,
     likes: apiItem.likes,
     uploadedAt: apiItem.uploaded_at,
@@ -36,7 +34,7 @@ function validateApiItem(item: unknown): item is ApiResponseItem {
   return (
     typeof candidate.id === 'string' &&
     (candidate.type === 'image' || candidate.type === 'video') &&
-    (typeof candidate.original_url === 'string' || typeof candidate.optimized_url === 'string') &&
+    typeof candidate.original_url === 'string' &&
     typeof candidate.likes === 'number' &&
     typeof candidate.uploaded_at === 'string'
   );
@@ -172,8 +170,8 @@ export default function ExploreGallery() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <h1 className="font-serif text-2xl font-semibold tracking-tight">
-            Wedding Gallery
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Wedding Gallery 💍
           </h1>
           <button
             onClick={() => setIsUploadModalOpen(true)}
@@ -218,8 +216,6 @@ export default function ExploreGallery() {
               <GalleryItem
                 key={item.id}
                 item={item}
-                isLiked={likedItems.has(item.id)}
-                onLike={handleLike}
                 onClick={setSelectedItem}
               />
             ))}

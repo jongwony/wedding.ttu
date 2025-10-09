@@ -140,9 +140,9 @@ export default function GalleryModal({
         {/* Media */}
         <div className="relative flex h-full w-full items-center justify-center p-4">
           {currentItem.type === "image" ? (
-            currentItem.optimizedUrl || currentItem.originalUrl ? (
+            currentItem.originalUrl ? (
               <Image
-                src={currentItem.optimizedUrl || currentItem.originalUrl}
+                src={currentItem.originalUrl}
                 alt={`갤러리 이미지 ${currentIndex + 1} / ${items.length}`}
                 width={1200}
                 height={800}
@@ -154,7 +154,7 @@ export default function GalleryModal({
             )
           ) : (
             <video
-              src={currentItem.optimizedUrl || currentItem.originalUrl}
+              src={currentItem.originalUrl}
               controls
               autoPlay
               loop

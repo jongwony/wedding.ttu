@@ -531,8 +531,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     id: string;
     type: 'image' | 'video';
     original_url: string;
-    optimized_url?: string;
-    thumbnail_url?: string;
+    thumbnail_url?: string; // WebP 썸네일 (이미지와 비디오 모두)
     likes?: number;
     uploaded_at: string;
   }
@@ -625,8 +624,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
         id: item.id,
         type: item.type,
         originalUrl: item.original_url,
-        optimizedUrl: item.optimized_url || '',
-        thumbnailUrl: item.thumbnail_url,
+        thumbnailUrl: item.thumbnail_url, // WebP 썸네일
         likes: item.likes || 0,
         uploadedAt: item.uploaded_at,
       }));

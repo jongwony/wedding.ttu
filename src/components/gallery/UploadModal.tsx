@@ -24,8 +24,11 @@ interface UploadInfo {
   uploadId: string;
   filename: string;
   presignedUrl: string;
+  presignedThumbnailUrl: string; // WebP 썸네일 업로드 URL
   s3Key: string;
+  thumbnailS3Key: string; // 항상 .webp 확장자
   contentType?: string; // 백엔드에서 presigned URL 생성 시 사용한 ContentType (optional)
+  expiresIn?: number; // 900 (15분)
 }
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
@@ -90,6 +93,134 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
       console.error('HEIF conversion failed:', error);
       throw new Error('HEIF 파일 변환에 실패했습니다. 브라우저가 HEIF를 지원하지 않을 수 있습니다.');
     }
+  };
+
+  /**
+   * 이미지를 WebP 썸네일로 변환
+   * @param file 원본 이미지 파일 (또는 JPEG로 변환된 파일)
+   * @param maxSize 최대 너비/높이 (기본 300px)
+   * @param quality WebP 품질 (기본 0.8)
+   */
+  const convertToWebPThumbnail = async (
+    file: File,
+    maxSize = 300,
+    quality = 0.8
+  ): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      // HTMLImageElement를 명시적으로 생성 (Next.js Image 컴포넌트와 구분)
+      const img = document.createElement('img');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        reject(new Error('Canvas context not available'));
+        return;
+      }
+
+      img.onload = () => {
+        // 종횡비 유지 리사이징
+        let { width, height } = img;
+        if (width > maxSize || height > maxSize) {
+          const ratio = Math.min(maxSize / width, maxSize / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // WebP 변환
+        canvas.toBlob(
+          (blob) => {
+            // 메모리 해제
+            URL.revokeObjectURL(img.src);
+            canvas.width = canvas.height = 0;
+
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('WebP 썸네일 생성 실패'));
+            }
+          },
+          'image/webp',
+          quality
+        );
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(img.src);
+        reject(new Error('이미지 로드 실패'));
+      };
+
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  /**
+   * 비디오에서 WebP 썸네일 추출
+   * @param file 비디오 파일
+   * @param maxSize 최대 너비/높이 (기본 300px)
+   * @param quality WebP 품질 (기본 0.8)
+   */
+  const extractVideoThumbnailWebP = async (
+    file: File,
+    maxSize = 300,
+    quality = 0.8
+  ): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement('video');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        reject(new Error('Canvas context not available'));
+        return;
+      }
+
+      video.onloadeddata = () => {
+        video.currentTime = 0; // 첫 프레임
+      };
+
+      video.onseeked = () => {
+        // 종횡비 유지 리사이징
+        let { videoWidth: width, videoHeight: height } = video;
+        if (width > maxSize || height > maxSize) {
+          const ratio = Math.min(maxSize / width, maxSize / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(video, 0, 0, width, height);
+
+        // WebP 변환
+        canvas.toBlob(
+          (blob) => {
+            // 메모리 해제
+            URL.revokeObjectURL(video.src);
+            canvas.width = canvas.height = 0;
+
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('비디오 썸네일 생성 실패'));
+            }
+          },
+          'image/webp',
+          quality
+        );
+      };
+
+      video.onerror = () => {
+        URL.revokeObjectURL(video.src);
+        reject(new Error('비디오 로드 실패'));
+      };
+
+      video.src = URL.createObjectURL(file);
+      video.load();
+    });
   };
 
   const validateFile = (file: File): string | null => {
@@ -262,48 +393,100 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
     });
   };
 
+  /**
+   * 단일 파일을 S3에 업로드 (재시도 포함)
+   * @param url Presigned URL
+   * @param data 업로드할 데이터 (File 또는 Blob)
+   * @param contentType Content-Type
+   * @param maxRetries 최대 재시도 횟수
+   */
+  const uploadToS3WithRetry = async (
+    url: string,
+    data: Blob | File,
+    contentType: string,
+    maxRetries = 3
+  ): Promise<void> => {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: { "Content-Type": contentType },
+          body: data,
+        });
+
+        if (response.ok) {
+          return;
+        }
+
+        throw new Error(`Upload failed with status ${response.status}`);
+      } catch (error) {
+        if (attempt === maxRetries - 1) {
+          throw error;
+        }
+        // Exponential backoff
+        await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+      }
+    }
+  };
+
+  /**
+   * 원본 + 썸네일을 S3에 업로드
+   */
   const uploadToS3 = async (
     uploadInfo: UploadInfo,
     fileState: FileUploadState
-  ): Promise<{ uploadId: string; s3Key: string }> => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
+  ): Promise<{ uploadId: string; s3Key: string; thumbnailS3Key: string }> => {
+    try {
+      updateFileProgress(uploadInfo.filename, 0, "uploading");
 
-      xhr.upload.addEventListener("progress", (e) => {
-        if (e.lengthComputable) {
-          const progress = Math.round((e.loaded / e.total) * 100);
-          updateFileProgress(uploadInfo.filename, progress, "uploading");
-        }
-      });
+      const isImage = fileState.file.type.startsWith("image/");
+      const isVideo = fileState.file.type.startsWith("video/");
 
-      xhr.addEventListener("load", () => {
-        if (xhr.status === 200) {
-          updateFileProgress(uploadInfo.filename, 100, "success");
-          resolve({
-            uploadId: uploadInfo.uploadId,
-            s3Key: uploadInfo.s3Key,
-          });
-        } else {
-          const error = "업로드 실패";
-          updateFileProgress(uploadInfo.filename, 0, "error", error);
-          reject(new Error(error));
-        }
-      });
-
-      xhr.addEventListener("error", () => {
-        const error = "네트워크 오류";
-        updateFileProgress(uploadInfo.filename, 0, "error", error);
-        reject(new Error(error));
-      });
-
-      // 백엔드가 contentType을 반환하면 그것을 사용, 아니면 file.type 사용
+      // Step 1: 원본 업로드
       const contentType = uploadInfo.contentType || fileState.file.type || 'application/octet-stream';
-      console.log(`[S3 PUT] ${uploadInfo.filename}: contentType="${contentType}" (backend: ${uploadInfo.contentType}, file: ${fileState.file.type})`);
+      console.log(`[S3 PUT Original] ${uploadInfo.filename}: contentType="${contentType}"`);
 
-      xhr.open("PUT", uploadInfo.presignedUrl);
-      xhr.setRequestHeader("Content-Type", contentType);
-      xhr.send(fileState.file);
-    });
+      await uploadToS3WithRetry(
+        uploadInfo.presignedUrl,
+        fileState.file,
+        contentType
+      );
+
+      updateFileProgress(uploadInfo.filename, 50, "uploading");
+
+      // Step 2: 썸네일 생성
+      let thumbnailBlob: Blob;
+      if (isImage) {
+        console.log(`[Thumbnail] Generating WebP thumbnail for image: ${uploadInfo.filename}`);
+        thumbnailBlob = await convertToWebPThumbnail(fileState.file);
+      } else if (isVideo) {
+        console.log(`[Thumbnail] Generating WebP thumbnail for video: ${uploadInfo.filename}`);
+        thumbnailBlob = await extractVideoThumbnailWebP(fileState.file);
+      } else {
+        throw new Error("지원하지 않는 파일 형식");
+      }
+
+      // Step 3: 썸네일 업로드
+      console.log(`[S3 PUT Thumbnail] ${uploadInfo.filename}: size=${thumbnailBlob.size} bytes`);
+      await uploadToS3WithRetry(
+        uploadInfo.presignedThumbnailUrl,
+        thumbnailBlob,
+        'image/webp'
+      );
+
+      updateFileProgress(uploadInfo.filename, 100, "success");
+
+      return {
+        uploadId: uploadInfo.uploadId,
+        s3Key: uploadInfo.s3Key,
+        thumbnailS3Key: uploadInfo.thumbnailS3Key,
+      };
+    } catch (error) {
+      console.error(`Upload failed for ${uploadInfo.filename}:`, error);
+      const errorMessage = (error as Error).message || "업로드 실패";
+      updateFileProgress(uploadInfo.filename, 0, "error", errorMessage);
+      throw error;
+    }
   };
 
   interface CompleteResponseItem {
@@ -366,7 +549,7 @@ export default function UploadModal({ onClose, onSuccess }: UploadModalProps) {
 
       // Step 3: Complete upload
       const successfulUploads = uploadResults
-        .filter((r): r is PromiseFulfilledResult<{ uploadId: string; s3Key: string }> => r.status === "fulfilled")
+        .filter((r): r is PromiseFulfilledResult<{ uploadId: string; s3Key: string; thumbnailS3Key: string }> => r.status === "fulfilled")
         .map((r) => r.value);
 
       const failedUploads = uploadResults
